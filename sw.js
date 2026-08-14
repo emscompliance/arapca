@@ -13,7 +13,7 @@
    fully offline.
    ══════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'masrawy-v1';
+const CACHE_NAME = 'masrawy-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -40,9 +40,17 @@ self.addEventListener('activate', (event) => {
 });
 
 /* Önbellek-öncelikli strateji: dosya önbellekte varsa hemen onu döndür (hızlı + çevrimdışı
-   güvenli), yoksa ağdan çekmeyi dener ve başarılı olursa önbelleğe de ekler. /
+   güvenli), yoksa ağdan çekmeyi dener ve başarılı olursa önbelleğe de ekler.
+   ═══ DÜZELTİLDİ ═══ Önceki sürüm sadece "basic" (aynı köken/same-origin) yanıtları
+   önbelleğe alıyordu — bu yüzden Google Fonts gibi FARKLI KÖKENDEN gelen dosyalar (Arapça
+   fontlar) hiç önbelleğe alınmıyor, ilk çevrimdışı ziyarette font indirilemiyordu. Artık
+   "cors" (çapraz-kaynak ama başarılı) yanıtlar da önbelleğe alınıyor. /
    Cache-first strategy: if the file is cached, return it immediately (fast + offline-safe);
-   otherwise try the network, and cache the result if it succeeds. */
+   otherwise try the network, and cache the result if it succeeds.
+   ═══ FIXED ═══ The previous version only cached "basic" (same-origin) responses — so files
+   from a DIFFERENT origin (like Google Fonts' Arabic fonts) were never cached, and the font
+   couldn't load on the first offline visit. Now "cors" (cross-origin but successful)
+   responses are cached too. */
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
@@ -50,7 +58,7 @@ self.addEventListener('fetch', (event) => {
       if (cached) return cached;
       return fetch(event.request)
         .then((response) => {
-          if (response && response.status === 200 && response.type === 'basic') {
+          if (response && response.status === 200 && (response.type === 'basic' || response.type === 'cors')) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           }

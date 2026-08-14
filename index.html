@@ -11,6 +11,17 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-apple-180.png">
 <link rel="icon" href="icon-192.png">
+<!-- ═══ YENİ ═══ Arapça yazı tipleri — internetteyken indirilir ve Service Worker tarafından
+     önbelleğe alınır, böylece bir kez yüklendikten sonra çevrimdışıyken de aynı kaliteli görünüm
+     korunur. Eğer hiç internete bağlanmadan ilk kez açılırsa (nadir durum), cihazın kendi sistem
+     Arapça fontuna otomatik döner — asla bozuk/boş görünmez. /
+     ═══ NEW ═══ Arabic web fonts — downloaded while online and cached by the Service Worker, so
+     the same polished look is kept even offline once loaded. If the app is opened for the very
+     first time with no internet at all (rare), it automatically falls back to the device's own
+     system Arabic font — it never looks broken or blank. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;500;700&display=swap" rel="stylesheet">
 <title>مصراوي — Günlük Mısır Arapçası</title>
 <style>
   :root{
@@ -40,11 +51,16 @@
     padding-top:var(--sat);
   }
   h1,h2,h3,.display{font-weight:800; letter-spacing:-.01em;}
-  /* ── Arapça metin: cihazın kendi Arapça sistem fontları — GOOGLE FONTS'A BAĞLI DEĞİL, ilk açılışta
-       bile internet gerektirmez. / Arabic text: the device's own system Arabic fonts — NOT dependent
-       on Google Fonts, requires no internet even on the very first load. ── */
+  /* ── Arapça metin: önce özel Amiri fontu (Service Worker ile önbelleklenir), bulunamazsa
+       cihazın kendi sistem Arapça fontuna döner — her koşulda düzgün görünür. / Arabic text: prefers
+       the custom Amiri font (cached by the Service Worker); falls back to the device's own system
+       Arabic font if unavailable — looks correct either way. ── */
   .ar{
-    font-family:"Noto Naskh Arabic","Geeza Pro","Damascus","Arabic Typesetting",Tahoma,"Segoe UI",sans-serif;
+    font-family:"Amiri","Noto Naskh Arabic","Geeza Pro","Damascus","Arabic Typesetting",Tahoma,"Segoe UI",sans-serif;
+    direction:rtl; unicode-bidi:isolate;
+  }
+  .kufi{
+    font-family:"Reem Kufi","Amiri","Noto Naskh Arabic","Geeza Pro","Damascus",Tahoma,sans-serif;
     direction:rtl; unicode-bidi:isolate;
   }
   .lat{direction:ltr; unicode-bidi:isolate; color:var(--teal-dark); font-weight:700; letter-spacing:.01em;}
@@ -74,7 +90,7 @@
   .brand{display:flex; align-items:center; gap:9px;}
   .brand .star8{width:30px; height:30px; color:var(--gold); flex-shrink:0;}
   .brand-text{line-height:1.15;}
-  .brand-text .ar{font-size:19px; font-weight:700; color:#fff;}
+  .brand-text .kufi{font-size:19px; font-weight:700; color:#fff;}
   .brand-text .sub{font-size:10px; letter-spacing:.07em; color:var(--gold-tint); text-transform:uppercase; font-weight:700;}
   .offline-pill{
     display:none; align-items:center; gap:5px; background:rgba(179,58,46,0.9); border-radius:99px;
@@ -114,11 +130,18 @@
   .search-wrap input::placeholder{color:var(--ink-faint); font-weight:500;}
   .search-wrap input:focus{outline:3px solid var(--gold);}
   .search-clear{
-    position:absolute; right:8px; top:50%; transform:translateY(-50%); width:30px; height:30px;
+    position:absolute; right:46px; top:50%; transform:translateY(-50%); width:30px; height:30px;
     border-radius:50%; background:var(--border-soft); border:none; display:none; align-items:center;
     justify-content:center; font-size:14px; color:var(--ink-soft);
   }
   .search-clear.show{display:flex;}
+  .mic-btn{
+    position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px;
+    border-radius:50%; background:var(--teal-tint); border:none; display:flex; align-items:center;
+    justify-content:center; font-size:15px; color:var(--teal-dark);
+  }
+  .mic-btn.listening{background:var(--rust); color:#fff; animation:mic-pulse 1.1s ease-in-out infinite;}
+  @keyframes mic-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(179,58,46,0.45);} 50%{ box-shadow:0 0 0 8px rgba(179,58,46,0);} }
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
   .search-hit{
     background:#fff; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:12px;
@@ -238,7 +261,7 @@
   .back-row{padding:14px 16px 0; display:flex; align-items:center; gap:10px;}
   .back-btn{width:40px; height:40px; border-radius:50%; background:var(--card); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:16px;}
   .cat-header{padding:14px 16px 4px;}
-  .cat-header .ar{font-size:22px; color:var(--teal-dark);}
+  .cat-header .kufi{font-size:22px; color:var(--teal-dark);}
   .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:2px;}
 
   /* ── Okuma Rehberi modal / Reading guide modal ── */
@@ -265,7 +288,7 @@
     #sidebar{display:flex; flex-direction:column; width:230px; flex-shrink:0; background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:22px 16px; box-shadow:var(--shadow-md); position:sticky; top:24px; gap:4px;}
     .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--border-soft); margin-bottom:14px;}
     .side-brand .star8{width:28px; height:28px; color:var(--teal);}
-    .side-brand .ar{font-size:17px; color:var(--teal-dark);}
+    .side-brand .kufi{font-size:17px; color:var(--teal-dark);}
     .side-brand .sub{font-size:9px; color:var(--ink-faint); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
     .side-link{display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:12px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-soft); text-align:left; width:100%;}
     .side-link .ic{font-size:17px; width:20px; text-align:center;}
@@ -286,7 +309,7 @@
   <nav id="sidebar">
     <div class="side-brand">
       <span class="star8"></span>
-      <div><div class="ar">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
+      <div><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
     </div>
     <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
     <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
@@ -301,7 +324,7 @@
       <div class="topbar-row">
         <div class="brand">
           <span class="star8"></span>
-          <div class="brand-text"><div class="ar">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
+          <div class="brand-text"><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
@@ -591,23 +614,111 @@ function catLearnedCount(catId){ return WORDS[catId].filter(w => isLearned(w.id)
 function totalLearnedCount(){ return allWords().filter(w => isLearned(w.id)).length; }
 
 /* ══════════════════════════ SESLENDİRME / SPEECH ══════════════════════════
-   Çevrimdışıyken bazı cihazlarda konuşma sesi motoru çalışmayabilir — bu durumda
-   buton sessizce hiçbir şey yapmaz, hata vermez. / While offline, the speech engine may
-   be unavailable on some devices — in that case the button silently does nothing, no error. */
-function speak(text){
-  if (!('speechSynthesis' in window)) return;
+   Tarayıcılar bazen ses listesini (getVoices) ASENKRON yükler — sayfa yeni açıldığında
+   liste boş dönebilir ve önceki sürümde bu durumda "sessizce" hiçbir şey olmuyordu. Şimdi
+   liste boşsa kısa süre bekleyip (voiceschanged olayını dinleyerek) tekrar deniyoruz, yine
+   de bulunamazsa kullanıcıya görünür bir uyarı gösteriyoruz — tamamen sessiz kalmıyor. /
+   Browsers sometimes load the voice list (getVoices) ASYNCHRONOUSLY — on a fresh page load
+   the list can come back empty, and the previous version silently did nothing in that case.
+   Now, if the list is empty, we wait briefly (listening for the voiceschanged event) and
+   retry; if still nothing is found, we show a visible toast to the user instead of staying
+   silent. */
+let _voicesReadyPromise = null;
+function waitForVoices(){
+  if (_voicesReadyPromise) return _voicesReadyPromise;
+  _voicesReadyPromise = new Promise((resolve) => {
+    if (!('speechSynthesis' in window)) { resolve([]); return; }
+    const existing = window.speechSynthesis.getVoices();
+    if (existing.length) { resolve(existing); return; }
+    let done = false;
+    const finish = () => { if (done) return; done = true; resolve(window.speechSynthesis.getVoices()); };
+    window.speechSynthesis.onvoiceschanged = finish;
+    setTimeout(finish, 700); // bazı taraycılar hiç 'voiceschanged' tetiklemiyor / some browsers never fire 'voiceschanged'
+  });
+  return _voicesReadyPromise;
+}
+async function speak(text){
+  if (!('speechSynthesis' in window)) { showToast('🔇 Bu cihaz/tarayıcı sesli okumayı desteklemiyor.'); return; }
   try {
+    const voices = await waitForVoices();
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'ar-EG'; u.rate = 0.85;
-    const voices = window.speechSynthesis.getVoices();
+    u.rate = 0.85;
     const egVoice = voices.find(v => v.lang && v.lang.toLowerCase() === 'ar-eg');
-    const arVoice = egVoice || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
-    if (arVoice) u.voice = arVoice;
+    const anyArVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+    const chosen = egVoice || anyArVoice;
+    if (chosen) { u.voice = chosen; u.lang = chosen.lang; }
+    else { u.lang = 'ar'; }
+    if (!chosen && !voices.length) {
+      // ═══ Bu cihazda HİÇ ses motoru yüklenmemiş — muhtemelen çevrimdışı ilk açılış ya da
+      // cihazda Arapça ses paketi kurulu değil. Sessizce başarısız olmak yerine açıkça söylüyoruz. /
+      // No voice engine loaded on this device at all — likely first offline load, or no Arabic
+      // voice pack installed. Instead of silently failing, we say so explicitly.
+      showToast('🔇 Ses motoru yüklenemedi. İnternete bağlıyken bir kez açman yeterli.');
+      return;
+    }
+    if (!chosen) {
+      showToast('ℹ️ Cihazında özel Mısır Arapçası sesi yok — genel Arapça sesle okunuyor.');
+    }
     window.speechSynthesis.speak(u);
-  } catch(e) {}
+  } catch(e) { showToast('🔇 Ses çalınamadı.'); }
 }
 function esc(s){ return String(s).replace(/'/g, "\\'").replace(/"/g,'&quot;'); }
+
+/* ── Küçük bilgi baloncuğu (toast) — sessiz başarısızlıklar yerine görünür geri bildirim / Small toast — visible feedback instead of silent failures ── */
+let _toastTimer = null;
+function showToast(msg){
+  let el = document.getElementById('app-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'app-toast';
+    el.style.cssText = 'position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--sab) + 16px); transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:12px 18px; border-radius:99px; font-size:13px; font-weight:700; box-shadow:var(--shadow-lg); z-index:200; max-width:88vw; text-align:center; opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  clearTimeout(_toastTimer);
+  requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateX(-50%) translateY(0)'; });
+  _toastTimer = setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateX(-50%) translateY(20px)'; }, 3200);
+}
+
+/* ══════════════════════════ SESLİ KOMUT / VOICE INPUT (arama kutusu) ══════════════════════════
+   Not: Konuşmayı metne çevirme (SpeechRecognition), telefonun kendi ses tanıma motorunu kullanır;
+   Chrome/Android'de genellikle İNTERNET GEREKTİRİR (Safari/iOS'ta cihaz üzerinde çalışabilir).
+   Çevrimdışıyken mikrofon çalışmayabilir — bu normaldir, dinle/okuma/alıştırma/sınav gibi asıl
+   öğrenme özellikleri yine tam çevrimdışı çalışır. /
+   Note: Speech-to-text (SpeechRecognition) uses the phone's own recognition engine; on
+   Chrome/Android it usually REQUIRES INTERNET (on Safari/iOS it can run on-device). The mic may
+   not work while offline — that's expected; the core learning features (listen/practice/quiz)
+   still work fully offline. */
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let _recognizer = null, _listening = false;
+function micSupported(){ return !!SpeechRecognitionAPI; }
+function toggleVoiceSearch(){
+  if (!micSupported()) { showToast('🎙️ Bu tarayıcı sesli aramayı desteklemiyor.'); return; }
+  if (_listening) { stopVoiceSearch(); return; }
+  try {
+    _recognizer = new SpeechRecognitionAPI();
+    _recognizer.lang = 'tr-TR';
+    _recognizer.interimResults = true;
+    _recognizer.maxAlternatives = 1;
+    const btn = document.getElementById('mic-btn');
+    _recognizer.onstart = () => { _listening = true; if (btn) btn.classList.add('listening'); showToast('🎙️ Dinliyorum... konuş'); };
+    _recognizer.onresult = (e) => {
+      const transcript = Array.from(e.results).map(r => r[0].transcript).join(' ');
+      const input = document.getElementById('search-input');
+      if (input) { input.value = transcript; onSearch(transcript); }
+    };
+    _recognizer.onerror = () => { showToast('🎙️ Sesli arama başarısız — internet bağlantını kontrol et.'); stopVoiceSearch(); };
+    _recognizer.onend = () => stopVoiceSearch();
+    _recognizer.start();
+  } catch(e) { showToast('🎙️ Sesli arama başlatılamadı.'); }
+}
+function stopVoiceSearch(){
+  _listening = false;
+  const btn = document.getElementById('mic-btn');
+  if (btn) btn.classList.remove('listening');
+  try { if (_recognizer) _recognizer.stop(); } catch(e) {}
+}
 
 /* ══════════════════════════ GÖRÜNÜM GEÇİŞİ / VIEW SWITCHING ══════════════════════════ */
 const VIEWS = ['home','category','practice','quiz','favorites'];
@@ -647,8 +758,9 @@ function renderHome(){
         <div class="search-wrap">
           <div class="search-input-row">
             <input id="search-input" type="text" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false"
-              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)">
+              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)" style="padding-inline-end:88px;">
             <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+            <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="Sesli ara">🎙️</button>
           </div>
           <div id="search-results" class="search-results"></div>
           <div class="search-hint-chips" id="search-hints"></div>
@@ -691,6 +803,8 @@ function renderHome(){
     </div>
   `;
   renderSearchHints();
+  const micBtn = document.getElementById('mic-btn');
+  if (micBtn && !micSupported()) micBtn.style.display = 'none';
 }
 function catGridHtml(){
   return `<div class="cat-grid">
@@ -710,7 +824,7 @@ function catGridHtml(){
 }
 function showAllCategories(){
   document.getElementById('view-home').innerHTML = `
-    <div class="cat-header"><div class="ar">الفئات</div><div class="en">Tüm Kategoriler</div></div>
+    <div class="cat-header"><div class="kufi">الفئات</div><div class="en">Tüm Kategoriler</div></div>
     <div class="section" style="padding-top:8px;">${catGridHtml()}</div>
   `;
   showView('home');
@@ -725,7 +839,7 @@ function openCategory(catId){
   document.getElementById('view-category').innerHTML = `
     <div class="back-row"><button class="back-btn" onclick="goHome()">←</button></div>
     <div class="cat-header">
-      <div class="ar" style="color:${c.color};">${c.mark} ${c.ar}</div>
+      <div class="kufi" style="color:${c.color};">${c.mark} ${c.ar}</div>
       <div class="en">${c.tr} · ${words.length} kelime/cümle</div>
     </div>
     <div class="section" style="padding-top:10px; padding-bottom:0;">
@@ -760,7 +874,7 @@ function refreshWordCard(id){
 function showFavorites(){
   const words = Object.keys(STATE.favorites).filter(id => STATE.favorites[id]).map(wordById).filter(Boolean);
   document.getElementById('view-favorites').innerHTML = `
-    <div class="cat-header"><div class="ar" style="color:var(--gold-dark);">⭐ المفضلة</div><div class="en">Favoriler</div></div>
+    <div class="cat-header"><div class="kufi" style="color:var(--gold-dark);">⭐ المفضلة</div><div class="en">Favoriler</div></div>
     <div class="word-list" style="margin-top:12px;">
       ${words.length ? words.map(w => wordCardHtml(w)).join('') : `<div class="empty-state"><div class="glyph">⭐</div>Henüz favori kelimen yok.<br>Kelime kartlarındaki yıldıza dokunarak ekleyebilirsin.</div>`}
     </div>
@@ -1015,7 +1129,7 @@ function refreshStreakUI(){
   const side = document.getElementById('side-streak-txt');
   if (side) side.textContent = (STATE.streak || 0) + ' günlük seri';
 }
-if ('speechSynthesis' in window) { window.speechSynthesis.onvoiceschanged = () => {}; }
+// speechSynthesis.onvoiceschanged artık waitForVoices() içinde yönetiliyor / now managed inside waitForVoices()
 refreshStreakUI();
 updateOnlineStatus();
 renderHome();
