@@ -96,15 +96,6 @@
   .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
   .offline-pill.show{display:flex;}
 
-  /* ── Büyük marka amblemi (referans logo düzeni) / Large brand emblem (matches reference logo layout) ── */
-  .brand-hero{display:flex; align-items:center; justify-content:center; gap:16px; padding:18px 16px 8px;}
-  .brand-hero .logo-mark-lg{font-family:"Amiri","Noto Naskh Arabic",serif; color:var(--red); font-weight:700; font-size:64px; line-height:0.75; text-shadow:0 8px 24px var(--red-glow);}
-  .brand-hero .divider{width:1.5px; height:52px; background:linear-gradient(180deg, transparent, var(--glass-border), transparent);}
-  .brand-hero .lockup-ar{text-align:right; direction:rtl;}
-  .brand-hero .lockup-ar .l1{font-family:"Reem Kufi","Amiri",serif; font-size:22px; font-weight:700; color:var(--ink); line-height:1.35;}
-  .brand-hero .lockup-ar .l2{font-family:"Reem Kufi","Amiri",serif; font-size:22px; font-weight:700; color:var(--red); line-height:1.2;}
-  .brand-hero-caption{text-align:center; font-size:11.5px; font-weight:800; letter-spacing:.16em; color:var(--red); margin-bottom:4px;}
-
   .section{padding:14px 16px 4px; position:relative; z-index:1;}
   .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
   .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
@@ -136,6 +127,7 @@
   @keyframes mic-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(229,57,59,0.5);} 50%{ box-shadow:0 0 0 9px rgba(229,57,59,0);} }
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
   .search-hit{background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left;}
+  .search-hit.top-hit{background:rgba(255,75,75,0.10); border-color:var(--red);}
   .search-hit .ar{font-size:20px; color:var(--gold-soft); flex-shrink:0; min-width:64px;}
   .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
   .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
@@ -293,8 +285,6 @@
   /* ── Alt bilgi / Footer ── */
   .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
   .footer-card{padding:22px 20px; text-align:center;}
-  .footer-logo-row{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:6px;}
-  .footer-logo-row .kufi{font-size:15px; color:var(--ink);}
   .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
   .footer-flags{font-size:18px; margin-bottom:16px; letter-spacing:2px;}
   .footer-contact{
@@ -376,10 +366,7 @@
          extra shortcuts. -->
     <footer class="app-footer">
       <div class="footer-card glass">
-        <div class="footer-logo-row">
-          <span class="logo-mark" style="font-size:22px;">ع</span>
-          <span class="kufi">أتعلم العربية</span>
-        </div>
+        <div class="footer-tag" style="font-weight:800; font-size:13px; color:var(--ink); margin-bottom:8px;">Arapça Öğreniyorum</div>
         <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
         <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
@@ -388,8 +375,7 @@
           <button class="footer-mini-btn" onclick="openGuide()">📖 Okuma Rehberi</button>
           <button class="footer-mini-btn" onclick="confirmResetProgress()">🗑️ İlerlemeyi Sıfırla</button>
         </div>
-        <div class="footer-meta">
-          164 kelime & cümle · 12 kategori · v3.0<br>
+        <div class="footer-meta" id="footer-meta-stats">
           Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır
         </div>
       </div>
@@ -423,6 +409,7 @@
 <script>
 /* ══════════════════════════ VERİ: MISIR ARAPÇASI (AMİYYE) ══════════════════════════ */
 const CATS = [
+  { id:'alphabet',   ar:'الأبجدية',   tr:'Arapça Alfabesi',      en:'Arabic Alphabet',     mark:'ا', c1:'#FF3B30', c2:'#4A0000' },
   { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', c1:'#FF5252', c2:'#7A0C0C' },
   { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', c1:'#4A4A4A', c2:'#0A0A0A' },
   { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', c1:'#E5393B', c2:'#8E1B1B' },
@@ -435,9 +422,42 @@ const CATS = [
   { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', c1:'#FF8A80', c2:'#C62828' },
   { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', c1:'#3A3A3A', c2:'#000000' },
   { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', c1:'#C62828', c2:'#000000' },
+  { id:'places',     ar:'أماكن',      tr:'Yerler & Mekanlar',    en:'Places',              mark:'⌘', c1:'#D32F2F', c2:'#1A0000' },
+  { id:'body',       ar:'الجسم',      tr:'Vücut Bölümleri',      en:'Body Parts',          mark:'✚', c1:'#9E9E9E', c2:'#212121' },
 ];
 
 const WORDS = {
+  alphabet:[
+    {ar:'ا', lat:'alif — uzun "a" sesi', tr:'Elif', en:'Alif'},
+    {ar:'ب', lat:'ba — "b" sesi', tr:'Be', en:'Ba'},
+    {ar:'ت', lat:'ta — "t" sesi', tr:'Te', en:'Ta'},
+    {ar:'ث', lat:'sa — Mısır\u2019da "s" gibi okunur', tr:'Se', en:'Tha'},
+    {ar:'ج', lat:'ga — Mısır\u2019da sert "g" (gol\u2019daki gibi)', tr:'Cim (Mısır\u2019da "g")', en:'Jim/Gim'},
+    {ar:'ح', lat:'h — boğazdan gelen kalın h', tr:'Ha (kalın)', en:'Ha'},
+    {ar:'خ', lat:'kh — hırıltılı, kalın h', tr:'Hı', en:'Kha'},
+    {ar:'د', lat:'d — "d" sesi', tr:'Dal', en:'Dal'},
+    {ar:'ذ', lat:'z — Mısır\u2019da "z" gibi okunur', tr:'Zel', en:'Dhal'},
+    {ar:'ر', lat:'r — "r" sesi', tr:'Ra', en:'Ra'},
+    {ar:'ز', lat:'z — "z" sesi', tr:'Ze', en:'Zay'},
+    {ar:'س', lat:'s — "s" sesi', tr:'Sin', en:'Sin'},
+    {ar:'ش', lat:'sh — "ş" sesi', tr:'Şin', en:'Shin'},
+    {ar:'ص', lat:'s — kalın, kalın "s"', tr:'Sad (kalın s)', en:'Sad'},
+    {ar:'ض', lat:'d — kalın, kalın "d"', tr:'Dad (kalın d)', en:'Dad'},
+    {ar:'ط', lat:'t — kalın, kalın "t"', tr:'Tı (kalın t)', en:'Ta (heavy)'},
+    {ar:'ظ', lat:'z — kalın, kalın "z"', tr:'Zı (kalın z)', en:'Za (heavy)'},
+    {ar:'ع', lat:"' — boğazdan gelen kısa duraklama (ayn)", tr:'Ayn', en:'Ain'},
+    {ar:'غ', lat:'gh — Fransızca "r" gibi', tr:'Ğayn', en:'Ghain'},
+    {ar:'ف', lat:'f — "f" sesi', tr:'Fe', en:'Fa'},
+    {ar:'ق', lat:"' — Mısır ağzında çoğunlukla yutulur (glottal)", tr:'Kaf', en:'Qaf'},
+    {ar:'ك', lat:'k — "k" sesi', tr:'Kef', en:'Kaf'},
+    {ar:'ل', lat:'l — "l" sesi', tr:'Lam', en:'Lam'},
+    {ar:'م', lat:'m — "m" sesi', tr:'Mim', en:'Mim'},
+    {ar:'ن', lat:'n — "n" sesi', tr:'Nun', en:'Nun'},
+    {ar:'ه', lat:'h — normal "h" sesi', tr:'He', en:'Ha'},
+    {ar:'و', lat:'w/oo — "v" ya da uzun "u"', tr:'Vav', en:'Waw'},
+    {ar:'ي', lat:'y/ee — "y" ya da uzun "i"', tr:'Ya', en:'Ya'},
+    {ar:'ء', lat:"' — ani bir duruş (hemze)", tr:'Hemze', en:'Hamza'},
+  ],
   greetings:[
     {ar:'أهلاً', lat:'ahlan', tr:'Merhaba', en:'Hi / Hello'},
     {ar:'إزيك؟', lat:'izzayyak? (izzayyik? kadına)', tr:'Nasılsın?', en:'How are you?'},
@@ -472,8 +492,19 @@ const WORDS = {
     {ar:'تمانية', lat:'tamanya', tr:'Sekiz', en:'Eight'},
     {ar:'تسعة', lat:"tis'a", tr:'Dokuz', en:'Nine'},
     {ar:'عشرة', lat:"'ashara", tr:'On', en:'Ten'},
+    {ar:'حداشر', lat:"hidaashar", tr:'On bir', en:'Eleven'},
+    {ar:'اتناشر', lat:"itnaashar", tr:'On iki', en:'Twelve'},
+    {ar:'تلتاشر', lat:"talataashar", tr:'On üç', en:'Thirteen'},
     {ar:'عشرين', lat:"'ishreen", tr:'Yirmi', en:'Twenty'},
+    {ar:'تلاتين', lat:"talateen", tr:'Otuz', en:'Thirty'},
+    {ar:'أربعين', lat:"arba'een", tr:'Kırk', en:'Forty'},
+    {ar:'خمسين', lat:"khamseen", tr:'Elli', en:'Fifty'},
+    {ar:'ستين', lat:"sitteen", tr:'Altmış', en:'Sixty'},
+    {ar:'سبعين', lat:"sab'een", tr:'Yetmiş', en:'Seventy'},
+    {ar:'تمانين', lat:"tamaneen", tr:'Seksen', en:'Eighty'},
+    {ar:'تسعين', lat:"tis'een", tr:'Doksan', en:'Ninety'},
     {ar:'ميه', lat:'miyya', tr:'Yüz', en:'One hundred'},
+    {ar:'الف', lat:'alf', tr:'Bin', en:'One thousand'},
   ],
   family:[
     {ar:'بابا', lat:'baba', tr:'Baba', en:'Father'},
@@ -627,6 +658,47 @@ const WORDS = {
     {ar:'عايز', lat:"'aayiz", tr:'İster', en:'He wants'},
     {ar:'بيشوف', lat:'beyshoof', tr:'Görür', en:'He sees'},
     {ar:'بيلعب', lat:"beyil'ab", tr:'Oynar', en:'He plays'},
+    {ar:'بيدرس', lat:'beyidris', tr:'Ders çalışır', en:'He studies'},
+    {ar:'بيسافر', lat:'beyisaafir', tr:'Seyahat eder', en:'He travels'},
+    {ar:'بيشتري', lat:'beyishtiri', tr:'Satın alır', en:'He buys'},
+    {ar:'بيبيع', lat:'beybee', tr:'Satar', en:'He sells'},
+    {ar:'بيساعد', lat:"beysaa'id", tr:'Yardım eder', en:'He helps'},
+    {ar:'بيفتح', lat:'beyiftah', tr:'Açar', en:'He opens'},
+    {ar:'بيقفل', lat:'beyi\u2019fil', tr:'Kapatır', en:'He closes'},
+    {ar:'بيجري', lat:'beyigri', tr:'Koşar', en:'He runs'},
+    {ar:'بيغني', lat:'beyighanni', tr:'Şarkı söyler', en:'He sings'},
+  ],
+  places:[
+    {ar:'بيت', lat:'beit', tr:'Ev', en:'House'},
+    {ar:'شغل', lat:'shughl', tr:'İş yeri', en:'Work'},
+    {ar:'مدرسة', lat:'madrasa', tr:'Okul', en:'School'},
+    {ar:'جامعة', lat:"gam'a", tr:'Üniversite', en:'University'},
+    {ar:'مستشفى', lat:'mustashfa', tr:'Hastane', en:'Hospital'},
+    {ar:'صيدلية', lat:'saydaliyya', tr:'Eczane', en:'Pharmacy'},
+    {ar:'مطعم', lat:'mat\u2019am', tr:'Restoran', en:'Restaurant'},
+    {ar:'فندق', lat:'funduq', tr:'Otel', en:'Hotel'},
+    {ar:'مسجد', lat:'masgid', tr:'Cami', en:'Mosque'},
+    {ar:'كنيسة', lat:'kaneesa', tr:'Kilise', en:'Church'},
+    {ar:'محطة', lat:'mahatta', tr:'İstasyon / Durak', en:'Station'},
+    {ar:'مطار', lat:'mataar', tr:'Havalimanı', en:'Airport'},
+    {ar:'بنك', lat:'bank', tr:'Banka', en:'Bank'},
+    {ar:'شارع', lat:"shaari'", tr:'Sokak / Cadde', en:'Street'},
+    {ar:'مدينة', lat:'madeena', tr:'Şehir', en:'City'},
+    {ar:'بلد', lat:'balad', tr:'Ülke / Memleket', en:'Country'},
+  ],
+  body:[
+    {ar:'راس', lat:'raas', tr:'Baş', en:'Head'},
+    {ar:'وش', lat:'wish', tr:'Yüz', en:'Face'},
+    {ar:'عين', lat:'ein', tr:'Göz', en:'Eye'},
+    {ar:'ودن', lat:'widn', tr:'Kulak', en:'Ear'},
+    {ar:'مناخير', lat:'manaakheer', tr:'Burun', en:'Nose'},
+    {ar:'بق', lat:'buʾ', tr:'Ağız', en:'Mouth'},
+    {ar:'سنان', lat:'sinaan', tr:'Dişler', en:'Teeth'},
+    {ar:'إيد', lat:'eed', tr:'El', en:'Hand'},
+    {ar:'رجل', lat:'rigl', tr:'Ayak / Bacak', en:'Leg/Foot'},
+    {ar:'ضهر', lat:'dahr', tr:'Sırt', en:'Back'},
+    {ar:'بطن', lat:'baṭn', tr:'Karın', en:'Stomach'},
+    {ar:'قلب', lat:'ʾalb', tr:'Kalp', en:'Heart'},
   ],
 };
 
@@ -819,12 +891,6 @@ function renderHome(){
   const favTotal = Object.values(STATE.favorites).filter(Boolean).length;
   const totalWords = allWords().length;
   document.getElementById('view-home').innerHTML = `
-    <div class="brand-hero">
-      <span class="logo-mark-lg">ع</span>
-      <div class="divider"></div>
-      <div class="lockup-ar"><div class="l1">أتعلم</div><div class="l2">العربية</div></div>
-    </div>
-    <div class="brand-hero-caption">ARAPÇA ÖĞRENİYORUM</div>
     <div class="bridge-strip">
       <span class="bridge-flag">🇹🇷</span>
       <div class="bridge-route"><div class="bridge-line"></div><span class="bridge-plane">✈</span><div class="bridge-line"></div></div>
@@ -1024,20 +1090,35 @@ function runSearch(q){
   scored.sort((a,b) => b.score - a.score);
   const hits = scored.slice(0, 12).map(s => s.w);
   if (!hits.length) { box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene ya da Okuma Rehberi'ne göz at.</div>`; return; }
-  box.innerHTML = (partial ? `<div class="search-empty" style="padding:4px 4px 10px; text-align:left;">Tam cümle bulunamadı — içindeki bilinen kelimeler:</div>` : '') + hits.map(w => `
-    <button class="search-hit" onclick="openCategory('${w.cat}')">
+  box.innerHTML = (partial ? `<div class="search-empty" style="padding:4px 4px 10px; text-align:left;">Tam cümle bulunamadı — içindeki bilinen kelimeler:</div>` : '') + hits.map((w, i) => `
+    <button class="search-hit ${i === 0 ? 'top-hit' : ''}" onclick="openCategory('${w.cat}')">
       <span class="ar">${w.ar}</span>
       <div class="meta"><div class="tr">${w.tr}</div><span class="lat-pill">${w.lat}</span></div>
       <button class="hit-play" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊</button>
     </button>
   `).join('');
   rememberSearch(q);
+  // ═══ YENİ ═══ En iyi eşleşme bulunduğunda okunuşu otomatik seslendirilir — kullanıcı ayrıca
+  // 🔊 butonuna basmak zorunda kalmaz. Her tuş vuruşunda değil, yazma durakladığında ve sonuç
+  // değiştiğinde bir kez seslendirilir. /
+  // ═══ NEW ═══ Once a best match is found, its pronunciation is spoken automatically — the user
+  // no longer has to tap the 🔊 button. It only speaks once typing pauses and the top result
+  // actually changes, not on every keystroke.
+  scheduleAutoSpeak(hits[0]);
+}
+let _autoSpeakTimer = null, _lastAutoSpokenId = null;
+function scheduleAutoSpeak(word){
+  clearTimeout(_autoSpeakTimer);
+  if (!word || word.id === _lastAutoSpokenId) return;
+  _autoSpeakTimer = setTimeout(() => { _lastAutoSpokenId = word.id; speak(word.ar); }, 550);
 }
 function clearSearch(){
   const input = document.getElementById('search-input');
   if (input) { input.value=''; input.focus(); }
   document.getElementById('search-results').innerHTML = '';
   document.getElementById('search-clear').classList.remove('show');
+  _lastAutoSpokenId = null;
+  clearTimeout(_autoSpeakTimer);
   renderSearchHints();
 }
 function rememberSearch(q){
@@ -1226,7 +1307,13 @@ function refreshStreakUI(){
   const side = document.getElementById('side-streak-txt');
   if (side) side.textContent = (STATE.streak || 0) + ' günlük seri';
 }
+function refreshFooterStats(){
+  const el = document.getElementById('footer-meta-stats');
+  if (!el) return;
+  el.innerHTML = `${allWords().length} kelime & harf · ${CATS.length} kategori (alfabe dahil)<br>Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır`;
+}
 refreshStreakUI();
+refreshFooterStats();
 updateOnlineStatus();
 renderHome();
 showView('home');
