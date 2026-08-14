@@ -1,13 +1,13 @@
 {
-  "name": "مصراوي — Günlük Mısır Arapçası",
-  "short_name": "مصراوي",
+  "name": "Arapça Öğreniyorum — أتعلم العربية",
+  "short_name": "Arapça Öğreniyorum",
   "description": "Mısır Arapçası (Amiyye) günlük kelime ve cümle rehberi — okunuşuyla, çevrimdışı çalışır.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0B1220",
-  "theme_color": "#0B1220",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
   "lang": "tr",
   "dir": "ltr",
   "icons": [
