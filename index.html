@@ -62,10 +62,6 @@
   ::selection{background:var(--gold); color:#1B1204;}
   input{color:var(--ink); user-select:text;}
 
-  .star8{position:relative; display:inline-block;}
-  .star8::before,.star8::after{content:''; position:absolute; inset:0; border:1.7px solid currentColor;}
-  .star8::after{transform:rotate(45deg);}
-
   /* ═══════════ GLASS bileşenleri / GLASS primitives ═══════════ */
   .glass{
     background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
@@ -80,9 +76,16 @@
 
   .topbar{padding:calc(16px + var(--sat)) 16px 8px;}
   .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .brand{display:flex; align-items:center; gap:9px;}
-  .brand .star8{width:28px; height:28px; color:var(--gold); flex-shrink:0;}
-  .brand-text{line-height:1.15;}
+  .brand{display:flex; align-items:center; gap:10px; background:none; border:none; padding:2px; border-radius:14px;}
+  .brand:active{transform:scale(.96);}
+  /* ── Logo işareti: kırmızı kutu içinde siyah "A" — favicon ile birebir aynı, tıklanınca anasayfaya döner /
+       Logo mark: black "A" in a red box — matches the favicon exactly, clicking it returns to the home screen ── */
+  .logo-mark{
+    width:34px; height:34px; border-radius:10px; background:var(--red); color:#0B0B0B;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:19px; flex-shrink:0;
+    font-family:'Manrope',sans-serif; box-shadow:0 6px 16px var(--red-glow);
+  }
+  .brand-text{line-height:1.15; text-align:left;}
   .brand-text .kufi{font-size:18px; font-weight:700; color:var(--ink);}
   .brand-text .sub{font-size:9.5px; letter-spacing:.08em; color:var(--ink-faint); text-transform:uppercase; font-weight:700;}
   .flag-pill{
@@ -266,12 +269,43 @@
   .nav-btn .ic{font-size:19px;}
   .nav-btn.active{color:#241902; background:linear-gradient(135deg,var(--gold-soft),var(--gold));}
 
+  /* ── Yukarı kaydır çubuğu / Scroll-to-top button ── */
+  #scroll-top-btn{
+    position:fixed; right:16px; bottom:calc(var(--nav-h) + var(--sab) + 26px); z-index:49;
+    width:46px; height:46px; border-radius:50%; border:1px solid var(--glass-border);
+    background:rgba(15,23,38,0.78); color:var(--gold-soft); font-size:19px; font-weight:800;
+    backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%);
+    box-shadow:var(--shadow-pop); display:flex; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(14px) scale(.85); pointer-events:none; transition:opacity .22s, transform .22s;
+  }
+  #scroll-top-btn.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
+  #scroll-top-btn:active{transform:scale(.9);}
+
+  /* ── Alt bilgi / Footer ── */
+  .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
+  .footer-card{padding:22px 20px; text-align:center;}
+  .footer-logo-row{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:6px;}
+  .footer-logo-row .kufi{font-size:15px; color:var(--ink);}
+  .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
+  .footer-flags{font-size:18px; margin-bottom:16px; letter-spacing:2px;}
+  .footer-contact{
+    display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:99px;
+    background:rgba(232,179,61,0.10); border:1px solid rgba(232,179,61,0.28); color:var(--gold-soft);
+    font-size:12.5px; font-weight:700; margin-bottom:16px; word-break:break-all;
+  }
+  .footer-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-bottom:16px;}
+  .footer-mini-btn{
+    display:inline-flex; align-items:center; gap:6px; padding:9px 15px; border-radius:99px; font-size:12px;
+    font-weight:700; color:var(--ink-dim); background:rgba(255,255,255,0.05); border:1px solid var(--glass-border);
+  }
+  .footer-meta{font-size:10.5px; color:var(--ink-faint); border-top:1px solid var(--glass-border); padding-top:14px; line-height:1.7;}
+
   @media (min-width:901px){
     body{padding:24px 0;}
     #app{gap:26px; align-items:flex-start;}
     #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
-    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--glass-border); margin-bottom:14px;}
-    .side-brand .star8{width:28px; height:28px; color:var(--gold);}
+    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--glass-border); margin-bottom:14px; background:none; border-inline:none; border-top:none; width:100%; cursor:pointer;}
+    .side-brand:active{opacity:.8;}
     .side-brand .kufi{font-size:17px; color:var(--ink);}
     .side-brand .sub{font-size:9px; color:var(--ink-faint); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
     .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 0 16px; font-size:22px;}
@@ -281,6 +315,7 @@
     .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
     #main-col{padding-bottom:24px;}
     #bottom-nav{display:none;}
+    #scroll-top-btn{bottom:26px;}
     .cat-grid{grid-template-columns:repeat(3,1fr);}
     .hero-ar{font-size:52px;}
     .bridge-route{width:180px;}
@@ -292,10 +327,10 @@
 
 <div id="app">
   <nav id="sidebar" class="glass">
-    <div class="side-brand">
-      <span class="star8"></span>
+    <button class="side-brand" onclick="goHome()" title="Ana sayfaya dön">
+      <span class="logo-mark">A</span>
       <div><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
-    </div>
+    </button>
     <div class="side-flags">🇹🇷 <span style="color:var(--gold); font-size:14px;">✦</span> 🇪🇬</div>
     <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
     <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
@@ -308,10 +343,10 @@
   <div id="main-col">
     <header class="topbar">
       <div class="topbar-row">
-        <div class="brand">
-          <span class="star8"></span>
+        <button class="brand" onclick="goHome()" title="Ana sayfaya dön">
+          <span class="logo-mark">A</span>
           <div class="brand-text"><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
-        </div>
+        </button>
         <div style="display:flex; align-items:center;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
           <div class="flag-pill glass"><span class="fl">🇹🇷</span>→<span class="fl">🇪🇬</span></div>
@@ -326,6 +361,30 @@
     <div id="view-practice" style="display:none;"></div>
     <div id="view-quiz" style="display:none;"></div>
     <div id="view-favorites" style="display:none;"></div>
+
+    <!-- ═══ YENİ ═══ Alt bilgi (footer) — her ekranda görünür, iletişim adresi ve ek kısayollar
+         içerir. / NEW: Footer — visible on every screen, includes the contact address and a few
+         extra shortcuts. -->
+    <footer class="app-footer">
+      <div class="footer-card glass">
+        <div class="footer-logo-row">
+          <span class="logo-mark" style="width:26px; height:26px; font-size:14px; border-radius:8px;">A</span>
+          <span class="kufi">مصراوي</span>
+        </div>
+        <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
+        <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
+        <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
+        <div class="footer-actions">
+          <button class="footer-mini-btn" onclick="shareApp()">🔗 Paylaş</button>
+          <button class="footer-mini-btn" onclick="openGuide()">📖 Okuma Rehberi</button>
+          <button class="footer-mini-btn" onclick="confirmResetProgress()">🗑️ İlerlemeyi Sıfırla</button>
+        </div>
+        <div class="footer-meta">
+          164 kelime & cümle · 12 kategori · v2.0<br>
+          Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 
@@ -336,6 +395,11 @@
   <button class="nav-btn" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
   <button class="nav-btn" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
 </nav>
+
+<!-- ═══ YENİ ═══ Yukarı kaydır çubuğu — sayfa aşağı kaydırıldığında belirir, tıklanınca yumuşak
+     şekilde en üste döner. / NEW: Scroll-to-top button — appears once the page is scrolled down,
+     smoothly scrolls back to the top when tapped. -->
+<button id="scroll-top-btn" onclick="scrollToTop()" title="Yukarı çık" aria-label="Yukarı çık">↑</button>
 
 <div class="modal-overlay" id="guide-modal" onclick="if(event.target===this) closeGuide()">
   <div class="modal-sheet">
@@ -649,6 +713,40 @@ function showToast(msg){
   clearTimeout(_toastTimer);
   requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateX(-50%) translateY(0)'; });
   _toastTimer = setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateX(-50%) translateY(20px)'; }, 3200);
+}
+
+/* ══════════════════════════ YUKARI KAYDIR ÇUBUĞU / SCROLL-TO-TOP ══════════════════════════
+   Sayfa belirli bir miktar aşağı kaydırıldığında sağ altta beliren buton; tıklanınca yumuşakça
+   en üste döner. / A button that appears bottom-right once the page is scrolled down a bit;
+   tapping it smoothly scrolls back to the top. */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+  btn.classList.toggle('show', window.scrollY > 320);
+}, { passive:true });
+function scrollToTop(){ window.scrollTo({ top:0, behavior:'smooth' }); }
+
+/* ══════════════════════════ PAYLAŞ / SHARE ══════════════════════════ */
+async function shareApp(){
+  const shareData = { title: 'مصراوي — Günlük Mısır Arapçası', text: 'Mısır Arapçası kelime ve cümlelerini okunuşuyla öğren:', url: location.href };
+  try {
+    if (navigator.share) { await navigator.share(shareData); return; }
+  } catch(e) { return; }
+  try {
+    await navigator.clipboard.writeText(location.href);
+    showToast('🔗 Bağlantı kopyalandı.');
+  } catch(e) {
+    showToast('🔗 ' + location.href);
+  }
+}
+
+/* ══════════════════════════ İLERLEMEYİ SIFIRLA / RESET PROGRESS ══════════════════════════ */
+function confirmResetProgress(){
+  if (!confirm('Öğrenilenler, favoriler ve sınav skorların silinecek. Emin misin?')) return;
+  STATE = { learned:{}, favorites:{}, lastVisit:STATE.lastVisit, streak:STATE.streak, bestQuiz:0, recentSearches:[] };
+  saveState();
+  showToast('🗑️ İlerleme sıfırlandı.');
+  goHome();
 }
 
 /* ══════════════════════════ SESLİ KOMUT / VOICE INPUT ══════════════════════════ */
