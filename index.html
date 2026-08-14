@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0F6B5C">
+<meta name="theme-color" content="#0B1220">
 <meta name="description" content="Mısır Arapçası (Amiyye) günlük kelime ve cümle rehberi — okunuşuyla, çevrimdışı çalışır.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,294 +11,279 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-apple-180.png">
 <link rel="icon" href="icon-192.png">
-<!-- ═══ YENİ ═══ Arapça yazı tipleri — internetteyken indirilir ve Service Worker tarafından
-     önbelleğe alınır, böylece bir kez yüklendikten sonra çevrimdışıyken de aynı kaliteli görünüm
-     korunur. Eğer hiç internete bağlanmadan ilk kez açılırsa (nadir durum), cihazın kendi sistem
-     Arapça fontuna otomatik döner — asla bozuk/boş görünmez. /
-     ═══ NEW ═══ Arabic web fonts — downloaded while online and cached by the Service Worker, so
-     the same polished look is kept even offline once loaded. If the app is opened for the very
-     first time with no internet at all (rare), it automatically falls back to the device's own
-     system Arabic font — it never looks broken or blank. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>مصراوي — Günlük Mısır Arapçası</title>
 <style>
   :root{
-    --bg:#F7F0E3; --bg-soft:#FBF7EE; --card:#FFFDF8;
-    --ink:#1B3A3A; --ink-soft:#4B6363; --ink-faint:#84948E;
-    --teal:#0F6B5C; --teal-dark:#0A4B41; --teal-tint:#E4EFEA;
-    --gold:#C9A24B; --gold-dark:#A17E30; --gold-tint:#F5EBD2;
-    --rust:#B33A2E; --rust-dark:#8E2C22; --rust-tint:#F3DEDA;
-    --border:#E4D9BE; --border-soft:#EEE5D0;
-    --shadow-sm:0 2px 10px rgba(27,58,58,0.07);
-    --shadow-md:0 10px 28px rgba(27,58,58,0.10);
-    --shadow-lg:0 20px 50px rgba(27,58,58,0.18);
-    --radius-lg:22px; --radius-md:16px; --radius-sm:10px;
-    --nav-h:64px;
+    --bg0:#0B1220; --bg1:#0F1B2E;
+    --glass:rgba(255,255,255,0.055); --glass-hi:rgba(255,255,255,0.10); --glass-border:rgba(255,255,255,0.13);
+    --ink:#F3F6FA; --ink-dim:#9FB0C3; --ink-faint:#66788d;
+    --gold:#E8B33D; --gold-soft:#F6D98A; --gold-glow:rgba(232,179,61,0.35);
+    --red:#E5393B; --red-soft:#FF7B6B; --red-glow:rgba(229,57,59,0.35);
+    --teal:#21C8B0; --teal-soft:#6EE7D8; --teal-glow:rgba(33,200,176,0.30);
+    --radius-lg:26px; --radius-md:18px; --radius-sm:12px;
+    --nav-h:70px;
     --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+    --shadow-card:0 10px 34px rgba(0,0,0,0.32);
+    --shadow-pop:0 20px 60px rgba(0,0,0,0.5);
   }
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; touch-action:manipulation;}
   html,body{height:100%;}
   body{
-    background:var(--bg); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg0); color:var(--ink);
+    font-family:'Manrope',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     font-size:15px; line-height:1.5; overscroll-behavior-y:none; -webkit-font-smoothing:antialiased;
-    background-image:
-      radial-gradient(circle at 8% 4%, rgba(201,162,75,0.10), transparent 40%),
-      radial-gradient(circle at 96% 92%, rgba(15,107,92,0.08), transparent 45%);
-    background-attachment:fixed;
-    padding-top:var(--sat);
+    padding-top:var(--sat); position:relative; min-height:100%;
   }
-  h1,h2,h3,.display{font-weight:800; letter-spacing:-.01em;}
-  /* ── Arapça metin: önce özel Amiri fontu (Service Worker ile önbelleklenir), bulunamazsa
-       cihazın kendi sistem Arapça fontuna döner — her koşulda düzgün görünür. / Arabic text: prefers
-       the custom Amiri font (cached by the Service Worker); falls back to the device's own system
-       Arabic font if unavailable — looks correct either way. ── */
-  .ar{
-    font-family:"Amiri","Noto Naskh Arabic","Geeza Pro","Damascus","Arabic Typesetting",Tahoma,"Segoe UI",sans-serif;
-    direction:rtl; unicode-bidi:isolate;
+  /* ── Sabit atmosferik degrade lekeleri — imza arka plan / Fixed ambient gradient blobs — signature backdrop ── */
+  body::before{
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 620px 460px at 88% -6%, var(--gold-glow), transparent 60%),
+      radial-gradient(ellipse 560px 480px at -10% 18%, var(--red-glow), transparent 60%),
+      radial-gradient(ellipse 700px 560px at 50% 108%, var(--teal-glow), transparent 60%);
+    animation:driftBlobs 26s ease-in-out infinite alternate;
   }
-  .kufi{
-    font-family:"Reem Kufi","Amiri","Noto Naskh Arabic","Geeza Pro","Damascus",Tahoma,sans-serif;
-    direction:rtl; unicode-bidi:isolate;
-  }
-  .lat{direction:ltr; unicode-bidi:isolate; color:var(--teal-dark); font-weight:700; letter-spacing:.01em;}
-  button{font-family:inherit; cursor:pointer;}
-  a{color:inherit;}
-  ::selection{background:var(--gold-tint);}
-  input,button{-webkit-user-select:none;}
-  input{user-select:text;}
+  @keyframes driftBlobs{ 0%{ background-position:0 0,0 0,0 0;} 100%{ background-position:-30px 20px, 25px -15px, 15px 25px;} }
+  @media (prefers-reduced-motion:reduce){ body::before{animation:none;} }
 
-  /* ── 8 köşeli yıldız (rub el hizb) — imza motifi / signature 8-point star motif ── */
+  h1,h2,h3{font-weight:800; letter-spacing:-.01em;}
+  .ar{ font-family:"Amiri","Noto Naskh Arabic","Geeza Pro","Damascus",Tahoma,sans-serif; direction:rtl; unicode-bidi:isolate; }
+  .kufi{ font-family:"Reem Kufi","Amiri","Noto Naskh Arabic","Geeza Pro",Tahoma,sans-serif; direction:rtl; unicode-bidi:isolate; }
+  .lat-pill{
+    direction:ltr; unicode-bidi:isolate; display:inline-flex; align-items:center; gap:5px;
+    font-weight:700; font-size:13.5px; color:#04302A; background:linear-gradient(135deg,var(--teal-soft),var(--teal));
+    padding:5px 13px; border-radius:99px; letter-spacing:.01em;
+  }
+  button{font-family:inherit; cursor:pointer; color:inherit;}
+  a{color:inherit;}
+  ::selection{background:var(--gold); color:#1B1204;}
+  input{color:var(--ink); user-select:text;}
+
   .star8{position:relative; display:inline-block;}
-  .star8::before,.star8::after{content:''; position:absolute; inset:0; border:1.6px solid currentColor;}
+  .star8::before,.star8::after{content:''; position:absolute; inset:0; border:1.7px solid currentColor;}
   .star8::after{transform:rotate(45deg);}
 
-  .pattern-band{
-    background-color:var(--teal);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A24B' stroke-width='1' opacity='0.34'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  /* ═══════════ GLASS bileşenleri / GLASS primitives ═══════════ */
+  .glass{
+    background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:var(--shadow-card);
   }
 
   /* ═══════════ APP SHELL ═══════════ */
-  #app{max-width:1180px; margin:0 auto; min-height:100%; display:flex;}
+  #app{max-width:1180px; margin:0 auto; min-height:100%; display:flex; position:relative; z-index:1;}
   #sidebar{display:none;}
-  #main-col{flex:1; min-width:0; padding-bottom:calc(var(--nav-h) + var(--sab) + 20px);}
+  #main-col{flex:1; min-width:0; padding-bottom:calc(var(--nav-h) + var(--sab) + 28px);}
 
-  .topbar{padding:calc(16px + var(--sat)) 16px 14px; color:#fff; position:relative; overflow:hidden; border-radius:0 0 24px 24px;}
-  .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px; position:relative; z-index:1;}
+  .topbar{padding:calc(16px + var(--sat)) 16px 8px;}
+  .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
   .brand{display:flex; align-items:center; gap:9px;}
-  .brand .star8{width:30px; height:30px; color:var(--gold); flex-shrink:0;}
+  .brand .star8{width:28px; height:28px; color:var(--gold); flex-shrink:0;}
   .brand-text{line-height:1.15;}
-  .brand-text .kufi{font-size:19px; font-weight:700; color:#fff;}
-  .brand-text .sub{font-size:10px; letter-spacing:.07em; color:var(--gold-tint); text-transform:uppercase; font-weight:700;}
-  .offline-pill{
-    display:none; align-items:center; gap:5px; background:rgba(179,58,46,0.9); border-radius:99px;
-    padding:5px 10px; font-size:10.5px; font-weight:800; color:#fff;
+  .brand-text .kufi{font-size:18px; font-weight:700; color:var(--ink);}
+  .brand-text .sub{font-size:9.5px; letter-spacing:.08em; color:var(--ink-faint); text-transform:uppercase; font-weight:700;}
+  .flag-pill{
+    display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim);
   }
+  .flag-pill .fl{font-size:15px;}
+  .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-soft);}
+  .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
   .offline-pill.show{display:flex;}
-  .streak-pill{
-    display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.14);
-    border:1px solid rgba(255,255,255,0.22); border-radius:99px; padding:6px 12px;
-    font-size:12.5px; font-weight:800; color:#fff;
-  }
 
-  .section{padding:16px 16px 4px;}
-  .section-title{
-    font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
-    color:var(--ink-faint); margin-bottom:10px; display:flex; align-items:center; gap:8px;
-  }
-  .section-title .rule{flex:1; height:1px; background:var(--border);}
+  .section{padding:14px 16px 4px; position:relative; z-index:1;}
+  .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
+  .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
 
-  /* ── Çevirmen / Autocomplete arama — ana özellik / Translator search — the star feature ── */
-  .translator-card{
-    background:linear-gradient(155deg,var(--teal),var(--teal-dark)); border-radius:var(--radius-lg);
-    padding:20px 18px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;
-  }
-  .translator-card::after{
-    content:''; position:absolute; inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A24B' stroke-width='1' opacity='0.14'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
-  }
-  .translator-title{color:#fff; font-size:15px; font-weight:800; margin-bottom:3px; position:relative; z-index:1;}
-  .translator-sub{color:rgba(255,255,255,0.72); font-size:12px; margin-bottom:14px; position:relative; z-index:1;}
-  .search-wrap{position:relative; z-index:1;}
+  /* ── Köprü rozeti: 🇹🇷 → 🇪🇬 — imza unsuru / Bridge badge: 🇹🇷 → 🇪🇬 — signature element ── */
+  .bridge-strip{display:flex; align-items:center; justify-content:center; gap:14px; padding:14px 10px 18px;}
+  .bridge-flag{font-size:30px; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.4));}
+  .bridge-route{flex:0 0 auto; display:flex; align-items:center; gap:4px; width:120px; position:relative;}
+  .bridge-line{flex:1; height:2px; background:repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 11px);}
+  .bridge-plane{font-size:15px; transform:rotate(90deg); flex-shrink:0;}
+  .bridge-caption{text-align:center; font-size:11px; color:var(--ink-faint); font-weight:700; margin-top:-8px; margin-bottom:6px; letter-spacing:.02em;}
+
+  /* ── Çevirmen kartı / Translator card ── */
+  .translator-card{padding:20px 18px 18px; position:relative; overflow:hidden;}
+  .translator-title{font-size:16px; font-weight:800; margin-bottom:3px; color:var(--ink);}
+  .translator-sub{color:var(--ink-dim); font-size:12px; margin-bottom:14px;}
+  .search-wrap{position:relative;}
   .search-input-row{position:relative;}
   .search-wrap input{
-    width:100%; border:none; border-radius:14px; padding:15px 46px 15px 16px;
-    font-size:16px; background:#fff; color:var(--ink); font-weight:600; box-shadow:var(--shadow-sm);
+    width:100%; border:1.5px solid var(--glass-border); border-radius:16px; padding:16px 90px 16px 16px;
+    font-size:16px; background:rgba(255,255,255,0.06); color:var(--ink); font-weight:600;
   }
   .search-wrap input::placeholder{color:var(--ink-faint); font-weight:500;}
-  .search-wrap input:focus{outline:3px solid var(--gold);}
-  .search-clear{
-    position:absolute; right:46px; top:50%; transform:translateY(-50%); width:30px; height:30px;
-    border-radius:50%; background:var(--border-soft); border:none; display:none; align-items:center;
-    justify-content:center; font-size:14px; color:var(--ink-soft);
-  }
+  .search-wrap input:focus{outline:none; border-color:var(--gold);}
+  .search-clear{position:absolute; right:46px; top:50%; transform:translateY(-50%); width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; display:none; align-items:center; justify-content:center; font-size:13px; color:var(--ink-dim);}
   .search-clear.show{display:flex;}
-  .mic-btn{
-    position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px;
-    border-radius:50%; background:var(--teal-tint); border:none; display:flex; align-items:center;
-    justify-content:center; font-size:15px; color:var(--teal-dark);
-  }
-  .mic-btn.listening{background:var(--rust); color:#fff; animation:mic-pulse 1.1s ease-in-out infinite;}
-  @keyframes mic-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(179,58,46,0.45);} 50%{ box-shadow:0 0 0 8px rgba(179,58,46,0);} }
+  .mic-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border:none; display:flex; align-items:center; justify-content:center; font-size:14px; color:#04302A;}
+  .mic-btn.listening{background:var(--red); color:#fff; animation:mic-pulse 1.1s ease-in-out infinite;}
+  @keyframes mic-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(229,57,59,0.5);} 50%{ box-shadow:0 0 0 9px rgba(229,57,59,0);} }
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
-  .search-hit{
-    background:#fff; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:12px;
-    box-shadow:var(--shadow-sm); border:none; width:100%; text-align:left;
-  }
-  .search-hit .ar{font-size:21px; color:var(--teal-dark); flex-shrink:0; min-width:70px;}
-  .search-hit .meta{min-width:0; flex:1;}
-  .search-hit .meta .lat{font-size:12px; display:block;}
-  .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink); margin-top:1px;}
-  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:var(--teal-tint); border:none; color:var(--teal-dark); font-size:15px; flex-shrink:0;}
-  .search-empty{padding:16px; text-align:center; color:rgba(255,255,255,0.75); font-size:13px; position:relative; z-index:1;}
-  .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px; position:relative; z-index:1;}
-  .hint-chip{background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.22); color:#fff; border-radius:99px; padding:6px 12px; font-size:12px; font-weight:700;}
+  .search-hit{background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left;}
+  .search-hit .ar{font-size:20px; color:var(--gold-soft); flex-shrink:0; min-width:64px;}
+  .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
+  .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
+  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.08); border:none; color:var(--teal-soft); font-size:14px; flex-shrink:0;}
+  .search-empty{padding:16px; text-align:center; color:var(--ink-faint); font-size:13px;}
+  .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px;}
+  .hint-chip{background:rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--ink-dim); border-radius:99px; padding:6px 12px; font-size:11.5px; font-weight:700;}
 
-  /* ── Hero: Günün Kelimesi ── */
-  .hero-card{
-    background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg);
-    padding:24px 20px; position:relative; overflow:hidden; box-shadow:var(--shadow-md); text-align:center;
-  }
-  .hero-card::before,.hero-card::after{content:''; position:absolute; width:110px; height:110px; border:1.4px solid var(--gold); opacity:.5; top:50%; left:50%; margin:-55px 0 0 -55px;}
-  .hero-card::after{transform:rotate(45deg);}
-  .hero-inner{position:relative; z-index:1;}
-  .hero-eyebrow{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:10px;}
-  .hero-ar{font-size:38px; color:var(--teal-dark); line-height:1.35; margin-bottom:8px;}
-  .hero-lat{font-size:17px; margin-bottom:10px;}
-  .hero-tr{font-size:18px; font-weight:700; margin-bottom:2px;}
-  .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
-  .hero-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap;}
+  /* ── Günün Kelimesi (istiflenmiş) / Word of the Day (stacked) ── */
+  .hero-card{padding:28px 22px; position:relative; overflow:hidden; text-align:center;}
+  .hero-card .glow-orb{position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, var(--gold-glow), transparent 70%); top:-70px; right:-60px; pointer-events:none;}
+  .hero-eyebrow{font-size:10.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; position:relative;}
+  .hero-ar{font-size:44px; color:var(--ink); line-height:1.3; margin-bottom:14px; position:relative; background:linear-gradient(135deg,#fff,var(--gold-soft)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero-lat-row{margin-bottom:14px; position:relative;}
+  .hero-tr{font-size:20px; font-weight:800; margin-bottom:3px; position:relative; color:var(--ink);}
+  .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px; position:relative;}
+  .hero-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; position:relative;}
 
-  .btn{border:none; border-radius:99px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; gap:7px; transition:transform .12s; min-height:44px;}
+  .btn{border:none; border-radius:99px; padding:13px 20px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; gap:7px; transition:transform .12s; min-height:46px;}
   .btn:active{transform:scale(.95);}
-  .btn-teal{background:var(--teal); color:#fff;}
-  .btn-gold{background:var(--gold); color:#fff;}
-  .btn-rust{background:var(--rust); color:#fff;}
-  .btn-ghost{background:var(--teal-tint); color:var(--teal-dark);}
-  .btn-outline{background:transparent; border:1.5px solid var(--border); color:var(--ink-soft);}
-  .btn-lg{padding:15px 24px; font-size:15px;}
+  .btn-primary{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#241902; box-shadow:0 8px 22px var(--gold-glow);}
+  .btn-teal{background:linear-gradient(135deg,var(--teal-soft),var(--teal)); color:#04302A; box-shadow:0 8px 22px var(--teal-glow);}
+  .btn-red{background:linear-gradient(135deg,var(--red-soft),var(--red)); color:#fff; box-shadow:0 8px 22px var(--red-glow);}
+  .btn-glass{background:rgba(255,255,255,0.08); border:1.5px solid var(--glass-border); color:var(--ink);}
+  .btn-lg{padding:16px 26px; font-size:15px;}
   .btn-block{width:100%; justify-content:center;}
   .btn[disabled]{opacity:.4; pointer-events:none;}
 
-  .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:14px;}
-  .stat-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:13px 8px; text-align:center;}
-  .stat-card .num{font-size:22px; font-weight:800; color:var(--teal-dark);}
-  .stat-card .lbl{font-size:10px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin-top:2px;}
+  .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
+  .stat-card{padding:15px 8px; text-align:center;}
+  .stat-card .num{font-size:23px; font-weight:800; color:var(--ink); font-family:'Manrope',sans-serif;}
+  .stat-card .lbl{font-size:9.5px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:3px;}
 
-  .cat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:11px; margin-top:2px;}
-  .cat-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:15px 13px; text-align:left; position:relative; overflow:hidden; box-shadow:var(--shadow-sm); border-left:4px solid var(--cat-color,var(--teal)); min-height:44px;}
-  .cat-card .mark{font-size:20px; color:var(--cat-color,var(--teal)); margin-bottom:8px; display:block;}
-  .cat-card .name{font-weight:800; font-size:14px; color:var(--ink); margin-bottom:2px;}
-  .cat-card .en{font-size:10.5px; color:var(--ink-faint); margin-bottom:9px;}
-  .cat-card .prog-track{background:var(--border-soft); border-radius:99px; height:6px; overflow:hidden;}
-  .cat-card .prog-fill{height:100%; background:var(--cat-color,var(--teal)); border-radius:99px;}
-  .cat-card .prog-txt{font-size:10px; color:var(--ink-faint); margin-top:5px; font-weight:600;}
+  /* ── Kategori kartları: canlı degrade fayanslar / Category tiles: vivid gradient tiles ── */
+  .cat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:2px;}
+  .cat-card{
+    background:linear-gradient(150deg, var(--c1), var(--c2)); border-radius:var(--radius-md);
+    padding:16px 14px; text-align:left; position:relative; overflow:hidden; border:none;
+    box-shadow:0 10px 24px rgba(0,0,0,0.28); min-height:128px; display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .cat-card::after{content:''; position:absolute; inset:0; background:radial-gradient(circle at 90% -10%, rgba(255,255,255,0.28), transparent 55%);}
+  .cat-card .mark{font-size:21px; color:#fff; opacity:.92; position:relative;}
+  .cat-card .name{font-weight:800; font-size:14.5px; color:#fff; margin-top:8px; position:relative;}
+  .cat-card .en{font-size:10.5px; color:rgba(255,255,255,0.78); margin-bottom:9px; position:relative;}
+  .cat-card .prog-track{background:rgba(0,0,0,0.25); border-radius:99px; height:6px; overflow:hidden; position:relative;}
+  .cat-card .prog-fill{height:100%; background:#fff; border-radius:99px;}
+  .cat-card .prog-txt{font-size:10px; color:rgba(255,255,255,0.85); margin-top:5px; font-weight:700; position:relative;}
 
-  .guide-link{display:flex; align-items:center; gap:10px; background:var(--gold-tint); border:1.5px solid var(--gold); border-radius:var(--radius-md); padding:13px 15px; font-size:12.5px; font-weight:700; color:var(--gold-dark); width:100%; text-align:left; min-height:44px;}
+  .guide-link{display:flex; align-items:center; gap:10px; padding:14px 16px; font-size:12.5px; font-weight:700; color:var(--gold-soft); width:100%; text-align:left; min-height:46px; border:1px solid var(--glass-border); border-radius:var(--radius-md); background:rgba(232,179,61,0.08);}
   .guide-link .ic{font-size:18px;}
 
-  .word-list{display:flex; flex-direction:column; gap:9px; padding:0 16px 20px;}
-  .word-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:14px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);}
-  .word-card.learned{border-color:var(--teal); background:var(--teal-tint);}
-  .word-main{flex:1; min-width:0;}
-  .word-main .ar{font-size:22px; color:var(--teal-dark); display:block; margin-bottom:3px;}
-  .word-main .lat{font-size:13.5px; display:block;}
-  .word-main .tr{font-size:14px; font-weight:700; margin-top:5px;}
-  .word-main .en{font-size:11px; color:var(--ink-faint);}
-  .word-actions{display:flex; flex-direction:column; gap:7px; align-items:center; flex-shrink:0;}
-  .icon-btn{width:40px; height:40px; border-radius:50%; border:1.5px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink-soft);}
-  .icon-btn.on{background:var(--gold); border-color:var(--gold); color:#fff;}
-  .icon-btn.learned-on{background:var(--teal); border-color:var(--teal); color:#fff;}
+  /* ── Kelime kartları: dikey istif (Arapça / okunuş / anlam alt alta) / Word cards: vertical stack ── */
+  .word-list{display:flex; flex-direction:column; gap:11px; padding:0 16px 20px; position:relative; z-index:1;}
+  .word-card{padding:18px; position:relative; overflow:hidden;}
+  .word-card.learned{border-color:var(--teal);}
+  .word-card.learned::before{content:'✓ ÖĞRENİLDİ'; position:absolute; top:12px; right:14px; font-size:9px; font-weight:800; letter-spacing:.05em; color:var(--teal-soft);}
+  .word-stack{display:flex; flex-direction:column; align-items:flex-start; gap:9px;}
+  .word-stack .ar{font-size:25px; color:var(--ink);}
+  .word-stack .tr{font-size:14.5px; font-weight:800; color:var(--ink); margin-top:2px;}
+  .word-stack .en{font-size:11.5px; color:var(--ink-faint);}
+  .word-actions-row{display:flex; gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border);}
+  .icon-btn{width:40px; height:40px; border-radius:50%; border:1px solid var(--glass-border); background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--ink-dim);}
+  .icon-btn.on{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); border-color:transparent; color:#241902;}
+  .icon-btn.learned-on{background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border-color:transparent; color:#04302A;}
+  .icon-btn.grow{flex:1; border-radius:14px; gap:6px; font-size:12.5px; font-weight:700;}
 
-  /* ── Pratik / flashcard (kaydırma destekli) / Practice flashcard (swipe-enabled) ── */
-  .practice-wrap{padding:16px; display:flex; flex-direction:column; align-items:center;}
-  .dots{display:flex; gap:5px; margin-bottom:16px;}
-  .dot{width:7px; height:7px; border-radius:50%; background:var(--border);}
+  /* ── Pratik / flashcard (kaydırmalı) ── */
+  .practice-wrap{padding:16px; display:flex; flex-direction:column; align-items:center; position:relative; z-index:1;}
+  .dots{display:flex; gap:5px; margin-bottom:18px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--glass-border);}
   .dot.done{background:var(--teal);}
-  .dot.now{background:var(--gold); width:16px; border-radius:99px;}
-  .flash-stage{width:100%; max-width:400px; position:relative; min-height:290px;}
+  .dot.now{background:var(--gold); width:18px; border-radius:99px;}
+  .flash-stage{width:100%; max-width:400px; position:relative; min-height:300px;}
   .flash{
-    width:100%; min-height:290px; background:var(--card); border:1.5px solid var(--border);
-    border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); display:flex; flex-direction:column;
-    align-items:center; justify-content:center; text-align:center; padding:30px 22px; position:relative;
-    touch-action:pan-y; user-select:none; will-change:transform;
+    width:100%; min-height:300px; border-radius:var(--radius-lg); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:32px 24px; position:relative;
+    touch-action:pan-y; user-select:none; will-change:transform; overflow:hidden;
   }
-  .flash-face-a .ar{font-size:42px; color:var(--teal-dark); margin-bottom:10px;}
-  .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:16px; font-weight:600;}
+  .flash::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(232,179,61,0.14), transparent 55%);}
+  .flash-face-a .ar{font-size:46px; color:var(--ink); margin-bottom:14px; position:relative;}
+  .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:18px; font-weight:600; position:relative;}
   .flash-face-b{display:none;}
   .flash.flipped .flash-face-a{display:none;}
-  .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center;}
-  .flash-face-b .tr{font-size:21px; font-weight:800; margin-bottom:4px;}
-  .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:10px;}
-  .flash-face-b .lat{font-size:15px; margin-bottom:14px;}
-  .flash-cat-tag{position:absolute; top:14px; left:14px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-dark); background:var(--gold-tint); padding:4px 9px; border-radius:99px;}
-  .flash-swipe-badge{position:absolute; top:16px; padding:6px 14px; border-radius:99px; font-size:12px; font-weight:900; text-transform:uppercase; opacity:0; transform:scale(.8); pointer-events:none; letter-spacing:.03em;}
-  .flash-swipe-badge.left{right:16px; background:var(--rust); color:#fff;}
-  .flash-swipe-badge.right{left:16px; background:var(--teal); color:#fff;}
-  .practice-actions{display:flex; gap:10px; margin-top:20px; width:100%; max-width:400px;}
+  .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center; gap:11px; position:relative;}
+  .flash-face-b .tr{font-size:22px; font-weight:800; color:var(--ink);}
+  .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:6px;}
+  .flash-cat-tag{position:absolute; top:16px; left:16px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-soft); background:rgba(232,179,61,0.14); padding:5px 10px; border-radius:99px; z-index:2;}
+  .flash-swipe-badge{position:absolute; top:18px; padding:7px 15px; border-radius:99px; font-size:12px; font-weight:900; text-transform:uppercase; opacity:0; transform:scale(.8); pointer-events:none; letter-spacing:.03em; z-index:2;}
+  .flash-swipe-badge.left{right:18px; background:var(--red); color:#fff;}
+  .flash-swipe-badge.right{left:18px; background:var(--teal); color:#04302A;}
+  .practice-actions{display:flex; gap:10px; margin-top:22px; width:100%; max-width:400px;}
   .practice-actions .btn{flex:1;}
-  .swipe-tip{font-size:11px; color:var(--ink-faint); margin-top:10px; font-weight:600; display:flex; align-items:center; gap:6px;}
-  .practice-summary{text-align:center; padding:36px 20px;}
-  .practice-summary .big{font-size:52px; margin-bottom:14px;}
+  .swipe-tip{font-size:11px; color:var(--ink-faint); margin-top:12px; font-weight:600;}
+  .practice-summary{text-align:center; padding:38px 22px; position:relative; z-index:1;}
+  .practice-summary .big{font-size:54px; margin-bottom:16px;}
 
-  .quiz-wrap{padding:16px; max-width:460px; margin:0 auto;}
-  .quiz-q{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:24px 20px; text-align:center; box-shadow:var(--shadow-md); margin-bottom:16px;}
-  .quiz-q .ar{font-size:36px; color:var(--teal-dark); margin-bottom:6px;}
-  .quiz-opts{display:flex; flex-direction:column; gap:9px;}
-  .quiz-opt{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:15px 16px; text-align:left; font-size:14.5px; font-weight:600; color:var(--ink); min-height:44px;}
-  .quiz-opt.correct{background:var(--teal-tint); border-color:var(--teal); color:var(--teal-dark);}
-  .quiz-opt.wrong{background:var(--rust-tint); border-color:var(--rust); color:var(--rust-dark);}
-  .quiz-progress{font-size:12px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:10px;}
-  .quiz-result{text-align:center; padding:18px;}
-  .quiz-result .stars{font-size:32px; letter-spacing:6px; margin:12px 0;}
-  .quiz-result .score{font-size:44px; font-weight:900; color:var(--teal-dark);}
+  /* ── Sınav / Quiz ── */
+  .quiz-wrap{padding:16px; max-width:460px; margin:0 auto; position:relative; z-index:1;}
+  .quiz-q{padding:26px 22px; text-align:center; margin-bottom:16px;}
+  .quiz-q .ar{font-size:38px; color:var(--ink); margin-bottom:12px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:10px;}
+  .quiz-opt{background:rgba(255,255,255,0.05); border:1.5px solid var(--glass-border); border-radius:var(--radius-md); padding:16px 18px; text-align:left; font-size:14.5px; font-weight:700; color:var(--ink); min-height:46px;}
+  .quiz-opt.correct{background:rgba(33,200,176,0.18); border-color:var(--teal); color:var(--teal-soft);}
+  .quiz-opt.wrong{background:rgba(229,57,59,0.18); border-color:var(--red); color:var(--red-soft);}
+  .quiz-progress{font-size:12px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:12px;}
+  .quiz-result{text-align:center; padding:22px;}
+  .quiz-result .stars{font-size:34px; letter-spacing:8px; margin:14px 0; color:var(--gold);}
+  .quiz-result .score{font-size:46px; font-weight:800; background:linear-gradient(135deg,#fff,var(--gold-soft)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
 
-  .empty-state{padding:44px 22px; text-align:center; color:var(--ink-faint);}
-  .empty-state .glyph{font-size:38px; margin-bottom:12px; color:var(--gold);}
+  .empty-state{padding:48px 22px; text-align:center; color:var(--ink-faint); position:relative; z-index:1;}
+  .empty-state .glyph{font-size:40px; margin-bottom:12px;}
 
-  .back-row{padding:14px 16px 0; display:flex; align-items:center; gap:10px;}
-  .back-btn{width:40px; height:40px; border-radius:50%; background:var(--card); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:16px;}
-  .cat-header{padding:14px 16px 4px;}
-  .cat-header .kufi{font-size:22px; color:var(--teal-dark);}
-  .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:2px;}
+  .back-row{padding:16px 16px 0; display:flex; align-items:center; gap:10px; position:relative; z-index:1;}
+  .back-btn{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink);}
+  .cat-header{padding:16px 16px 4px; position:relative; z-index:1;}
+  .cat-header .kufi{font-size:23px; color:var(--ink);}
+  .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:3px;}
 
-  /* ── Okuma Rehberi modal / Reading guide modal ── */
-  .modal-overlay{position:fixed; inset:0; background:rgba(20,30,30,0.55); z-index:100; display:none; align-items:flex-end; justify-content:center;}
+  /* ── Okuma Rehberi modal ── */
+  .modal-overlay{position:fixed; inset:0; background:rgba(4,8,16,0.68); z-index:100; display:none; align-items:flex-end; justify-content:center;}
   .modal-overlay.open{display:flex;}
-  .modal-sheet{background:var(--bg-soft); width:100%; max-width:520px; max-height:82vh; overflow-y:auto; border-radius:24px 24px 0 0; padding:20px 20px calc(20px + var(--sab)); box-shadow:var(--shadow-lg);}
-  @media (min-width:640px){ .modal-overlay{align-items:center;} .modal-sheet{border-radius:24px; max-height:80vh;} }
-  .modal-handle{width:40px; height:4px; background:var(--border); border-radius:99px; margin:0 auto 16px;}
-  .modal-title{font-size:17px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px;}
+  .modal-sheet{background:var(--bg1); border:1px solid var(--glass-border); width:100%; max-width:520px; max-height:82vh; overflow-y:auto; border-radius:26px 26px 0 0; padding:22px 20px calc(20px + var(--sab));}
+  @media (min-width:640px){ .modal-overlay{align-items:center;} .modal-sheet{border-radius:26px; max-height:80vh;} }
+  .modal-handle{width:40px; height:4px; background:var(--glass-border); border-radius:99px; margin:0 auto 18px;}
+  .modal-title{font-size:17px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; color:var(--ink);}
   .modal-sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
-  .guide-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-soft);}
-  .guide-row .gsym{width:44px; height:44px; border-radius:12px; background:var(--teal-tint); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;}
-  .guide-row .gtxt{font-size:13px; color:var(--ink-soft);}
-  .modal-close-btn{width:100%; margin-top:16px;}
+  .guide-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--glass-border);}
+  .guide-row .gsym{width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); color:#04302A; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;}
+  .guide-row .gtxt{font-size:13px; color:var(--ink-dim);}
+  .modal-close-btn{width:100%; margin-top:18px;}
 
-  #bottom-nav{position:fixed; bottom:0; left:0; right:0; height:calc(var(--nav-h) + var(--sab)); background:var(--card); border-top:1.5px solid var(--border); display:flex; z-index:50; box-shadow:0 -6px 20px rgba(27,58,58,0.08); padding-bottom:var(--sab);}
-  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:none; border:none; color:var(--ink-faint); font-size:10px; font-weight:700; min-height:44px;}
+  /* ── Yüzen dock alt gezinme / Floating dock bottom nav ── */
+  #bottom-nav{
+    position:fixed; bottom:calc(14px + var(--sab)); left:16px; right:16px; height:var(--nav-h);
+    background:rgba(15,23,38,0.72); border:1px solid var(--glass-border); border-radius:26px; display:flex; z-index:50;
+    backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%);
+    box-shadow:var(--shadow-pop); max-width:520px; margin:0 auto;
+  }
+  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--ink-faint); font-size:9.5px; font-weight:700; min-height:44px; margin:8px 5px; border-radius:18px;}
   .nav-btn .ic{font-size:19px;}
-  .nav-btn.active{color:var(--teal);}
+  .nav-btn.active{color:#241902; background:linear-gradient(135deg,var(--gold-soft),var(--gold));}
 
   @media (min-width:901px){
     body{padding:24px 0;}
     #app{gap:26px; align-items:flex-start;}
-    #sidebar{display:flex; flex-direction:column; width:230px; flex-shrink:0; background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:22px 16px; box-shadow:var(--shadow-md); position:sticky; top:24px; gap:4px;}
-    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--border-soft); margin-bottom:14px;}
-    .side-brand .star8{width:28px; height:28px; color:var(--teal);}
-    .side-brand .kufi{font-size:17px; color:var(--teal-dark);}
+    #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
+    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--glass-border); margin-bottom:14px;}
+    .side-brand .star8{width:28px; height:28px; color:var(--gold);}
+    .side-brand .kufi{font-size:17px; color:var(--ink);}
     .side-brand .sub{font-size:9px; color:var(--ink-faint); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
-    .side-link{display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:12px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-soft); text-align:left; width:100%;}
+    .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 0 16px; font-size:22px;}
+    .side-link{display:flex; align-items:center; gap:12px; padding:12px 13px; border-radius:14px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-dim); text-align:left; width:100%;}
     .side-link .ic{font-size:17px; width:20px; text-align:center;}
-    .side-link.active{background:var(--teal-tint); color:var(--teal-dark);}
-    .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:12px;}
-    #main-col{padding-bottom:24px; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); background:var(--bg-soft);}
+    .side-link.active{background:linear-gradient(135deg,rgba(232,179,61,0.18),rgba(232,179,61,0.06)); color:var(--gold-soft);}
+    .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
+    #main-col{padding-bottom:24px;}
     #bottom-nav{display:none;}
-    .topbar{border-radius:0; padding-top:16px;}
     .cat-grid{grid-template-columns:repeat(3,1fr);}
-    .hero-ar{font-size:48px;}
+    .hero-ar{font-size:52px;}
+    .bridge-route{width:180px;}
   }
   @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important;} }
 </style>
@@ -306,11 +291,12 @@
 <body>
 
 <div id="app">
-  <nav id="sidebar">
+  <nav id="sidebar" class="glass">
     <div class="side-brand">
       <span class="star8"></span>
       <div><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
     </div>
+    <div class="side-flags">🇹🇷 <span style="color:var(--gold); font-size:14px;">✦</span> 🇪🇬</div>
     <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
     <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
     <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span> Alıştırma</button>
@@ -320,15 +306,17 @@
   </nav>
 
   <div id="main-col">
-    <header class="topbar pattern-band">
+    <header class="topbar">
       <div class="topbar-row">
         <div class="brand">
           <span class="star8"></span>
           <div class="brand-text"><div class="kufi">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
-          <div class="streak-pill"><span>🔥</span> <span id="streak-txt">0</span></div>
+          <div class="flag-pill glass"><span class="fl">🇹🇷</span>→<span class="fl">🇪🇬</span></div>
+          <div style="width:8px;"></div>
+          <div class="streak-pill glass"><span>🔥</span> <span id="streak-txt">0</span></div>
         </div>
       </div>
     </header>
@@ -360,23 +348,20 @@
 </div>
 
 <script>
-/* ══════════════════════════ VERİ: MISIR ARAPÇASI (AMİYYE) ══════════════════════════
-   DATA: EGYPTIAN ARABIC (colloquial / Masri). Okunuş = sade, Türkçe konuşana göre fonetik
-   Latin transkripsiyon (akademik IPA değil — kolay okumak için). Her öğe:
-   ar (Arapça), lat (okunuş), tr (Türkçe anlam), en (İngilizce anlam). */
+/* ══════════════════════════ VERİ: MISIR ARAPÇASI (AMİYYE) ══════════════════════════ */
 const CATS = [
-  { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', color:'#0F6B5C' },
-  { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', color:'#C9A24B' },
-  { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', color:'#B33A2E' },
-  { id:'family',     ar:'العيلة',     tr:'Aile',                 en:'Family',              mark:'⌂', color:'#0F6B5C' },
-  { id:'time',       ar:'الوقت',      tr:'Zaman',                en:'Time',                mark:'◔', color:'#C9A24B' },
-  { id:'food',       ar:'الأكل',      tr:'Yiyecek & İçecek',     en:'Food & Drink',        mark:'❋', color:'#B33A2E' },
-  { id:'colors',     ar:'الألوان',    tr:'Renkler',              en:'Colors',              mark:'✦', color:'#0F6B5C' },
-  { id:'shopping',   ar:'التسوق',     tr:'Alışveriş',            en:'Shopping',            mark:'⚖', color:'#C9A24B' },
-  { id:'directions', ar:'الاتجاهات',  tr:'Yön Tarifi',           en:'Directions',          mark:'⟐', color:'#B33A2E' },
-  { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', color:'#0F6B5C' },
-  { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', color:'#C9A24B' },
-  { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', color:'#B33A2E' },
+  { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', c1:'#21C8B0', c2:'#0B7F6E' },
+  { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', c1:'#8B5CF6', c2:'#4C3AA8' },
+  { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', c1:'#E5393B', c2:'#8E1B1B' },
+  { id:'family',     ar:'العيلة',     tr:'Aile',                 en:'Family',              mark:'⌂', c1:'#E8B33D', c2:'#B9791A' },
+  { id:'time',       ar:'الوقت',      tr:'Zaman',                en:'Time',                mark:'◔', c1:'#38BDF8', c2:'#1D4ED8' },
+  { id:'food',       ar:'الأكل',      tr:'Yiyecek & İçecek',     en:'Food & Drink',        mark:'❋', c1:'#FB923C', c2:'#DC2626' },
+  { id:'colors',     ar:'الألوان',    tr:'Renkler',              en:'Colors',              mark:'✦', c1:'#F472B6', c2:'#C026D3' },
+  { id:'shopping',   ar:'التسوق',     tr:'Alışveriş',            en:'Shopping',            mark:'⚖', c1:'#34D399', c2:'#0D9488' },
+  { id:'directions', ar:'الاتجاهات',  tr:'Yön Tarifi',           en:'Directions',          mark:'⟐', c1:'#22D3EE', c2:'#2563EB' },
+  { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', c1:'#FB7185', c2:'#E11D48' },
+  { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', c1:'#FBBF24', c2:'#EA580C' },
+  { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', c1:'#A3E635', c2:'#16A34A' },
 ];
 
 const WORDS = {
@@ -586,9 +571,14 @@ function wordById(id){ const [cat, idx] = id.split('-'); return (WORDS[cat] || [
 function allWords(){ return CATS.flatMap(c => WORDS[c.id]); }
 
 /* ══════════════════════════ DURUM / STATE (localStorage) ══════════════════════════ */
-const STORE_KEY = 'masrawy_v1';
+const STORE_KEY = 'masrawy_v2';
 function loadState(){
-  try { const raw = localStorage.getItem(STORE_KEY); if (raw) return JSON.parse(raw); } catch(e) {}
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) return JSON.parse(raw);
+    const old = localStorage.getItem('masrawy_v1');
+    if (old) return JSON.parse(old);
+  } catch(e) {}
   return { learned:{}, favorites:{}, lastVisit:null, streak:0, bestQuiz:0, recentSearches:[] };
 }
 let STATE = loadState();
@@ -613,16 +603,7 @@ function isFavorite(id){ return !!STATE.favorites[id]; }
 function catLearnedCount(catId){ return WORDS[catId].filter(w => isLearned(w.id)).length; }
 function totalLearnedCount(){ return allWords().filter(w => isLearned(w.id)).length; }
 
-/* ══════════════════════════ SESLENDİRME / SPEECH ══════════════════════════
-   Tarayıcılar bazen ses listesini (getVoices) ASENKRON yükler — sayfa yeni açıldığında
-   liste boş dönebilir ve önceki sürümde bu durumda "sessizce" hiçbir şey olmuyordu. Şimdi
-   liste boşsa kısa süre bekleyip (voiceschanged olayını dinleyerek) tekrar deniyoruz, yine
-   de bulunamazsa kullanıcıya görünür bir uyarı gösteriyoruz — tamamen sessiz kalmıyor. /
-   Browsers sometimes load the voice list (getVoices) ASYNCHRONOUSLY — on a fresh page load
-   the list can come back empty, and the previous version silently did nothing in that case.
-   Now, if the list is empty, we wait briefly (listening for the voiceschanged event) and
-   retry; if still nothing is found, we show a visible toast to the user instead of staying
-   silent. */
+/* ══════════════════════════ SESLENDİRME / SPEECH ══════════════════════════ */
 let _voicesReadyPromise = null;
 function waitForVoices(){
   if (_voicesReadyPromise) return _voicesReadyPromise;
@@ -633,7 +614,7 @@ function waitForVoices(){
     let done = false;
     const finish = () => { if (done) return; done = true; resolve(window.speechSynthesis.getVoices()); };
     window.speechSynthesis.onvoiceschanged = finish;
-    setTimeout(finish, 700); // bazı taraycılar hiç 'voiceschanged' tetiklemiyor / some browsers never fire 'voiceschanged'
+    setTimeout(finish, 700);
   });
   return _voicesReadyPromise;
 }
@@ -647,32 +628,21 @@ async function speak(text){
     const egVoice = voices.find(v => v.lang && v.lang.toLowerCase() === 'ar-eg');
     const anyArVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
     const chosen = egVoice || anyArVoice;
-    if (chosen) { u.voice = chosen; u.lang = chosen.lang; }
-    else { u.lang = 'ar'; }
-    if (!chosen && !voices.length) {
-      // ═══ Bu cihazda HİÇ ses motoru yüklenmemiş — muhtemelen çevrimdışı ilk açılış ya da
-      // cihazda Arapça ses paketi kurulu değil. Sessizce başarısız olmak yerine açıkça söylüyoruz. /
-      // No voice engine loaded on this device at all — likely first offline load, or no Arabic
-      // voice pack installed. Instead of silently failing, we say so explicitly.
-      showToast('🔇 Ses motoru yüklenemedi. İnternete bağlıyken bir kez açman yeterli.');
-      return;
-    }
-    if (!chosen) {
-      showToast('ℹ️ Cihazında özel Mısır Arapçası sesi yok — genel Arapça sesle okunuyor.');
-    }
+    if (chosen) { u.voice = chosen; u.lang = chosen.lang; } else { u.lang = 'ar'; }
+    if (!chosen && !voices.length) { showToast('🔇 Ses motoru yüklenemedi. İnternete bağlıyken bir kez açman yeterli.'); return; }
+    if (!chosen) { showToast('ℹ️ Cihazında özel Mısır Arapçası sesi yok — genel Arapça sesle okunuyor.'); }
     window.speechSynthesis.speak(u);
   } catch(e) { showToast('🔇 Ses çalınamadı.'); }
 }
 function esc(s){ return String(s).replace(/'/g, "\\'").replace(/"/g,'&quot;'); }
 
-/* ── Küçük bilgi baloncuğu (toast) — sessiz başarısızlıklar yerine görünür geri bildirim / Small toast — visible feedback instead of silent failures ── */
 let _toastTimer = null;
 function showToast(msg){
   let el = document.getElementById('app-toast');
   if (!el) {
     el = document.createElement('div');
     el.id = 'app-toast';
-    el.style.cssText = 'position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--sab) + 16px); transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:12px 18px; border-radius:99px; font-size:13px; font-weight:700; box-shadow:var(--shadow-lg); z-index:200; max-width:88vw; text-align:center; opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;';
+    el.style.cssText = 'position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--sab) + 30px); transform:translateX(-50%) translateY(20px); background:rgba(15,23,38,0.94); border:1px solid var(--glass-border); color:#fff; padding:12px 18px; border-radius:99px; font-size:13px; font-weight:700; box-shadow:var(--shadow-pop); z-index:200; max-width:88vw; text-align:center; opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;';
     document.body.appendChild(el);
   }
   el.textContent = msg;
@@ -681,15 +651,7 @@ function showToast(msg){
   _toastTimer = setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateX(-50%) translateY(20px)'; }, 3200);
 }
 
-/* ══════════════════════════ SESLİ KOMUT / VOICE INPUT (arama kutusu) ══════════════════════════
-   Not: Konuşmayı metne çevirme (SpeechRecognition), telefonun kendi ses tanıma motorunu kullanır;
-   Chrome/Android'de genellikle İNTERNET GEREKTİRİR (Safari/iOS'ta cihaz üzerinde çalışabilir).
-   Çevrimdışıyken mikrofon çalışmayabilir — bu normaldir, dinle/okuma/alıştırma/sınav gibi asıl
-   öğrenme özellikleri yine tam çevrimdışı çalışır. /
-   Note: Speech-to-text (SpeechRecognition) uses the phone's own recognition engine; on
-   Chrome/Android it usually REQUIRES INTERNET (on Safari/iOS it can run on-device). The mic may
-   not work while offline — that's expected; the core learning features (listen/practice/quiz)
-   still work fully offline. */
+/* ══════════════════════════ SESLİ KOMUT / VOICE INPUT ══════════════════════════ */
 const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
 let _recognizer = null, _listening = false;
 function micSupported(){ return !!SpeechRecognitionAPI; }
@@ -720,7 +682,7 @@ function stopVoiceSearch(){
   try { if (_recognizer) _recognizer.stop(); } catch(e) {}
 }
 
-/* ══════════════════════════ GÖRÜNÜM GEÇİŞİ / VIEW SWITCHING ══════════════════════════ */
+/* ══════════════════════════ GÖRÜNÜM GEÇİŞİ ══════════════════════════ */
 const VIEWS = ['home','category','practice','quiz','favorites'];
 function showView(name){
   VIEWS.forEach(v => { const el = document.getElementById('view-' + v); if (el) el.style.display = (v === name) ? '' : 'none'; });
@@ -730,16 +692,13 @@ function showView(name){
   window.scrollTo(0,0);
 }
 
-/* ══════════════════════════ OKUMA REHBERİ / READING GUIDE ══════════════════════════ */
 function openGuide(){
-  document.getElementById('guide-rows').innerHTML = READING_GUIDE.map(g => `
-    <div class="guide-row"><div class="gsym">${g.sym}</div><div class="gtxt">${g.txt}</div></div>
-  `).join('');
+  document.getElementById('guide-rows').innerHTML = READING_GUIDE.map(g => `<div class="guide-row"><div class="gsym">${g.sym}</div><div class="gtxt">${g.txt}</div></div>`).join('');
   document.getElementById('guide-modal').classList.add('open');
 }
 function closeGuide(){ document.getElementById('guide-modal').classList.remove('open'); }
 
-/* ══════════════════════════ ANA SAYFA / HOME ══════════════════════════ */
+/* ══════════════════════════ ANA SAYFA ══════════════════════════ */
 function dailyWord(){
   const words = allWords();
   const dayIdx = Math.floor(Date.now() / 86400000);
@@ -751,14 +710,20 @@ function renderHome(){
   const favTotal = Object.values(STATE.favorites).filter(Boolean).length;
   const totalWords = allWords().length;
   document.getElementById('view-home').innerHTML = `
+    <div class="bridge-strip">
+      <span class="bridge-flag">🇹🇷</span>
+      <div class="bridge-route"><div class="bridge-line"></div><span class="bridge-plane">✈</span><div class="bridge-line"></div></div>
+      <span class="bridge-flag">🇪🇬</span>
+    </div>
+    <div class="bridge-caption">İstanbul'dan Kahire'ye — günlük Mısır Arapçası</div>
     <div class="section">
-      <div class="translator-card">
+      <div class="translator-card glass">
         <div class="translator-title">🗣️ Ne demek istiyorsun?</div>
-        <div class="translator-sub">Türkçe yaz, Mısır Arapçası karşılığını ve okunuşunu bul</div>
+        <div class="translator-sub">Türkçe yaz ya da söyle, Mısır Arapçası karşılığını ve okunuşunu bul</div>
         <div class="search-wrap">
           <div class="search-input-row">
             <input id="search-input" type="text" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false"
-              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)" style="padding-inline-end:88px;">
+              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)">
             <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
             <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="Sesli ara">🎙️</button>
           </div>
@@ -768,23 +733,22 @@ function renderHome(){
       </div>
     </div>
     <div class="section">
-      <div class="hero-card">
-        <div class="hero-inner">
-          <div class="hero-eyebrow">✦ Günün Kelimesi ✦</div>
-          <div class="hero-ar ar">${w.ar}</div>
-          <div class="hero-lat lat">${w.lat}</div>
-          <div class="hero-tr">${w.tr}</div>
-          <div class="hero-en">${w.en}</div>
-          <div class="hero-actions">
-            <button class="btn btn-teal" onclick="speak('${esc(w.ar)}')">🔊 Dinle</button>
-            <button class="btn ${isFavorite(w.id) ? 'btn-gold' : 'btn-outline'}" onclick="toggleFavorite('${w.id}'); renderHome();">⭐ ${isFavorite(w.id) ? 'Favorilerde' : 'Favorile'}</button>
-          </div>
+      <div class="hero-card glass">
+        <div class="glow-orb"></div>
+        <div class="hero-eyebrow">✦ GÜNÜN KELİMESİ ✦</div>
+        <div class="hero-ar ar">${w.ar}</div>
+        <div class="hero-lat-row"><span class="lat-pill">🔊 ${w.lat}</span></div>
+        <div class="hero-tr">${w.tr}</div>
+        <div class="hero-en">${w.en}</div>
+        <div class="hero-actions">
+          <button class="btn btn-teal" onclick="speak('${esc(w.ar)}')">🔊 Dinle</button>
+          <button class="btn ${isFavorite(w.id) ? 'btn-primary' : 'btn-glass'}" onclick="toggleFavorite('${w.id}'); renderHome();">⭐ ${isFavorite(w.id) ? 'Favorilerde' : 'Favorile'}</button>
         </div>
       </div>
       <div class="stats-row">
-        <div class="stat-card"><div class="num">${learnedTotal}</div><div class="lbl">Öğrenilen</div></div>
-        <div class="stat-card"><div class="num">${totalWords}</div><div class="lbl">Toplam</div></div>
-        <div class="stat-card"><div class="num">${favTotal}</div><div class="lbl">Favori</div></div>
+        <div class="stat-card glass"><div class="num">${learnedTotal}</div><div class="lbl">Öğrenilen</div></div>
+        <div class="stat-card glass"><div class="num">${totalWords}</div><div class="lbl">Toplam</div></div>
+        <div class="stat-card glass"><div class="num">${favTotal}</div><div class="lbl">Favori</div></div>
       </div>
     </div>
     <div class="section">
@@ -793,8 +757,8 @@ function renderHome(){
     <div class="section">
       <div class="section-title"><span>Hızlı Başla</span><span class="rule"></span></div>
       <div style="display:flex; gap:9px; flex-wrap:wrap;">
-        <button class="btn btn-teal btn-lg" style="flex:1;" onclick="startPractice()">🔄 Alıştırma Yap</button>
-        <button class="btn btn-gold btn-lg" style="flex:1;" onclick="startQuiz()">📝 Sınav Ol</button>
+        <button class="btn btn-primary btn-lg" style="flex:1;" onclick="startPractice()">🔄 Alıştırma Yap</button>
+        <button class="btn btn-red btn-lg" style="flex:1;" onclick="startQuiz()">📝 Sınav Ol</button>
       </div>
     </div>
     <div class="section">
@@ -812,12 +776,11 @@ function catGridHtml(){
       const total = WORDS[c.id].length;
       const learned = catLearnedCount(c.id);
       const pct = total ? Math.round((learned/total)*100) : 0;
-      return `<button class="cat-card" style="--cat-color:${c.color};" onclick="openCategory('${c.id}')">
+      return `<button class="cat-card" style="--c1:${c.c1}; --c2:${c.c2};" onclick="openCategory('${c.id}')">
         <span class="mark">${c.mark}</span>
-        <div class="name">${c.tr}</div>
-        <div class="en">${c.en}</div>
-        <div class="prog-track"><div class="prog-fill" style="width:${pct}%;"></div></div>
-        <div class="prog-txt">${learned}/${total} öğrenildi</div>
+        <div><div class="name">${c.tr}</div><div class="en">${c.en}</div></div>
+        <div><div class="prog-track"><div class="prog-fill" style="width:${pct}%;"></div></div>
+        <div class="prog-txt">${learned}/${total} öğrenildi</div></div>
       </button>`;
     }).join('')}
   </div>`;
@@ -832,33 +795,33 @@ function showAllCategories(){
 }
 function goHome(){ renderHome(); showView('home'); }
 
-/* ══════════════════════════ KATEGORİ DETAY / CATEGORY DETAIL ══════════════════════════ */
+/* ══════════════════════════ KATEGORİ DETAY (dikey istif) ══════════════════════════ */
 function openCategory(catId){
   const c = catOf(catId);
   const words = WORDS[catId];
   document.getElementById('view-category').innerHTML = `
-    <div class="back-row"><button class="back-btn" onclick="goHome()">←</button></div>
+    <div class="back-row"><button class="back-btn glass" onclick="goHome()">←</button></div>
     <div class="cat-header">
-      <div class="kufi" style="color:${c.color};">${c.mark} ${c.ar}</div>
+      <div class="kufi" style="background:linear-gradient(135deg,${c.c1},${c.c2}); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">${c.mark} ${c.ar}</div>
       <div class="en">${c.tr} · ${words.length} kelime/cümle</div>
     </div>
     <div class="section" style="padding-top:10px; padding-bottom:0;">
-      <button class="btn btn-ghost btn-block" onclick="startPractice('${catId}')">🔄 Bu kategoride alıştırma yap</button>
+      <button class="btn btn-glass btn-block" onclick="startPractice('${catId}')">🔄 Bu kategoride alıştırma yap</button>
     </div>
     <div class="word-list" style="margin-top:12px;">${words.map(w => wordCardHtml(w)).join('')}</div>
   `;
   showView('category');
 }
 function wordCardHtml(w){
-  return `<div class="word-card ${isLearned(w.id) ? 'learned' : ''}" id="card-${w.id}">
-    <div class="word-main">
+  return `<div class="word-card glass ${isLearned(w.id) ? 'learned' : ''}" id="card-${w.id}">
+    <div class="word-stack">
       <span class="ar">${w.ar}</span>
-      <span class="lat">${w.lat}</span>
+      <span class="lat-pill">${w.lat}</span>
       <div class="tr">${w.tr}</div>
       <div class="en">${w.en}</div>
     </div>
-    <div class="word-actions">
-      <button class="icon-btn" onclick="speak('${esc(w.ar)}')" title="Dinle">🔊</button>
+    <div class="word-actions-row">
+      <button class="icon-btn grow" onclick="speak('${esc(w.ar)}')">🔊 Dinle</button>
       <button class="icon-btn ${isFavorite(w.id) ? 'on' : ''}" onclick="toggleFavorite('${w.id}'); refreshWordCard('${w.id}');" title="Favorile">⭐</button>
       <button class="icon-btn ${isLearned(w.id) ? 'learned-on' : ''}" onclick="toggleLearned('${w.id}'); refreshWordCard('${w.id}');" title="Öğrendim">✓</button>
     </div>
@@ -870,11 +833,11 @@ function refreshWordCard(id){
   el.outerHTML = wordCardHtml(wordById(id));
 }
 
-/* ══════════════════════════ FAVORİLER / FAVORITES ══════════════════════════ */
+/* ══════════════════════════ FAVORİLER ══════════════════════════ */
 function showFavorites(){
   const words = Object.keys(STATE.favorites).filter(id => STATE.favorites[id]).map(wordById).filter(Boolean);
   document.getElementById('view-favorites').innerHTML = `
-    <div class="cat-header"><div class="kufi" style="color:var(--gold-dark);">⭐ المفضلة</div><div class="en">Favoriler</div></div>
+    <div class="cat-header"><div class="kufi" style="color:var(--gold-soft);">⭐ المفضلة</div><div class="en">Favoriler</div></div>
     <div class="word-list" style="margin-top:12px;">
       ${words.length ? words.map(w => wordCardHtml(w)).join('') : `<div class="empty-state"><div class="glyph">⭐</div>Henüz favori kelimen yok.<br>Kelime kartlarındaki yıldıza dokunarak ekleyebilirsin.</div>`}
     </div>
@@ -882,10 +845,7 @@ function showFavorites(){
   showView('favorites');
 }
 
-/* ══════════════════════════ ARAMA / AUTOCOMPLETE TRANSLATOR ══════════════════════════
-   Yazarken canlı öneriler — Türkçe, İngilizce, Arapça ya da okunuşa göre eşleşir; en iyi
-   eşleşmeler (baştan başlayanlar) üstte gösterilir. / Live suggestions as you type — matches
-   Turkish, English, Arabic, or transliteration; best matches (starts-with) rank first. */
+/* ══════════════════════════ ARAMA / AUTOCOMPLETE ══════════════════════════ */
 let _searchDebounce = null;
 function onSearch(q){
   clearTimeout(_searchDebounce);
@@ -913,14 +873,11 @@ function runSearch(q){
   });
   scored.sort((a,b) => b.score - a.score);
   const hits = scored.slice(0, 12).map(s => s.w);
-  if (!hits.length) {
-    box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene.</div>`;
-    return;
-  }
+  if (!hits.length) { box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene.</div>`; return; }
   box.innerHTML = hits.map(w => `
     <button class="search-hit" onclick="openCategory('${w.cat}')">
       <span class="ar">${w.ar}</span>
-      <div class="meta"><div class="tr">${w.tr}</div><span class="lat">${w.lat}</span></div>
+      <div class="meta"><div class="tr">${w.tr}</div><span class="lat-pill">${w.lat}</span></div>
       <button class="hit-play" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊</button>
     </button>
   `).join('');
@@ -940,13 +897,11 @@ function rememberSearch(q){
 function renderSearchHints(){
   const hintBox = document.getElementById('search-hints');
   if (!hintBox) return;
-  const suggestions = (STATE.recentSearches && STATE.recentSearches.length)
-    ? STATE.recentSearches
-    : ['teşekkürler','su','nerede','ne kadar','seviyorum'];
+  const suggestions = (STATE.recentSearches && STATE.recentSearches.length) ? STATE.recentSearches : ['teşekkürler','su','nerede','ne kadar','seviyorum'];
   hintBox.innerHTML = suggestions.map(s => `<button class="hint-chip" onclick="document.getElementById('search-input').value='${esc(s)}'; runSearch('${esc(s)}');">${s}</button>`).join('');
 }
 
-/* ══════════════════════════ ALIŞTIRMA / PRACTICE (KAYDIRMALI FLASHCARD) ══════════════════════════ */
+/* ══════════════════════════ ALIŞTIRMA / PRACTICE ══════════════════════════ */
 let _practiceDeck = [], _practiceIdx = 0, _practiceKnown = 0;
 function startPractice(catId){
   let pool = catId ? WORDS[catId].slice() : allWords().slice();
@@ -971,7 +926,7 @@ function renderPracticeCard(){
     <div class="practice-wrap">
       <div class="dots">${dots}</div>
       <div class="flash-stage">
-        <div class="flash" id="flash-el">
+        <div class="flash glass" id="flash-el" style="background:linear-gradient(160deg, rgba(${hexToRgb(c.c1)},0.14), transparent 60%);">
           <span class="flash-cat-tag">${c.tr}</span>
           <span class="flash-swipe-badge left" id="badge-left">Tekrar</span>
           <span class="flash-swipe-badge right" id="badge-right">Biliyorum</span>
@@ -981,14 +936,14 @@ function renderPracticeCard(){
           </div>
           <div class="flash-face-b">
             <div class="tr">${w.tr}</div>
-            <div class="lat">${w.lat}</div>
+            <span class="lat-pill">${w.lat}</span>
             <div class="en">${w.en}</div>
-            <button class="btn btn-ghost" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊 Dinle</button>
+            <button class="btn btn-glass" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊 Dinle</button>
           </div>
         </div>
       </div>
       <div class="practice-actions">
-        <button class="btn btn-outline btn-lg" onclick="practiceAnswer(false)">🔁 Tekrar Et</button>
+        <button class="btn btn-glass btn-lg" onclick="practiceAnswer(false)">🔁 Tekrar Et</button>
         <button class="btn btn-teal btn-lg" onclick="practiceAnswer(true)">✅ Biliyorum</button>
       </div>
       <div class="swipe-tip">👉 Sağa kaydır: biliyorum · 👈 sola kaydır: tekrar et</div>
@@ -996,9 +951,8 @@ function renderPracticeCard(){
   `;
   attachSwipeHandlers();
 }
+function hexToRgb(hex){ const n = parseInt(hex.replace('#',''),16); return [(n>>16)&255,(n>>8)&255,n&255].join(','); }
 function flipCard(){ const el = document.getElementById('flash-el'); if (el) el.classList.toggle('flipped'); }
-
-/* ── Dokunmatik kaydırma (swipe) desteği — mobil için doğal his / Touch swipe support — feels native on mobile ── */
 function attachSwipeHandlers(){
   const el = document.getElementById('flash-el');
   if (!el) return;
@@ -1013,7 +967,7 @@ function attachSwipeHandlers(){
     const t = e.touches[0]; dx = t.clientX - startX;
     const dy = t.clientY - startY;
     if (Math.abs(dx) < 8 && !movedEnough) return;
-    if (Math.abs(dy) > Math.abs(dx) * 1.3 && !movedEnough) return; // düşey kaydırma ise (scroll) elleme
+    if (Math.abs(dy) > Math.abs(dx) * 1.3 && !movedEnough) return;
     movedEnough = true;
     el.style.transform = `translateX(${dx}px) rotate(${dx/22}deg)`;
     const p = Math.min(1, Math.abs(dx)/90);
@@ -1046,8 +1000,8 @@ function renderPracticeSummary(){
       <h2 style="font-size:21px; margin-bottom:8px;">Alıştırma Tamamlandı!</h2>
       <p style="color:var(--ink-faint); margin-bottom:20px;">${_practiceDeck.length} kelimeden ${_practiceKnown} tanesini biliyordun.</p>
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button class="btn btn-teal btn-lg" onclick="startPractice()">🔄 Yeniden Başla</button>
-        <button class="btn btn-outline btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
+        <button class="btn btn-primary btn-lg" onclick="startPractice()">🔄 Yeniden Başla</button>
+        <button class="btn btn-glass btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
       </div>
     </div>
   `;
@@ -1070,7 +1024,7 @@ function renderQuizQuestion(){
   document.getElementById('view-quiz').innerHTML = `
     <div class="quiz-wrap">
       <div class="quiz-progress">Soru ${_quizIdx + 1} / ${_quizDeck.length} · Skor: ${_quizScore}</div>
-      <div class="quiz-q"><div class="ar">${w.ar}</div><div class="lat">${w.lat}</div></div>
+      <div class="quiz-q glass"><div class="ar">${w.ar}</div><span class="lat-pill">${w.lat}</span></div>
       <div class="quiz-opts" id="quiz-opts">
         ${options.map(o => `<button class="quiz-opt" data-id="${o.id}" onclick="answerQuiz('${o.id}','${w.id}')">${o.tr}</button>`).join('')}
       </div>
@@ -1093,43 +1047,35 @@ function renderQuizResult(){
   if (_quizScore > (STATE.bestQuiz || 0)) { STATE.bestQuiz = _quizScore; saveState(); }
   document.getElementById('view-quiz').innerHTML = `
     <div class="quiz-wrap quiz-result">
-      <div class="hero-eyebrow">Sınav Sonucu</div>
+      <div class="hero-eyebrow" style="position:static;">SINAV SONUCU</div>
       <div class="score">${_quizScore}/${_quizDeck.length}</div>
       <div class="stars">${stars}</div>
-      <p style="color:var(--ink-faint); margin-bottom:8px;">%${pct} doğru cevap</p>
+      <p style="color:var(--ink-dim); margin-bottom:8px;">%${pct} doğru cevap</p>
       <p style="color:var(--ink-faint); font-size:12px; margin-bottom:20px;">En iyi skorun: ${STATE.bestQuiz || 0}/10</p>
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button class="btn btn-teal btn-lg" onclick="startQuiz()">🔄 Tekrar Dene</button>
-        <button class="btn btn-outline btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
+        <button class="btn btn-primary btn-lg" onclick="startQuiz()">🔄 Tekrar Dene</button>
+        <button class="btn btn-glass btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
       </div>
     </div>
   `;
 }
 
-/* ══════════════════════════ ÇEVRİMDIŞI DURUMU / OFFLINE STATUS ══════════════════════════ */
-function updateOnlineStatus(){
-  document.getElementById('offline-pill').classList.toggle('show', !navigator.onLine);
-}
+/* ══════════════════════════ ÇEVRİMDIŞI DURUMU ══════════════════════════ */
+function updateOnlineStatus(){ document.getElementById('offline-pill').classList.toggle('show', !navigator.onLine); }
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
-/* ══════════════════════════ SERVICE WORKER (ÇEVRİMDIŞI ÇALIŞMA) ══════════════════════════
-   Uygulama ilk açıldığında dosyaları önbelleğe alır; internet olmadan tekrar açıldığında
-   önbellekten çalışmaya devam eder. / Caches app files on first load; when reopened without
-   internet, keeps running from the cache. */
+/* ══════════════════════════ SERVICE WORKER ══════════════════════════ */
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
 
-/* ══════════════════════════ BAŞLAT / INIT ══════════════════════════ */
+/* ══════════════════════════ BAŞLAT ══════════════════════════ */
 function refreshStreakUI(){
   document.getElementById('streak-txt').textContent = STATE.streak || 0;
   const side = document.getElementById('side-streak-txt');
   if (side) side.textContent = (STATE.streak || 0) + ' günlük seri';
 }
-// speechSynthesis.onvoiceschanged artık waitForVoices() içinde yönetiliyor / now managed inside waitForVoices()
 refreshStreakUI();
 updateOnlineStatus();
 renderHome();
