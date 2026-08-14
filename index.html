@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F6B5C">
+<meta name="description" content="Mısır Arapçası (Amiyye) günlük kelime ve cümle rehberi — okunuşuyla, çevrimdışı çalışır.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="مصراوي">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-apple-180.png">
+<link rel="icon" href="icon-192.png">
+<title>مصراوي — Günlük Mısır Arapçası</title>
+<style>
+  :root{
+    --bg:#F7F0E3; --bg-soft:#FBF7EE; --card:#FFFDF8;
+    --ink:#1B3A3A; --ink-soft:#4B6363; --ink-faint:#84948E;
+    --teal:#0F6B5C; --teal-dark:#0A4B41; --teal-tint:#E4EFEA;
+    --gold:#C9A24B; --gold-dark:#A17E30; --gold-tint:#F5EBD2;
+    --rust:#B33A2E; --rust-dark:#8E2C22; --rust-tint:#F3DEDA;
+    --border:#E4D9BE; --border-soft:#EEE5D0;
+    --shadow-sm:0 2px 10px rgba(27,58,58,0.07);
+    --shadow-md:0 10px 28px rgba(27,58,58,0.10);
+    --shadow-lg:0 20px 50px rgba(27,58,58,0.18);
+    --radius-lg:22px; --radius-md:16px; --radius-sm:10px;
+    --nav-h:64px;
+    --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; touch-action:manipulation;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:15px; line-height:1.5; overscroll-behavior-y:none; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 8% 4%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 96% 92%, rgba(15,107,92,0.08), transparent 45%);
+    background-attachment:fixed;
+    padding-top:var(--sat);
+  }
+  h1,h2,h3,.display{font-weight:800; letter-spacing:-.01em;}
+  /* ── Arapça metin: cihazın kendi Arapça sistem fontları — GOOGLE FONTS'A BAĞLI DEĞİL, ilk açılışta
+       bile internet gerektirmez. / Arabic text: the device's own system Arabic fonts — NOT dependent
+       on Google Fonts, requires no internet even on the very first load. ── */
+  .ar{
+    font-family:"Noto Naskh Arabic","Geeza Pro","Damascus","Arabic Typesetting",Tahoma,"Segoe UI",sans-serif;
+    direction:rtl; unicode-bidi:isolate;
+  }
+  .lat{direction:ltr; unicode-bidi:isolate; color:var(--teal-dark); font-weight:700; letter-spacing:.01em;}
+  button{font-family:inherit; cursor:pointer;}
+  a{color:inherit;}
+  ::selection{background:var(--gold-tint);}
+  input,button{-webkit-user-select:none;}
+  input{user-select:text;}
+
+  /* ── 8 köşeli yıldız (rub el hizb) — imza motifi / signature 8-point star motif ── */
+  .star8{position:relative; display:inline-block;}
+  .star8::before,.star8::after{content:''; position:absolute; inset:0; border:1.6px solid currentColor;}
+  .star8::after{transform:rotate(45deg);}
+
+  .pattern-band{
+    background-color:var(--teal);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A24B' stroke-width='1' opacity='0.34'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ═══════════ APP SHELL ═══════════ */
+  #app{max-width:1180px; margin:0 auto; min-height:100%; display:flex;}
+  #sidebar{display:none;}
+  #main-col{flex:1; min-width:0; padding-bottom:calc(var(--nav-h) + var(--sab) + 20px);}
+
+  .topbar{padding:calc(16px + var(--sat)) 16px 14px; color:#fff; position:relative; overflow:hidden; border-radius:0 0 24px 24px;}
+  .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px; position:relative; z-index:1;}
+  .brand{display:flex; align-items:center; gap:9px;}
+  .brand .star8{width:30px; height:30px; color:var(--gold); flex-shrink:0;}
+  .brand-text{line-height:1.15;}
+  .brand-text .ar{font-size:19px; font-weight:700; color:#fff;}
+  .brand-text .sub{font-size:10px; letter-spacing:.07em; color:var(--gold-tint); text-transform:uppercase; font-weight:700;}
+  .offline-pill{
+    display:none; align-items:center; gap:5px; background:rgba(179,58,46,0.9); border-radius:99px;
+    padding:5px 10px; font-size:10.5px; font-weight:800; color:#fff;
+  }
+  .offline-pill.show{display:flex;}
+  .streak-pill{
+    display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.22); border-radius:99px; padding:6px 12px;
+    font-size:12.5px; font-weight:800; color:#fff;
+  }
+
+  .section{padding:16px 16px 4px;}
+  .section-title{
+    font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:10px; display:flex; align-items:center; gap:8px;
+  }
+  .section-title .rule{flex:1; height:1px; background:var(--border);}
+
+  /* ── Çevirmen / Autocomplete arama — ana özellik / Translator search — the star feature ── */
+  .translator-card{
+    background:linear-gradient(155deg,var(--teal),var(--teal-dark)); border-radius:var(--radius-lg);
+    padding:20px 18px; box-shadow:var(--shadow-md); position:relative; overflow:hidden;
+  }
+  .translator-card::after{
+    content:''; position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A24B' stroke-width='1' opacity='0.14'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .translator-title{color:#fff; font-size:15px; font-weight:800; margin-bottom:3px; position:relative; z-index:1;}
+  .translator-sub{color:rgba(255,255,255,0.72); font-size:12px; margin-bottom:14px; position:relative; z-index:1;}
+  .search-wrap{position:relative; z-index:1;}
+  .search-input-row{position:relative;}
+  .search-wrap input{
+    width:100%; border:none; border-radius:14px; padding:15px 46px 15px 16px;
+    font-size:16px; background:#fff; color:var(--ink); font-weight:600; box-shadow:var(--shadow-sm);
+  }
+  .search-wrap input::placeholder{color:var(--ink-faint); font-weight:500;}
+  .search-wrap input:focus{outline:3px solid var(--gold);}
+  .search-clear{
+    position:absolute; right:8px; top:50%; transform:translateY(-50%); width:30px; height:30px;
+    border-radius:50%; background:var(--border-soft); border:none; display:none; align-items:center;
+    justify-content:center; font-size:14px; color:var(--ink-soft);
+  }
+  .search-clear.show{display:flex;}
+  .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
+  .search-hit{
+    background:#fff; border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:12px;
+    box-shadow:var(--shadow-sm); border:none; width:100%; text-align:left;
+  }
+  .search-hit .ar{font-size:21px; color:var(--teal-dark); flex-shrink:0; min-width:70px;}
+  .search-hit .meta{min-width:0; flex:1;}
+  .search-hit .meta .lat{font-size:12px; display:block;}
+  .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink); margin-top:1px;}
+  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:var(--teal-tint); border:none; color:var(--teal-dark); font-size:15px; flex-shrink:0;}
+  .search-empty{padding:16px; text-align:center; color:rgba(255,255,255,0.75); font-size:13px; position:relative; z-index:1;}
+  .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px; position:relative; z-index:1;}
+  .hint-chip{background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.22); color:#fff; border-radius:99px; padding:6px 12px; font-size:12px; font-weight:700;}
+
+  /* ── Hero: Günün Kelimesi ── */
+  .hero-card{
+    background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg);
+    padding:24px 20px; position:relative; overflow:hidden; box-shadow:var(--shadow-md); text-align:center;
+  }
+  .hero-card::before,.hero-card::after{content:''; position:absolute; width:110px; height:110px; border:1.4px solid var(--gold); opacity:.5; top:50%; left:50%; margin:-55px 0 0 -55px;}
+  .hero-card::after{transform:rotate(45deg);}
+  .hero-inner{position:relative; z-index:1;}
+  .hero-eyebrow{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:10px;}
+  .hero-ar{font-size:38px; color:var(--teal-dark); line-height:1.35; margin-bottom:8px;}
+  .hero-lat{font-size:17px; margin-bottom:10px;}
+  .hero-tr{font-size:18px; font-weight:700; margin-bottom:2px;}
+  .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
+  .hero-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap;}
+
+  .btn{border:none; border-radius:99px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; gap:7px; transition:transform .12s; min-height:44px;}
+  .btn:active{transform:scale(.95);}
+  .btn-teal{background:var(--teal); color:#fff;}
+  .btn-gold{background:var(--gold); color:#fff;}
+  .btn-rust{background:var(--rust); color:#fff;}
+  .btn-ghost{background:var(--teal-tint); color:var(--teal-dark);}
+  .btn-outline{background:transparent; border:1.5px solid var(--border); color:var(--ink-soft);}
+  .btn-lg{padding:15px 24px; font-size:15px;}
+  .btn-block{width:100%; justify-content:center;}
+  .btn[disabled]{opacity:.4; pointer-events:none;}
+
+  .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:14px;}
+  .stat-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:13px 8px; text-align:center;}
+  .stat-card .num{font-size:22px; font-weight:800; color:var(--teal-dark);}
+  .stat-card .lbl{font-size:10px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin-top:2px;}
+
+  .cat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:11px; margin-top:2px;}
+  .cat-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:15px 13px; text-align:left; position:relative; overflow:hidden; box-shadow:var(--shadow-sm); border-left:4px solid var(--cat-color,var(--teal)); min-height:44px;}
+  .cat-card .mark{font-size:20px; color:var(--cat-color,var(--teal)); margin-bottom:8px; display:block;}
+  .cat-card .name{font-weight:800; font-size:14px; color:var(--ink); margin-bottom:2px;}
+  .cat-card .en{font-size:10.5px; color:var(--ink-faint); margin-bottom:9px;}
+  .cat-card .prog-track{background:var(--border-soft); border-radius:99px; height:6px; overflow:hidden;}
+  .cat-card .prog-fill{height:100%; background:var(--cat-color,var(--teal)); border-radius:99px;}
+  .cat-card .prog-txt{font-size:10px; color:var(--ink-faint); margin-top:5px; font-weight:600;}
+
+  .guide-link{display:flex; align-items:center; gap:10px; background:var(--gold-tint); border:1.5px solid var(--gold); border-radius:var(--radius-md); padding:13px 15px; font-size:12.5px; font-weight:700; color:var(--gold-dark); width:100%; text-align:left; min-height:44px;}
+  .guide-link .ic{font-size:18px;}
+
+  .word-list{display:flex; flex-direction:column; gap:9px; padding:0 16px 20px;}
+  .word-card{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:14px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);}
+  .word-card.learned{border-color:var(--teal); background:var(--teal-tint);}
+  .word-main{flex:1; min-width:0;}
+  .word-main .ar{font-size:22px; color:var(--teal-dark); display:block; margin-bottom:3px;}
+  .word-main .lat{font-size:13.5px; display:block;}
+  .word-main .tr{font-size:14px; font-weight:700; margin-top:5px;}
+  .word-main .en{font-size:11px; color:var(--ink-faint);}
+  .word-actions{display:flex; flex-direction:column; gap:7px; align-items:center; flex-shrink:0;}
+  .icon-btn{width:40px; height:40px; border-radius:50%; border:1.5px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink-soft);}
+  .icon-btn.on{background:var(--gold); border-color:var(--gold); color:#fff;}
+  .icon-btn.learned-on{background:var(--teal); border-color:var(--teal); color:#fff;}
+
+  /* ── Pratik / flashcard (kaydırma destekli) / Practice flashcard (swipe-enabled) ── */
+  .practice-wrap{padding:16px; display:flex; flex-direction:column; align-items:center;}
+  .dots{display:flex; gap:5px; margin-bottom:16px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--border);}
+  .dot.done{background:var(--teal);}
+  .dot.now{background:var(--gold); width:16px; border-radius:99px;}
+  .flash-stage{width:100%; max-width:400px; position:relative; min-height:290px;}
+  .flash{
+    width:100%; min-height:290px; background:var(--card); border:1.5px solid var(--border);
+    border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:30px 22px; position:relative;
+    touch-action:pan-y; user-select:none; will-change:transform;
+  }
+  .flash-face-a .ar{font-size:42px; color:var(--teal-dark); margin-bottom:10px;}
+  .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:16px; font-weight:600;}
+  .flash-face-b{display:none;}
+  .flash.flipped .flash-face-a{display:none;}
+  .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center;}
+  .flash-face-b .tr{font-size:21px; font-weight:800; margin-bottom:4px;}
+  .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:10px;}
+  .flash-face-b .lat{font-size:15px; margin-bottom:14px;}
+  .flash-cat-tag{position:absolute; top:14px; left:14px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-dark); background:var(--gold-tint); padding:4px 9px; border-radius:99px;}
+  .flash-swipe-badge{position:absolute; top:16px; padding:6px 14px; border-radius:99px; font-size:12px; font-weight:900; text-transform:uppercase; opacity:0; transform:scale(.8); pointer-events:none; letter-spacing:.03em;}
+  .flash-swipe-badge.left{right:16px; background:var(--rust); color:#fff;}
+  .flash-swipe-badge.right{left:16px; background:var(--teal); color:#fff;}
+  .practice-actions{display:flex; gap:10px; margin-top:20px; width:100%; max-width:400px;}
+  .practice-actions .btn{flex:1;}
+  .swipe-tip{font-size:11px; color:var(--ink-faint); margin-top:10px; font-weight:600; display:flex; align-items:center; gap:6px;}
+  .practice-summary{text-align:center; padding:36px 20px;}
+  .practice-summary .big{font-size:52px; margin-bottom:14px;}
+
+  .quiz-wrap{padding:16px; max-width:460px; margin:0 auto;}
+  .quiz-q{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:24px 20px; text-align:center; box-shadow:var(--shadow-md); margin-bottom:16px;}
+  .quiz-q .ar{font-size:36px; color:var(--teal-dark); margin-bottom:6px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:9px;}
+  .quiz-opt{background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:15px 16px; text-align:left; font-size:14.5px; font-weight:600; color:var(--ink); min-height:44px;}
+  .quiz-opt.correct{background:var(--teal-tint); border-color:var(--teal); color:var(--teal-dark);}
+  .quiz-opt.wrong{background:var(--rust-tint); border-color:var(--rust); color:var(--rust-dark);}
+  .quiz-progress{font-size:12px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:10px;}
+  .quiz-result{text-align:center; padding:18px;}
+  .quiz-result .stars{font-size:32px; letter-spacing:6px; margin:12px 0;}
+  .quiz-result .score{font-size:44px; font-weight:900; color:var(--teal-dark);}
+
+  .empty-state{padding:44px 22px; text-align:center; color:var(--ink-faint);}
+  .empty-state .glyph{font-size:38px; margin-bottom:12px; color:var(--gold);}
+
+  .back-row{padding:14px 16px 0; display:flex; align-items:center; gap:10px;}
+  .back-btn{width:40px; height:40px; border-radius:50%; background:var(--card); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:16px;}
+  .cat-header{padding:14px 16px 4px;}
+  .cat-header .ar{font-size:22px; color:var(--teal-dark);}
+  .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:2px;}
+
+  /* ── Okuma Rehberi modal / Reading guide modal ── */
+  .modal-overlay{position:fixed; inset:0; background:rgba(20,30,30,0.55); z-index:100; display:none; align-items:flex-end; justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal-sheet{background:var(--bg-soft); width:100%; max-width:520px; max-height:82vh; overflow-y:auto; border-radius:24px 24px 0 0; padding:20px 20px calc(20px + var(--sab)); box-shadow:var(--shadow-lg);}
+  @media (min-width:640px){ .modal-overlay{align-items:center;} .modal-sheet{border-radius:24px; max-height:80vh;} }
+  .modal-handle{width:40px; height:4px; background:var(--border); border-radius:99px; margin:0 auto 16px;}
+  .modal-title{font-size:17px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px;}
+  .modal-sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
+  .guide-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-soft);}
+  .guide-row .gsym{width:44px; height:44px; border-radius:12px; background:var(--teal-tint); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;}
+  .guide-row .gtxt{font-size:13px; color:var(--ink-soft);}
+  .modal-close-btn{width:100%; margin-top:16px;}
+
+  #bottom-nav{position:fixed; bottom:0; left:0; right:0; height:calc(var(--nav-h) + var(--sab)); background:var(--card); border-top:1.5px solid var(--border); display:flex; z-index:50; box-shadow:0 -6px 20px rgba(27,58,58,0.08); padding-bottom:var(--sab);}
+  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:none; border:none; color:var(--ink-faint); font-size:10px; font-weight:700; min-height:44px;}
+  .nav-btn .ic{font-size:19px;}
+  .nav-btn.active{color:var(--teal);}
+
+  @media (min-width:901px){
+    body{padding:24px 0;}
+    #app{gap:26px; align-items:flex-start;}
+    #sidebar{display:flex; flex-direction:column; width:230px; flex-shrink:0; background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:22px 16px; box-shadow:var(--shadow-md); position:sticky; top:24px; gap:4px;}
+    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--border-soft); margin-bottom:14px;}
+    .side-brand .star8{width:28px; height:28px; color:var(--teal);}
+    .side-brand .ar{font-size:17px; color:var(--teal-dark);}
+    .side-brand .sub{font-size:9px; color:var(--ink-faint); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
+    .side-link{display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:12px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-soft); text-align:left; width:100%;}
+    .side-link .ic{font-size:17px; width:20px; text-align:center;}
+    .side-link.active{background:var(--teal-tint); color:var(--teal-dark);}
+    .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:12px;}
+    #main-col{padding-bottom:24px; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); background:var(--bg-soft);}
+    #bottom-nav{display:none;}
+    .topbar{border-radius:0; padding-top:16px;}
+    .cat-grid{grid-template-columns:repeat(3,1fr);}
+    .hero-ar{font-size:48px;}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important;} }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <nav id="sidebar">
+    <div class="side-brand">
+      <span class="star8"></span>
+      <div><div class="ar">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
+    </div>
+    <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
+    <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
+    <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span> Alıştırma</button>
+    <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span> Sınav</button>
+    <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span> Favoriler</button>
+    <div class="side-streak"><span>🔥</span> <span id="side-streak-txt">0 günlük seri</span></div>
+  </nav>
+
+  <div id="main-col">
+    <header class="topbar pattern-band">
+      <div class="topbar-row">
+        <div class="brand">
+          <span class="star8"></span>
+          <div class="brand-text"><div class="ar">مصراوي</div><div class="sub">Günlük Mısır Arapçası</div></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
+          <div class="streak-pill"><span>🔥</span> <span id="streak-txt">0</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div id="view-home"></div>
+    <div id="view-category" style="display:none;"></div>
+    <div id="view-practice" style="display:none;"></div>
+    <div id="view-quiz" style="display:none;"></div>
+    <div id="view-favorites" style="display:none;"></div>
+  </div>
+</div>
+
+<nav id="bottom-nav">
+  <button class="nav-btn" data-nav="home" onclick="goHome()"><span class="ic">🏠</span>Ana Sayfa</button>
+  <button class="nav-btn" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span>Kategoriler</button>
+  <button class="nav-btn" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span>Alıştırma</button>
+  <button class="nav-btn" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
+  <button class="nav-btn" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
+</nav>
+
+<div class="modal-overlay" id="guide-modal" onclick="if(event.target===this) closeGuide()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📖 Okuma Rehberi</div>
+    <div class="modal-sub">Arapça harfler, Latin harflerle şöyle okunur (Mısır ağzına göre):</div>
+    <div id="guide-rows"></div>
+    <button class="btn btn-teal btn-block modal-close-btn" onclick="closeGuide()">Anladım</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════ VERİ: MISIR ARAPÇASI (AMİYYE) ══════════════════════════
+   DATA: EGYPTIAN ARABIC (colloquial / Masri). Okunuş = sade, Türkçe konuşana göre fonetik
+   Latin transkripsiyon (akademik IPA değil — kolay okumak için). Her öğe:
+   ar (Arapça), lat (okunuş), tr (Türkçe anlam), en (İngilizce anlam). */
+const CATS = [
+  { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', color:'#0F6B5C' },
+  { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', color:'#C9A24B' },
+  { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', color:'#B33A2E' },
+  { id:'family',     ar:'العيلة',     tr:'Aile',                 en:'Family',              mark:'⌂', color:'#0F6B5C' },
+  { id:'time',       ar:'الوقت',      tr:'Zaman',                en:'Time',                mark:'◔', color:'#C9A24B' },
+  { id:'food',       ar:'الأكل',      tr:'Yiyecek & İçecek',     en:'Food & Drink',        mark:'❋', color:'#B33A2E' },
+  { id:'colors',     ar:'الألوان',    tr:'Renkler',              en:'Colors',              mark:'✦', color:'#0F6B5C' },
+  { id:'shopping',   ar:'التسوق',     tr:'Alışveriş',            en:'Shopping',            mark:'⚖', color:'#C9A24B' },
+  { id:'directions', ar:'الاتجاهات',  tr:'Yön Tarifi',           en:'Directions',          mark:'⟐', color:'#B33A2E' },
+  { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', color:'#0F6B5C' },
+  { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', color:'#C9A24B' },
+  { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', color:'#B33A2E' },
+];
+
+const WORDS = {
+  greetings:[
+    {ar:'إزيك؟', lat:'izzayyak? (izzayyik? kadına)', tr:'Nasılsın?', en:'How are you?'},
+    {ar:'عامل إيه؟', lat:'aamil eih?', tr:'Ne haber, naber?', en:"What's up?"},
+    {ar:'كويس، الحمد لله', lat:'kwayyes, elhamdulillah', tr:'İyiyim, Allah\u2019a şükür', en:"I'm fine, thank God"},
+    {ar:'صباح الخير', lat:'sabah el-kheir', tr:'Günaydın', en:'Good morning'},
+    {ar:'صباح النور', lat:'sabah en-noor', tr:'Günaydın (cevap)', en:'Good morning (reply)'},
+    {ar:'مساء الخير', lat:"masa' el-kheir", tr:'İyi akşamlar', en:'Good evening'},
+    {ar:'مساء النور', lat:"masa' en-noor", tr:'İyi akşamlar (cevap)', en:'Good evening (reply)'},
+    {ar:'أهلاً وسهلاً', lat:'ahlan wa sahlan', tr:'Hoş geldin', en:'Welcome'},
+    {ar:'أهلاً بيك', lat:'ahlan beek', tr:'Hoş bulduk (cevap)', en:'Welcome (reply)'},
+    {ar:'فرصة سعيدة', lat:"forsa sa'iida", tr:'Tanıştığımıza memnun oldum', en:'Nice to meet you'},
+    {ar:'مع السلامة', lat:"ma'a s-salaama", tr:'Güle güle', en:'Goodbye'},
+    {ar:'تصبح على خير', lat:"tisbah 'ala kheir", tr:'İyi geceler', en:'Good night'},
+    {ar:'شكراً', lat:'shukran', tr:'Teşekkürler', en:'Thank you'},
+    {ar:'متشكر', lat:'mitshakkir', tr:'Sağ ol (teşekkür ederim)', en:'Thanks (I am thankful)'},
+    {ar:'العفو', lat:"el-'afw", tr:'Rica ederim', en:"You're welcome"},
+    {ar:'من فضلك', lat:'min fadlak', tr:'Lütfen', en:'Please'},
+    {ar:'آسف', lat:'aasif (asfa kadına)', tr:'Özür dilerim', en:'Sorry'},
+    {ar:'أيوه', lat:'aywa', tr:'Evet', en:'Yes'},
+    {ar:'لأ', lat:"la'", tr:'Hayır', en:'No'},
+  ],
+  numbers:[
+    {ar:'صفر', lat:'sifr', tr:'Sıfır', en:'Zero'},
+    {ar:'واحد', lat:'waahid', tr:'Bir', en:'One'},
+    {ar:'اتنين', lat:'itnein', tr:'İki', en:'Two'},
+    {ar:'تلاتة', lat:'talata', tr:'Üç', en:'Three'},
+    {ar:'أربعة', lat:"arba'a", tr:'Dört', en:'Four'},
+    {ar:'خمسة', lat:'khamsa', tr:'Beş', en:'Five'},
+    {ar:'ستة', lat:'sitta', tr:'Altı', en:'Six'},
+    {ar:'سبعة', lat:"sab'a", tr:'Yedi', en:'Seven'},
+    {ar:'تمانية', lat:'tamanya', tr:'Sekiz', en:'Eight'},
+    {ar:'تسعة', lat:"tis'a", tr:'Dokuz', en:'Nine'},
+    {ar:'عشرة', lat:"'ashara", tr:'On', en:'Ten'},
+    {ar:'عشرين', lat:"'ishreen", tr:'Yirmi', en:'Twenty'},
+    {ar:'ميه', lat:'miyya', tr:'Yüz', en:'One hundred'},
+  ],
+  family:[
+    {ar:'بابا', lat:'baba', tr:'Baba', en:'Father'},
+    {ar:'ماما', lat:'mama', tr:'Anne', en:'Mother'},
+    {ar:'ابن', lat:'ibn', tr:'Oğul', en:'Son'},
+    {ar:'بنت', lat:'bint', tr:'Kız', en:'Daughter/Girl'},
+    {ar:'أخويا', lat:'akhuuya', tr:'Erkek kardeşim', en:'My brother'},
+    {ar:'أختي', lat:'ukhti', tr:'Kız kardeşim', en:'My sister'},
+    {ar:'جدو', lat:'giddo', tr:'Dede', en:'Grandfather'},
+    {ar:'تيتة', lat:'teta', tr:'Nine', en:'Grandmother'},
+    {ar:'جوزي', lat:'gohzi', tr:'Kocam', en:'My husband'},
+    {ar:'مراتي', lat:'meraati', tr:'Eşim / Karım', en:'My wife'},
+    {ar:'عمو', lat:"'ammo", tr:'Amca', en:'Uncle (paternal)'},
+    {ar:'خالو', lat:'khaalo', tr:'Dayı', en:'Uncle (maternal)'},
+    {ar:'عيلة', lat:"'eyla", tr:'Aile', en:'Family'},
+    {ar:'عيال', lat:"'ayyaal", tr:'Çocuklar', en:'Children'},
+  ],
+  time:[
+    {ar:'النهارده', lat:'en-naharda', tr:'Bugün', en:'Today'},
+    {ar:'بكرة', lat:'bukra', tr:'Yarın', en:'Tomorrow'},
+    {ar:'إمبارح', lat:'imbaareh', tr:'Dün', en:'Yesterday'},
+    {ar:'دلوقتي', lat:"dilwa'ti", tr:'Şimdi', en:'Now'},
+    {ar:'بعدين', lat:"ba'dein", tr:'Sonra', en:'Later'},
+    {ar:'الصبح', lat:'es-subh', tr:'Sabah', en:'Morning'},
+    {ar:'الضهر', lat:'ed-dohr', tr:'Öğle', en:'Noon'},
+    {ar:'بالليل', lat:'bil-leil', tr:'Gece', en:'At night'},
+    {ar:'أسبوع', lat:"usboo'", tr:'Hafta', en:'Week'},
+    {ar:'شهر', lat:'shahr', tr:'Ay', en:'Month'},
+    {ar:'سنة', lat:'sana', tr:'Yıl', en:'Year'},
+    {ar:'دقيقة', lat:"da'ii'a", tr:'Dakika', en:'Minute'},
+    {ar:'ساعة', lat:"saa'a", tr:'Saat', en:'Hour / Clock'},
+  ],
+  food:[
+    {ar:'ميه', lat:'mayya', tr:'Su', en:'Water'},
+    {ar:'عيش', lat:"'eish", tr:'Ekmek', en:'Bread'},
+    {ar:'رز', lat:'roz', tr:'Pirinç', en:'Rice'},
+    {ar:'لحمة', lat:'lahma', tr:'Et', en:'Meat'},
+    {ar:'فراخ', lat:'firaakh', tr:'Tavuk', en:'Chicken'},
+    {ar:'سمك', lat:'samak', tr:'Balık', en:'Fish'},
+    {ar:'فاكهة', lat:'fakha', tr:'Meyve', en:'Fruit'},
+    {ar:'خضار', lat:'khodaar', tr:'Sebze', en:'Vegetables'},
+    {ar:'لبن', lat:'laban', tr:'Süt', en:'Milk'},
+    {ar:'شاي', lat:'shai', tr:'Çay', en:'Tea'},
+    {ar:'قهوة', lat:"'ahwa", tr:'Kahve', en:'Coffee'},
+    {ar:'سكر', lat:'sukkar', tr:'Şeker', en:'Sugar'},
+    {ar:'ملح', lat:'malh', tr:'Tuz', en:'Salt'},
+    {ar:'جعان', lat:"ga'aan", tr:'Aç', en:'Hungry'},
+    {ar:'عطشان', lat:"'atshaan", tr:'Susamış', en:'Thirsty'},
+    {ar:'لذيذ', lat:'lazeez', tr:'Lezzetli', en:'Delicious'},
+  ],
+  colors:[
+    {ar:'أحمر', lat:'ahmar', tr:'Kırmızı', en:'Red'},
+    {ar:'أزرق', lat:"azra'", tr:'Mavi', en:'Blue'},
+    {ar:'أخضر', lat:'akhdar', tr:'Yeşil', en:'Green'},
+    {ar:'أصفر', lat:'asfar', tr:'Sarı', en:'Yellow'},
+    {ar:'أسود', lat:'iswid', tr:'Siyah', en:'Black'},
+    {ar:'أبيض', lat:'abyad', tr:'Beyaz', en:'White'},
+    {ar:'بني', lat:'bunni', tr:'Kahverengi', en:'Brown'},
+    {ar:'رمادي', lat:'romaadi', tr:'Gri', en:'Gray'},
+    {ar:'برتقالي', lat:"borto'aani", tr:'Turuncu', en:'Orange'},
+    {ar:'دهبي', lat:'dahabi', tr:'Altın rengi', en:'Gold'},
+  ],
+  shopping:[
+    {ar:'بكام ده؟', lat:'bikaam da?', tr:'Bu ne kadar?', en:'How much is this?'},
+    {ar:'غالي', lat:'ghaali', tr:'Pahalı', en:'Expensive'},
+    {ar:'رخيص', lat:'rikhees', tr:'Ucuz', en:'Cheap'},
+    {ar:'عايز', lat:"'aayiz ('ayza kadına)", tr:'İstiyorum', en:'I want'},
+    {ar:'سوق', lat:"soo'", tr:'Çarşı / Pazar', en:'Market'},
+    {ar:'محل', lat:'mahall', tr:'Dükkan', en:'Shop'},
+    {ar:'فلوس', lat:'filoos', tr:'Para', en:'Money'},
+    {ar:'كارت', lat:'kart', tr:'Kart', en:'Card'},
+    {ar:'فاتورة', lat:'fatoora', tr:'Fatura / Fiş', en:'Receipt'},
+    {ar:'خصم', lat:'khasm', tr:'İndirim', en:'Discount'},
+    {ar:'مقاس', lat:"ma'aas", tr:'Beden', en:'Size'},
+    {ar:'لون', lat:'lawn', tr:'Renk', en:'Color'},
+  ],
+  directions:[
+    {ar:'يمين', lat:'yimeen', tr:'Sağ', en:'Right'},
+    {ar:'شمال', lat:'shimaal', tr:'Sol', en:'Left'},
+    {ar:'قدام', lat:"'oddaam", tr:'Ön', en:'In front'},
+    {ar:'ورا', lat:'wara', tr:'Arka', en:'Behind'},
+    {ar:'فوق', lat:"fo'", tr:'Üst', en:'Above'},
+    {ar:'تحت', lat:'taht', tr:'Alt', en:'Under'},
+    {ar:'قريب', lat:"'orayyib", tr:'Yakın', en:'Near'},
+    {ar:'بعيد', lat:"bi'eed", tr:'Uzak', en:'Far'},
+    {ar:'هنا', lat:'hina', tr:'Burada', en:'Here'},
+    {ar:'هناك', lat:'hinaak', tr:'Orada', en:'There'},
+    {ar:'فين...؟', lat:'fein...?', tr:'Nerede...?', en:'Where is...?'},
+    {ar:'الطريق', lat:"et-taree'", tr:'Yol', en:'Road / Way'},
+  ],
+  emotions:[
+    {ar:'مبسوط', lat:'mabsoot', tr:'Mutlu', en:'Happy'},
+    {ar:'زعلان', lat:"za'laan", tr:'Üzgün', en:'Sad'},
+    {ar:'تعبان', lat:"ta'baan", tr:'Yorgun', en:'Tired'},
+    {ar:'عصبي', lat:"'asabi", tr:'Kızgın', en:'Angry'},
+    {ar:'خايف', lat:'khaayif', tr:'Korkmuş', en:'Scared'},
+    {ar:'مشغول', lat:'mashghool', tr:'Meşgul', en:'Busy'},
+    {ar:'جميل', lat:'gameel', tr:'Güzel', en:'Beautiful'},
+    {ar:'كبير', lat:'kibeer', tr:'Büyük', en:'Big'},
+    {ar:'صغير', lat:'soghayyar', tr:'Küçük', en:'Small'},
+    {ar:'جديد', lat:'gedeed', tr:'Yeni', en:'New'},
+    {ar:'قديم', lat:"'adeem", tr:'Eski', en:'Old'},
+    {ar:'سهل', lat:'sahl', tr:'Kolay', en:'Easy'},
+    {ar:'صعب', lat:"sa'b", tr:'Zor', en:'Difficult'},
+    {ar:'مهم', lat:'muhimm', tr:'Önemli', en:'Important'},
+  ],
+  questions:[
+    {ar:'إيه؟', lat:'eih?', tr:'Ne?', en:'What?'},
+    {ar:'مين؟', lat:'meen?', tr:'Kim?', en:'Who?'},
+    {ar:'إمتى؟', lat:'imta?', tr:'Ne zaman?', en:'When?'},
+    {ar:'فين؟', lat:'fein?', tr:'Nerede?', en:'Where?'},
+    {ar:'ليه؟', lat:'leih?', tr:'Neden?', en:'Why?'},
+    {ar:'إزاي؟', lat:'izzaay?', tr:'Nasıl?', en:'How?'},
+    {ar:'كام؟', lat:'kaam?', tr:'Kaç / Ne kadar?', en:'How many/much?'},
+    {ar:'أنهي؟', lat:'anhi?', tr:'Hangi?', en:'Which?'},
+  ],
+  phrases:[
+    {ar:'اسمك إيه؟', lat:'ismak eih?', tr:'Adın ne?', en:"What's your name?"},
+    {ar:'اسمي...', lat:'ismi...', tr:'Benim adım...', en:'My name is...'},
+    {ar:'إنت منين؟', lat:'inta mnein?', tr:'Nerelisin?', en:'Where are you from?'},
+    {ar:'أنا من تركيا', lat:'ana min turkiya', tr:'Ben Türkiye\u2019denim', en:"I'm from Turkey"},
+    {ar:'عندك كام سنة؟', lat:"'andak kam sana?", tr:'Kaç yaşındasın?', en:'How old are you?'},
+    {ar:'مش فاهم', lat:'mish faahim', tr:'Anlamıyorum', en:"I don't understand"},
+    {ar:'بتتكلم إنجليزي؟', lat:'bititkallim ingileezi?', tr:'İngilizce biliyor musun?', en:'Do you speak English?'},
+    {ar:'اتكلم شوية شوية', lat:'itkallim shwaya shwaya', tr:'Yavaş konuş lütfen', en:'Please speak slowly'},
+    {ar:'الحمام فين؟', lat:'el-hammaam fein?', tr:'Tuvalet nerede?', en:"Where's the bathroom?"},
+    {ar:'محتاج مساعدة', lat:"mihtaag musaa'da", tr:'Yardıma ihtiyacım var', en:'I need help'},
+    {ar:'الساعة كام؟', lat:'es-saa\u2019a kaam?', tr:'Saat kaç?', en:"What time is it?"},
+    {ar:'أنا كويس', lat:'ana kwayyes', tr:'Ben iyiyim', en:"I'm fine"},
+    {ar:'ده لذيذ', lat:'da lazeez', tr:'Bu lezzetli', en:'This is delicious'},
+    {ar:'بحبك', lat:'baHebbak', tr:'Seni seviyorum', en:'I love you'},
+    {ar:'مبروك', lat:'mabrook', tr:'Tebrikler', en:'Congratulations'},
+    {ar:'إن شاء الله', lat:'inshallah', tr:'İnşallah', en:'God willing'},
+    {ar:'يلا', lat:'yalla', tr:'Hadi / Haydi', en:"Let's go / Come on"},
+    {ar:'معلش', lat:"ma'lesh", tr:'Sorun değil / Boşver', en:"It's ok / never mind"},
+    {ar:'خلاص', lat:'khalas', tr:'Tamam / Bitti', en:'Okay / that\u2019s it'},
+  ],
+  verbs:[
+    {ar:'بياكل', lat:'beyaakol', tr:'Yer (yemek yer)', en:'He eats'},
+    {ar:'بيشرب', lat:'beyishrab', tr:'İçer', en:'He drinks'},
+    {ar:'بيروح', lat:'beyrooh', tr:'Gider', en:'He goes'},
+    {ar:'بييجي', lat:'beyiigi', tr:'Gelir', en:'He comes'},
+    {ar:'بيشتغل', lat:'beyishtaghal', tr:'Çalışır', en:'He works'},
+    {ar:'بينام', lat:'beynaam', tr:'Uyur', en:'He sleeps'},
+    {ar:'بيتكلم', lat:'beyitkallim', tr:'Konuşur', en:'He speaks'},
+    {ar:'بيقرا', lat:"beyi'ra", tr:'Okur', en:'He reads'},
+    {ar:'بيكتب', lat:'beyiktib', tr:'Yazar', en:'He writes'},
+    {ar:'بيحب', lat:'beyhibb', tr:'Sever', en:'He loves'},
+    {ar:'بيفهم', lat:'beyifham', tr:'Anlar', en:'He understands'},
+    {ar:'عايز', lat:"'aayiz", tr:'İster', en:'He wants'},
+    {ar:'بيشوف', lat:'beyshoof', tr:'Görür', en:'He sees'},
+    {ar:'بيلعب', lat:"beyil'ab", tr:'Oynar', en:'He plays'},
+  ],
+};
+
+const READING_GUIDE = [
+  {sym:"'", txt:'Boğazdan gelen kısa bir duraklama (ع/ق/ء harfleri) — "nefret" kelimesindeki gibi ani bir kesinti düşün.'},
+  {sym:'gh', txt:'Fransızca "r" gibi, boğazın arkasından gelen yumuşak bir ses (غ harfi).'},
+  {sym:'kh', txt:'Kalın, hırıltılı bir "h" — Türkçedeki "hırıltı" sesine yakın (خ harfi).'},
+  {sym:'g', txt:'Mısır Arapçasında ج harfi "c/j" değil, sert "g" (Türkçedeki "gol" gibi) okunur — en belirgin Mısır özelliği!'},
+  {sym:'sh', txt:'"ş" sesi (ش harfi) — "şeker" kelimesindeki gibi.'},
+  {sym:'aa/ee/oo', txt:'Uzatılmış sesli harfler — "aa" uzun a, "ee" uzun i/e, "oo" uzun u/o.'},
+  {sym:'h', txt:'Normal "h" sesi (ه harfi) — bazen daha boğazdan (ح harfi), ikisi de "h" ile yazıldı, kolaylık için.'},
+];
+
+CATS.forEach(c => { WORDS[c.id].forEach((w,i) => { w.id = c.id + '-' + i; w.cat = c.id; }); });
+function catOf(id){ return CATS.find(c => c.id === id); }
+function wordById(id){ const [cat, idx] = id.split('-'); return (WORDS[cat] || [])[+idx]; }
+function allWords(){ return CATS.flatMap(c => WORDS[c.id]); }
+
+/* ══════════════════════════ DURUM / STATE (localStorage) ══════════════════════════ */
+const STORE_KEY = 'masrawy_v1';
+function loadState(){
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) return JSON.parse(raw); } catch(e) {}
+  return { learned:{}, favorites:{}, lastVisit:null, streak:0, bestQuiz:0, recentSearches:[] };
+}
+let STATE = loadState();
+function saveState(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(STATE)); } catch(e) {} }
+
+function updateStreak(){
+  const today = new Date().toISOString().slice(0,10);
+  if (STATE.lastVisit === today) return;
+  if (STATE.lastVisit) {
+    const diffDays = Math.round((new Date(today) - new Date(STATE.lastVisit)) / 86400000);
+    STATE.streak = (diffDays === 1) ? (STATE.streak || 0) + 1 : 1;
+  } else { STATE.streak = 1; }
+  STATE.lastVisit = today;
+  saveState();
+}
+updateStreak();
+
+function toggleLearned(id){ STATE.learned[id] = !STATE.learned[id]; saveState(); }
+function toggleFavorite(id){ STATE.favorites[id] = !STATE.favorites[id]; saveState(); }
+function isLearned(id){ return !!STATE.learned[id]; }
+function isFavorite(id){ return !!STATE.favorites[id]; }
+function catLearnedCount(catId){ return WORDS[catId].filter(w => isLearned(w.id)).length; }
+function totalLearnedCount(){ return allWords().filter(w => isLearned(w.id)).length; }
+
+/* ══════════════════════════ SESLENDİRME / SPEECH ══════════════════════════
+   Çevrimdışıyken bazı cihazlarda konuşma sesi motoru çalışmayabilir — bu durumda
+   buton sessizce hiçbir şey yapmaz, hata vermez. / While offline, the speech engine may
+   be unavailable on some devices — in that case the button silently does nothing, no error. */
+function speak(text){
+  if (!('speechSynthesis' in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ar-EG'; u.rate = 0.85;
+    const voices = window.speechSynthesis.getVoices();
+    const egVoice = voices.find(v => v.lang && v.lang.toLowerCase() === 'ar-eg');
+    const arVoice = egVoice || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+    if (arVoice) u.voice = arVoice;
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
+}
+function esc(s){ return String(s).replace(/'/g, "\\'").replace(/"/g,'&quot;'); }
+
+/* ══════════════════════════ GÖRÜNÜM GEÇİŞİ / VIEW SWITCHING ══════════════════════════ */
+const VIEWS = ['home','category','practice','quiz','favorites'];
+function showView(name){
+  VIEWS.forEach(v => { const el = document.getElementById('view-' + v); if (el) el.style.display = (v === name) ? '' : 'none'; });
+  document.querySelectorAll('.nav-btn, .side-link').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-nav') === (name === 'category' ? 'categories' : name));
+  });
+  window.scrollTo(0,0);
+}
+
+/* ══════════════════════════ OKUMA REHBERİ / READING GUIDE ══════════════════════════ */
+function openGuide(){
+  document.getElementById('guide-rows').innerHTML = READING_GUIDE.map(g => `
+    <div class="guide-row"><div class="gsym">${g.sym}</div><div class="gtxt">${g.txt}</div></div>
+  `).join('');
+  document.getElementById('guide-modal').classList.add('open');
+}
+function closeGuide(){ document.getElementById('guide-modal').classList.remove('open'); }
+
+/* ══════════════════════════ ANA SAYFA / HOME ══════════════════════════ */
+function dailyWord(){
+  const words = allWords();
+  const dayIdx = Math.floor(Date.now() / 86400000);
+  return words[dayIdx % words.length];
+}
+function renderHome(){
+  const w = dailyWord();
+  const learnedTotal = totalLearnedCount();
+  const favTotal = Object.values(STATE.favorites).filter(Boolean).length;
+  const totalWords = allWords().length;
+  document.getElementById('view-home').innerHTML = `
+    <div class="section">
+      <div class="translator-card">
+        <div class="translator-title">🗣️ Ne demek istiyorsun?</div>
+        <div class="translator-sub">Türkçe yaz, Mısır Arapçası karşılığını ve okunuşunu bul</div>
+        <div class="search-wrap">
+          <div class="search-input-row">
+            <input id="search-input" type="text" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)">
+            <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+          </div>
+          <div id="search-results" class="search-results"></div>
+          <div class="search-hint-chips" id="search-hints"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="hero-card">
+        <div class="hero-inner">
+          <div class="hero-eyebrow">✦ Günün Kelimesi ✦</div>
+          <div class="hero-ar ar">${w.ar}</div>
+          <div class="hero-lat lat">${w.lat}</div>
+          <div class="hero-tr">${w.tr}</div>
+          <div class="hero-en">${w.en}</div>
+          <div class="hero-actions">
+            <button class="btn btn-teal" onclick="speak('${esc(w.ar)}')">🔊 Dinle</button>
+            <button class="btn ${isFavorite(w.id) ? 'btn-gold' : 'btn-outline'}" onclick="toggleFavorite('${w.id}'); renderHome();">⭐ ${isFavorite(w.id) ? 'Favorilerde' : 'Favorile'}</button>
+          </div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="num">${learnedTotal}</div><div class="lbl">Öğrenilen</div></div>
+        <div class="stat-card"><div class="num">${totalWords}</div><div class="lbl">Toplam</div></div>
+        <div class="stat-card"><div class="num">${favTotal}</div><div class="lbl">Favori</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <button class="guide-link" onclick="openGuide()"><span class="ic">📖</span> Okuma Rehberi — Arapça harfler nasıl okunur?</button>
+    </div>
+    <div class="section">
+      <div class="section-title"><span>Hızlı Başla</span><span class="rule"></span></div>
+      <div style="display:flex; gap:9px; flex-wrap:wrap;">
+        <button class="btn btn-teal btn-lg" style="flex:1;" onclick="startPractice()">🔄 Alıştırma Yap</button>
+        <button class="btn btn-gold btn-lg" style="flex:1;" onclick="startQuiz()">📝 Sınav Ol</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title"><span>Kategoriler</span><span class="rule"></span></div>
+      ${catGridHtml()}
+    </div>
+  `;
+  renderSearchHints();
+}
+function catGridHtml(){
+  return `<div class="cat-grid">
+    ${CATS.map(c => {
+      const total = WORDS[c.id].length;
+      const learned = catLearnedCount(c.id);
+      const pct = total ? Math.round((learned/total)*100) : 0;
+      return `<button class="cat-card" style="--cat-color:${c.color};" onclick="openCategory('${c.id}')">
+        <span class="mark">${c.mark}</span>
+        <div class="name">${c.tr}</div>
+        <div class="en">${c.en}</div>
+        <div class="prog-track"><div class="prog-fill" style="width:${pct}%;"></div></div>
+        <div class="prog-txt">${learned}/${total} öğrenildi</div>
+      </button>`;
+    }).join('')}
+  </div>`;
+}
+function showAllCategories(){
+  document.getElementById('view-home').innerHTML = `
+    <div class="cat-header"><div class="ar">الفئات</div><div class="en">Tüm Kategoriler</div></div>
+    <div class="section" style="padding-top:8px;">${catGridHtml()}</div>
+  `;
+  showView('home');
+  document.querySelectorAll('.nav-btn, .side-link').forEach(b => b.classList.toggle('active', b.getAttribute('data-nav') === 'categories'));
+}
+function goHome(){ renderHome(); showView('home'); }
+
+/* ══════════════════════════ KATEGORİ DETAY / CATEGORY DETAIL ══════════════════════════ */
+function openCategory(catId){
+  const c = catOf(catId);
+  const words = WORDS[catId];
+  document.getElementById('view-category').innerHTML = `
+    <div class="back-row"><button class="back-btn" onclick="goHome()">←</button></div>
+    <div class="cat-header">
+      <div class="ar" style="color:${c.color};">${c.mark} ${c.ar}</div>
+      <div class="en">${c.tr} · ${words.length} kelime/cümle</div>
+    </div>
+    <div class="section" style="padding-top:10px; padding-bottom:0;">
+      <button class="btn btn-ghost btn-block" onclick="startPractice('${catId}')">🔄 Bu kategoride alıştırma yap</button>
+    </div>
+    <div class="word-list" style="margin-top:12px;">${words.map(w => wordCardHtml(w)).join('')}</div>
+  `;
+  showView('category');
+}
+function wordCardHtml(w){
+  return `<div class="word-card ${isLearned(w.id) ? 'learned' : ''}" id="card-${w.id}">
+    <div class="word-main">
+      <span class="ar">${w.ar}</span>
+      <span class="lat">${w.lat}</span>
+      <div class="tr">${w.tr}</div>
+      <div class="en">${w.en}</div>
+    </div>
+    <div class="word-actions">
+      <button class="icon-btn" onclick="speak('${esc(w.ar)}')" title="Dinle">🔊</button>
+      <button class="icon-btn ${isFavorite(w.id) ? 'on' : ''}" onclick="toggleFavorite('${w.id}'); refreshWordCard('${w.id}');" title="Favorile">⭐</button>
+      <button class="icon-btn ${isLearned(w.id) ? 'learned-on' : ''}" onclick="toggleLearned('${w.id}'); refreshWordCard('${w.id}');" title="Öğrendim">✓</button>
+    </div>
+  </div>`;
+}
+function refreshWordCard(id){
+  const el = document.getElementById('card-' + id);
+  if (!el) return;
+  el.outerHTML = wordCardHtml(wordById(id));
+}
+
+/* ══════════════════════════ FAVORİLER / FAVORITES ══════════════════════════ */
+function showFavorites(){
+  const words = Object.keys(STATE.favorites).filter(id => STATE.favorites[id]).map(wordById).filter(Boolean);
+  document.getElementById('view-favorites').innerHTML = `
+    <div class="cat-header"><div class="ar" style="color:var(--gold-dark);">⭐ المفضلة</div><div class="en">Favoriler</div></div>
+    <div class="word-list" style="margin-top:12px;">
+      ${words.length ? words.map(w => wordCardHtml(w)).join('') : `<div class="empty-state"><div class="glyph">⭐</div>Henüz favori kelimen yok.<br>Kelime kartlarındaki yıldıza dokunarak ekleyebilirsin.</div>`}
+    </div>
+  `;
+  showView('favorites');
+}
+
+/* ══════════════════════════ ARAMA / AUTOCOMPLETE TRANSLATOR ══════════════════════════
+   Yazarken canlı öneriler — Türkçe, İngilizce, Arapça ya da okunuşa göre eşleşir; en iyi
+   eşleşmeler (baştan başlayanlar) üstte gösterilir. / Live suggestions as you type — matches
+   Turkish, English, Arabic, or transliteration; best matches (starts-with) rank first. */
+let _searchDebounce = null;
+function onSearch(q){
+  clearTimeout(_searchDebounce);
+  document.getElementById('search-clear').classList.toggle('show', !!q);
+  _searchDebounce = setTimeout(() => runSearch(q), 90);
+}
+function runSearch(q){
+  const box = document.getElementById('search-results');
+  const hintBox = document.getElementById('search-hints');
+  q = (q || '').trim().toLowerCase();
+  if (!q) { box.innerHTML = ''; renderSearchHints(); return; }
+  hintBox.innerHTML = '';
+  const words = allWords();
+  const scored = [];
+  words.forEach(w => {
+    const fields = [w.tr.toLowerCase(), w.en.toLowerCase(), w.lat.toLowerCase(), w.ar];
+    let best = -1;
+    fields.forEach(f => {
+      const idx = f.indexOf(q);
+      if (idx === -1) return;
+      const score = (idx === 0 ? 100 : 50) - Math.min(f.length, 40);
+      if (score > best) best = score;
+    });
+    if (best > -1) scored.push({ w, score: best });
+  });
+  scored.sort((a,b) => b.score - a.score);
+  const hits = scored.slice(0, 12).map(s => s.w);
+  if (!hits.length) {
+    box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene.</div>`;
+    return;
+  }
+  box.innerHTML = hits.map(w => `
+    <button class="search-hit" onclick="openCategory('${w.cat}')">
+      <span class="ar">${w.ar}</span>
+      <div class="meta"><div class="tr">${w.tr}</div><span class="lat">${w.lat}</span></div>
+      <button class="hit-play" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊</button>
+    </button>
+  `).join('');
+  rememberSearch(q);
+}
+function clearSearch(){
+  const input = document.getElementById('search-input');
+  if (input) { input.value=''; input.focus(); }
+  document.getElementById('search-results').innerHTML = '';
+  document.getElementById('search-clear').classList.remove('show');
+  renderSearchHints();
+}
+function rememberSearch(q){
+  STATE.recentSearches = [q, ...(STATE.recentSearches || []).filter(x => x !== q)].slice(0, 6);
+  saveState();
+}
+function renderSearchHints(){
+  const hintBox = document.getElementById('search-hints');
+  if (!hintBox) return;
+  const suggestions = (STATE.recentSearches && STATE.recentSearches.length)
+    ? STATE.recentSearches
+    : ['teşekkürler','su','nerede','ne kadar','seviyorum'];
+  hintBox.innerHTML = suggestions.map(s => `<button class="hint-chip" onclick="document.getElementById('search-input').value='${esc(s)}'; runSearch('${esc(s)}');">${s}</button>`).join('');
+}
+
+/* ══════════════════════════ ALIŞTIRMA / PRACTICE (KAYDIRMALI FLASHCARD) ══════════════════════════ */
+let _practiceDeck = [], _practiceIdx = 0, _practiceKnown = 0;
+function startPractice(catId){
+  let pool = catId ? WORDS[catId].slice() : allWords().slice();
+  const notLearned = pool.filter(w => !isLearned(w.id));
+  const source = notLearned.length >= 6 ? notLearned : pool;
+  _practiceDeck = shuffle(source).slice(0, 15);
+  _practiceIdx = 0; _practiceKnown = 0;
+  if (!_practiceDeck.length) {
+    document.getElementById('view-practice').innerHTML = `<div class="empty-state"><div class="glyph">🔄</div>Bu kategoride kelime yok.</div>`;
+    showView('practice'); return;
+  }
+  renderPracticeCard();
+  showView('practice');
+}
+function shuffle(arr){ const a = arr.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function renderPracticeCard(){
+  if (_practiceIdx >= _practiceDeck.length) { renderPracticeSummary(); return; }
+  const w = _practiceDeck[_practiceIdx];
+  const c = catOf(w.cat);
+  const dots = _practiceDeck.map((_,i) => `<span class="dot ${i < _practiceIdx ? 'done' : (i === _practiceIdx ? 'now' : '')}"></span>`).join('');
+  document.getElementById('view-practice').innerHTML = `
+    <div class="practice-wrap">
+      <div class="dots">${dots}</div>
+      <div class="flash-stage">
+        <div class="flash" id="flash-el">
+          <span class="flash-cat-tag">${c.tr}</span>
+          <span class="flash-swipe-badge left" id="badge-left">Tekrar</span>
+          <span class="flash-swipe-badge right" id="badge-right">Biliyorum</span>
+          <div class="flash-face-a" onclick="flipCard()">
+            <div class="ar">${w.ar}</div>
+            <div class="flash-hint">👆 Anlamı görmek için dokun</div>
+          </div>
+          <div class="flash-face-b">
+            <div class="tr">${w.tr}</div>
+            <div class="lat">${w.lat}</div>
+            <div class="en">${w.en}</div>
+            <button class="btn btn-ghost" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊 Dinle</button>
+          </div>
+        </div>
+      </div>
+      <div class="practice-actions">
+        <button class="btn btn-outline btn-lg" onclick="practiceAnswer(false)">🔁 Tekrar Et</button>
+        <button class="btn btn-teal btn-lg" onclick="practiceAnswer(true)">✅ Biliyorum</button>
+      </div>
+      <div class="swipe-tip">👉 Sağa kaydır: biliyorum · 👈 sola kaydır: tekrar et</div>
+    </div>
+  `;
+  attachSwipeHandlers();
+}
+function flipCard(){ const el = document.getElementById('flash-el'); if (el) el.classList.toggle('flipped'); }
+
+/* ── Dokunmatik kaydırma (swipe) desteği — mobil için doğal his / Touch swipe support — feels native on mobile ── */
+function attachSwipeHandlers(){
+  const el = document.getElementById('flash-el');
+  if (!el) return;
+  let startX = 0, startY = 0, dx = 0, dragging = false, movedEnough = false;
+  const badgeL = document.getElementById('badge-left'), badgeR = document.getElementById('badge-right');
+  el.addEventListener('touchstart', (e) => {
+    const t = e.touches[0]; startX = t.clientX; startY = t.clientY; dx = 0; dragging = true; movedEnough = false;
+    el.style.transition = 'none';
+  }, { passive:true });
+  el.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const t = e.touches[0]; dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    if (Math.abs(dx) < 8 && !movedEnough) return;
+    if (Math.abs(dy) > Math.abs(dx) * 1.3 && !movedEnough) return; // düşey kaydırma ise (scroll) elleme
+    movedEnough = true;
+    el.style.transform = `translateX(${dx}px) rotate(${dx/22}deg)`;
+    const p = Math.min(1, Math.abs(dx)/90);
+    if (dx > 0) { badgeR.style.opacity = p; badgeR.style.transform = `scale(${0.8+0.2*p})`; badgeL.style.opacity = 0; }
+    else if (dx < 0) { badgeL.style.opacity = p; badgeL.style.transform = `scale(${0.8+0.2*p})`; badgeR.style.opacity = 0; }
+  }, { passive:true });
+  el.addEventListener('touchend', () => {
+    dragging = false;
+    el.style.transition = 'transform .25s ease';
+    if (movedEnough && Math.abs(dx) > 90) {
+      const knew = dx > 0;
+      el.style.transform = `translateX(${knew ? 500 : -500}px) rotate(${knew ? 25 : -25}deg)`;
+      setTimeout(() => practiceAnswer(knew), 180);
+    } else {
+      el.style.transform = 'translateX(0) rotate(0)';
+      badgeL.style.opacity = 0; badgeR.style.opacity = 0;
+    }
+  });
+}
+function practiceAnswer(knew){
+  const w = _practiceDeck[_practiceIdx];
+  if (knew) { STATE.learned[w.id] = true; _practiceKnown++; saveState(); }
+  _practiceIdx++;
+  renderPracticeCard();
+}
+function renderPracticeSummary(){
+  document.getElementById('view-practice').innerHTML = `
+    <div class="practice-summary">
+      <div class="big">🎉</div>
+      <h2 style="font-size:21px; margin-bottom:8px;">Alıştırma Tamamlandı!</h2>
+      <p style="color:var(--ink-faint); margin-bottom:20px;">${_practiceDeck.length} kelimeden ${_practiceKnown} tanesini biliyordun.</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-teal btn-lg" onclick="startPractice()">🔄 Yeniden Başla</button>
+        <button class="btn btn-outline btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ══════════════════════════ SINAV / QUIZ ══════════════════════════ */
+let _quizDeck = [], _quizIdx = 0, _quizScore = 0, _quizLocked = false;
+function startQuiz(){
+  _quizDeck = shuffle(allWords()).slice(0, 10);
+  _quizIdx = 0; _quizScore = 0;
+  renderQuizQuestion();
+  showView('quiz');
+}
+function renderQuizQuestion(){
+  if (_quizIdx >= _quizDeck.length) { renderQuizResult(); return; }
+  _quizLocked = false;
+  const w = _quizDeck[_quizIdx];
+  const distractors = shuffle(allWords().filter(x => x.id !== w.id)).slice(0,3);
+  const options = shuffle([w, ...distractors]);
+  document.getElementById('view-quiz').innerHTML = `
+    <div class="quiz-wrap">
+      <div class="quiz-progress">Soru ${_quizIdx + 1} / ${_quizDeck.length} · Skor: ${_quizScore}</div>
+      <div class="quiz-q"><div class="ar">${w.ar}</div><div class="lat">${w.lat}</div></div>
+      <div class="quiz-opts" id="quiz-opts">
+        ${options.map(o => `<button class="quiz-opt" data-id="${o.id}" onclick="answerQuiz('${o.id}','${w.id}')">${o.tr}</button>`).join('')}
+      </div>
+    </div>
+  `;
+}
+function answerQuiz(chosenId, correctId){
+  if (_quizLocked) return;
+  _quizLocked = true;
+  if (chosenId === correctId) _quizScore++;
+  document.querySelectorAll('#quiz-opts .quiz-opt').forEach(btn => {
+    if (btn.getAttribute('data-id') === correctId) btn.classList.add('correct');
+    else if (btn.getAttribute('data-id') === chosenId) btn.classList.add('wrong');
+  });
+  setTimeout(() => { _quizIdx++; renderQuizQuestion(); }, 700);
+}
+function renderQuizResult(){
+  const pct = Math.round((_quizScore / _quizDeck.length) * 100);
+  const stars = pct >= 90 ? '★★★' : pct >= 60 ? '★★☆' : pct >= 30 ? '★☆☆' : '☆☆☆';
+  if (_quizScore > (STATE.bestQuiz || 0)) { STATE.bestQuiz = _quizScore; saveState(); }
+  document.getElementById('view-quiz').innerHTML = `
+    <div class="quiz-wrap quiz-result">
+      <div class="hero-eyebrow">Sınav Sonucu</div>
+      <div class="score">${_quizScore}/${_quizDeck.length}</div>
+      <div class="stars">${stars}</div>
+      <p style="color:var(--ink-faint); margin-bottom:8px;">%${pct} doğru cevap</p>
+      <p style="color:var(--ink-faint); font-size:12px; margin-bottom:20px;">En iyi skorun: ${STATE.bestQuiz || 0}/10</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-teal btn-lg" onclick="startQuiz()">🔄 Tekrar Dene</button>
+        <button class="btn btn-outline btn-lg" onclick="goHome()">🏠 Ana Sayfa</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ══════════════════════════ ÇEVRİMDIŞI DURUMU / OFFLINE STATUS ══════════════════════════ */
+function updateOnlineStatus(){
+  document.getElementById('offline-pill').classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+/* ══════════════════════════ SERVICE WORKER (ÇEVRİMDIŞI ÇALIŞMA) ══════════════════════════
+   Uygulama ilk açıldığında dosyaları önbelleğe alır; internet olmadan tekrar açıldığında
+   önbellekten çalışmaya devam eder. / Caches app files on first load; when reopened without
+   internet, keeps running from the cache. */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
+/* ══════════════════════════ BAŞLAT / INIT ══════════════════════════ */
+function refreshStreakUI(){
+  document.getElementById('streak-txt').textContent = STATE.streak || 0;
+  const side = document.getElementById('side-streak-txt');
+  if (side) side.textContent = (STATE.streak || 0) + ' günlük seri';
+}
+if ('speechSynthesis' in window) { window.speechSynthesis.onvoiceschanged = () => {}; }
+refreshStreakUI();
+updateOnlineStatus();
+renderHome();
+showView('home');
+</script>
+</body>
+</html>
