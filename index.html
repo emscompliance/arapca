@@ -92,6 +92,14 @@
     display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim);
   }
   .flag-pill .fl{font-size:15px;}
+  /* ── Gerçek SVG bayrak ikonları — Windows'ta bayrak emojileri "TR"/"EG" gibi düz metin olarak
+       göründüğü için (sistem emoji fontunun sınırlaması), bayraklar artık her platformda AYNI
+       görünen vektör grafikler olarak çiziliyor. / Real SVG flag icons — since flag emoji render as
+       plain "TR"/"EG" text on Windows (a system emoji-font limitation), flags are now drawn as
+       vector graphics that look IDENTICAL on every platform. ── */
+  .flag-ico{width:22px; height:auto; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.4); vertical-align:middle; flex-shrink:0; display:inline-block;}
+  .flag-ico.sm{width:17px;}
+  .flag-ico.lg{width:36px;}
   .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-soft);}
   .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
   .offline-pill.show{display:flex;}
@@ -126,7 +134,7 @@
   .mic-btn.listening{background:var(--red); color:#fff; animation:mic-pulse 1.1s ease-in-out infinite;}
   @keyframes mic-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(229,57,59,0.5);} 50%{ box-shadow:0 0 0 9px rgba(229,57,59,0);} }
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
-  .search-hit{background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left;}
+  .search-hit{background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;}
   .search-hit.top-hit{background:rgba(255,75,75,0.10); border-color:var(--red);}
   .search-hit .ar{font-size:20px; color:var(--gold-soft); flex-shrink:0; min-width:64px;}
   .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
@@ -332,9 +340,11 @@
       <span class="logo-mark">ع</span>
       <div><div class="kufi">أتعلم العربية</div><div class="sub">ARAPÇA ÖĞRENİYORUM</div></div>
     </button>
-    <div class="side-flags">🇹🇷 <span style="color:var(--red); font-size:14px;">✦</span> 🇪🇬</div>
+    <div class="side-flags"><svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg> <span style="color:var(--red); font-size:14px;">✦</span> <svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
     <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
+    <button class="side-link" data-nav="translate" onclick="showTranslate()"><span class="ic">🗣️</span> Çeviri</button>
     <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
+    <button class="side-link" data-nav="phrases" onclick="openCategory('phrases')"><span class="ic">💬</span> Günlük Cümleler</button>
     <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span> Alıştırma</button>
     <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span> Sınav</button>
     <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span> Favoriler</button>
@@ -350,7 +360,7 @@
         </button>
         <div style="display:flex; align-items:center;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
-          <div class="flag-pill glass"><span class="fl">🇹🇷</span>→<span class="fl">🇪🇬</span></div>
+          <div class="flag-pill glass"><svg class="flag-ico sm" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg>→<svg class="flag-ico sm" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
           <div style="width:8px;"></div>
           <div class="streak-pill glass"><span>🔥</span> <span id="streak-txt">0</span></div>
         </div>
@@ -358,6 +368,7 @@
     </header>
 
     <div id="view-home"></div>
+    <div id="view-translate" style="display:none;"></div>
     <div id="view-category" style="display:none;"></div>
     <div id="view-practice" style="display:none;"></div>
     <div id="view-quiz" style="display:none;"></div>
@@ -373,7 +384,7 @@
           <span class="kufi" style="font-size:15px; color:var(--ink);">أتعلم العربية</span>
         </button>
         <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
-        <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
+        <div class="footer-flags"><svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg> ✦ <svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
         <div class="footer-actions">
           <button class="footer-mini-btn" onclick="shareApp()">🔗 Paylaş</button>
@@ -970,7 +981,7 @@ function stopVoiceSearch(){
 }
 
 /* ══════════════════════════ GÖRÜNÜM GEÇİŞİ ══════════════════════════ */
-const VIEWS = ['home','category','practice','quiz','favorites'];
+const VIEWS = ['home','translate','category','practice','quiz','favorites'];
 function showView(name){
   VIEWS.forEach(v => { const el = document.getElementById('view-' + v); if (el) el.style.display = (v === name) ? '' : 'none'; });
   document.querySelectorAll('.nav-btn, .side-link').forEach(b => {
@@ -998,26 +1009,20 @@ function renderHome(){
   const totalWords = allWords().length;
   document.getElementById('view-home').innerHTML = `
     <div class="bridge-strip">
-      <span class="bridge-flag">🇹🇷</span>
+      <svg class="flag-ico lg" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg>
       <div class="bridge-route"><div class="bridge-line"></div><span class="bridge-plane">✈</span><div class="bridge-line"></div></div>
-      <span class="bridge-flag">🇪🇬</span>
+      <svg class="flag-ico lg" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg>
     </div>
     <div class="bridge-caption">İstanbul'dan Kahire'ye — günlük Mısır Arapçası</div>
     <div class="section">
-      <div class="translator-card glass">
-        <div class="translator-title">🗣️ Ne demek istiyorsun?</div>
-        <div class="translator-sub">Türkçe yaz ya da söyle, Mısır Arapçası karşılığını ve okunuşunu bul</div>
-        <div class="search-wrap">
-          <div class="search-input-row">
-            <input id="search-input" type="text" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false"
-              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)">
-            <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
-            <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="Sesli ara">🎙️</button>
-          </div>
-          <div id="search-results" class="search-results"></div>
-          <div class="search-hint-chips" id="search-hints"></div>
-        </div>
-      </div>
+      <button class="translator-card glass" onclick="showTranslate()" style="width:100%; text-align:left; display:flex; align-items:center; gap:14px; cursor:pointer;">
+        <span style="font-size:28px; flex-shrink:0;">🗣️</span>
+        <span style="flex:1; min-width:0;">
+          <div class="translator-title">Çeviri Yap</div>
+          <div class="translator-sub" style="margin-bottom:0;">Türkçe yaz ya da söyle, Mısır Arapçası karşılığını ve okunuşunu bul</div>
+        </span>
+        <span style="font-size:20px; color:var(--red); flex-shrink:0;">›</span>
+      </button>
     </div>
     <div class="section">
       <div class="hero-card glass">
@@ -1053,9 +1058,6 @@ function renderHome(){
       ${catGridHtml()}
     </div>
   `;
-  renderSearchHints();
-  const micBtn = document.getElementById('mic-btn');
-  if (micBtn && !micSupported()) micBtn.style.display = 'none';
 }
 function catGridHtml(){
   return `<div class="cat-grid">
@@ -1082,6 +1084,39 @@ function showAllCategories(){
 }
 function goHome(){ renderHome(); showView('home'); }
 
+/* ══════════════════════════ ÇEVİRİ / TRANSLATE ══════════════════════════
+   Ayrı, tam sayfa bir çeviri bölümü — arama kutusu, sesli arama ve sonuçlar burada. Aynı
+   #search-input / #search-results kimlikleriyle çalışır, mevcut onSearch/runSearch mantığı
+   değişmeden bu görünümü de besler. /
+   A separate, full-page translation section — the search box, voice search, and results live
+   here. Uses the same #search-input / #search-results ids, so the existing onSearch/runSearch
+   logic powers this view unchanged. */
+function renderTranslate(){
+  document.getElementById('view-translate').innerHTML = `
+    <div class="back-row"><button class="back-btn glass" onclick="goHome()">←</button></div>
+    <div class="section">
+      <div class="translator-card glass">
+        <div class="translator-title">🗣️ Çeviri</div>
+        <div class="translator-sub">Türkçe yaz ya da mikrofona söyle — Mısır Arapçası karşılığı, okunuşu ve sesi hemen aşağıda çıkar</div>
+        <div class="search-wrap">
+          <div class="search-input-row">
+            <input id="search-input" type="text" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+              placeholder="örn: teşekkürler, su, nerede..." oninput="onSearch(this.value)" autofocus>
+            <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+            <button class="mic-btn" id="mic-btn" onclick="toggleVoiceSearch()" title="Sesli ara">🎙️</button>
+          </div>
+          <div id="search-results" class="search-results"></div>
+          <div class="search-hint-chips" id="search-hints"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  renderSearchHints();
+  const micBtn = document.getElementById('mic-btn');
+  if (micBtn && !micSupported()) micBtn.style.display = 'none';
+}
+function showTranslate(){ renderTranslate(); showView('translate'); }
+
 /* ══════════════════════════ KATEGORİ DETAY (dikey istif) ══════════════════════════ */
 function openCategory(catId){
   const c = catOf(catId);
@@ -1098,6 +1133,14 @@ function openCategory(catId){
     <div class="word-list" style="margin-top:12px;">${words.map(w => wordCardHtml(w)).join('')}</div>
   `;
   showView('category');
+  // Kenar menüde ilgili kısayol varsa (örn. "Günlük Cümleler") onu aktif göster, yoksa "Kategoriler"i /
+  // If a direct sidebar shortcut exists for this category (e.g. "Daily Sentences"), highlight it;
+  // otherwise fall back to highlighting "Categories".
+  const directLink = document.querySelector(`.side-link[data-nav="${catId}"], .nav-btn[data-nav="${catId}"]`);
+  if (directLink) {
+    document.querySelectorAll('.nav-btn, .side-link').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll(`[data-nav="${catId}"]`).forEach(b => b.classList.add('active'));
+  }
 }
 function wordCardHtml(w){
   return `<div class="word-card glass ${isLearned(w.id) ? 'learned' : ''}" id="card-${w.id}">
@@ -1197,11 +1240,11 @@ function runSearch(q){
   const hits = scored.slice(0, 12).map(s => s.w);
   if (!hits.length) { box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene ya da Okuma Rehberi'ne göz at.</div>`; return; }
   box.innerHTML = (partial ? `<div class="search-empty" style="padding:4px 4px 10px; text-align:left;">Tam cümle bulunamadı — içindeki bilinen kelimeler:</div>` : '') + hits.map((w, i) => `
-    <button class="search-hit ${i === 0 ? 'top-hit' : ''}" onclick="openCategory('${w.cat}')">
+    <div class="search-hit ${i === 0 ? 'top-hit' : ''}" onclick="openCategory('${w.cat}')">
       <span class="ar">${w.ar}</span>
       <div class="meta"><div class="tr">${w.tr}</div><span class="lat-pill">${w.lat}</span></div>
       <button class="hit-play" onclick="event.stopPropagation(); speak('${esc(w.ar)}')">🔊</button>
-    </button>
+    </div>
   `).join('');
   rememberSearch(q);
   // ═══ YENİ ═══ En iyi eşleşme bulunduğunda okunuşu otomatik seslendirilir — kullanıcı ayrıca
