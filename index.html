@@ -285,6 +285,8 @@
   /* ── Alt bilgi / Footer ── */
   .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
   .footer-card{padding:22px 20px; text-align:center;}
+  .footer-logo-row{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:10px; background:none; border:none; width:100%; padding:4px;}
+  .footer-logo-row:active{opacity:.75;}
   .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
   .footer-flags{font-size:18px; margin-bottom:16px; letter-spacing:2px;}
   .footer-contact{
@@ -366,7 +368,10 @@
          extra shortcuts. -->
     <footer class="app-footer">
       <div class="footer-card glass">
-        <div class="footer-tag" style="font-weight:800; font-size:13px; color:var(--ink); margin-bottom:8px;">Arapça Öğreniyorum</div>
+        <button class="footer-logo-row" onclick="goHome()" title="Ana sayfaya dön">
+          <span class="logo-mark" style="font-size:24px;">ع</span>
+          <span class="kufi" style="font-size:15px; color:var(--ink);">أتعلم العربية</span>
+        </button>
         <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
         <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
@@ -424,6 +429,15 @@ const CATS = [
   { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', c1:'#C62828', c2:'#000000' },
   { id:'places',     ar:'أماكن',      tr:'Yerler & Mekanlar',    en:'Places',              mark:'⌘', c1:'#D32F2F', c2:'#1A0000' },
   { id:'body',       ar:'الجسم',      tr:'Vücut Bölümleri',      en:'Body Parts',          mark:'✚', c1:'#9E9E9E', c2:'#212121' },
+  { id:'days',       ar:'أيام الأسبوع', tr:'Haftanın Günleri',   en:'Days of the Week',    mark:'📅', c1:'#FF5252', c2:'#5A0000' },
+  { id:'weather',    ar:'الجو',       tr:'Hava Durumu',          en:'Weather',             mark:'☁', c1:'#B0B0B0', c2:'#333333' },
+  { id:'animals',    ar:'الحيوانات',  tr:'Hayvanlar',            en:'Animals',             mark:'🐾', c1:'#EF5350', c2:'#4A0000' },
+  { id:'jobs',       ar:'المهن',      tr:'Meslekler',            en:'Jobs',                mark:'💼', c1:'#616161', c2:'#0A0A0A' },
+  { id:'clothes',    ar:'الهدوم',     tr:'Giysiler',             en:'Clothes',             mark:'👕', c1:'#FF6E6E', c2:'#8E1B1B' },
+  { id:'transport',  ar:'المواصلات',  tr:'Ulaşım',               en:'Transport',           mark:'🚗', c1:'#8B0000', c2:'#000000' },
+  { id:'home',       ar:'البيت',      tr:'Ev Eşyaları',          en:'Home',                mark:'🛋', c1:'#9C9C9C', c2:'#262626' },
+  { id:'health',     ar:'الصحة',      tr:'Sağlık',               en:'Health',              mark:'✚', c1:'#E53935', c2:'#2A0000' },
+  { id:'school',     ar:'المدرسة',    tr:'Okul & Eğitim',        en:'School',              mark:'📖', c1:'#757575', c2:'#101010' },
 ];
 
 const WORDS = {
@@ -699,6 +713,98 @@ const WORDS = {
     {ar:'ضهر', lat:'dahr', tr:'Sırt', en:'Back'},
     {ar:'بطن', lat:'baṭn', tr:'Karın', en:'Stomach'},
     {ar:'قلب', lat:'ʾalb', tr:'Kalp', en:'Heart'},
+  ],
+  days:[
+    {ar:'السبت', lat:'is-sabt', tr:'Cumartesi', en:'Saturday'},
+    {ar:'الحد', lat:'il-hadd', tr:'Pazar', en:'Sunday'},
+    {ar:'الاتنين', lat:'il-itnein', tr:'Pazartesi', en:'Monday'},
+    {ar:'التلات', lat:'it-talat', tr:'Salı', en:'Tuesday'},
+    {ar:'الأربع', lat:"il-arba'", tr:'Çarşamba', en:'Wednesday'},
+    {ar:'الخميس', lat:'il-khamees', tr:'Perşembe', en:'Thursday'},
+    {ar:'الجمعة', lat:"ig-gum'a", tr:'Cuma', en:'Friday'},
+  ],
+  weather:[
+    {ar:'شمس', lat:'shams', tr:'Güneş', en:'Sun'},
+    {ar:'مطر', lat:'matar', tr:'Yağmur', en:'Rain'},
+    {ar:'حر', lat:'harr', tr:'Sıcak (hava)', en:'Hot'},
+    {ar:'برد', lat:'bard', tr:'Soğuk (hava)', en:'Cold'},
+    {ar:'هوا', lat:'hawa', tr:'Rüzgar', en:'Wind'},
+    {ar:'سحاب', lat:'sahaab', tr:'Bulut', en:'Cloud'},
+    {ar:'الجو حلو', lat:"ig-gaw hilw", tr:'Hava güzel', en:'The weather is nice'},
+    {ar:'الجو وحش', lat:'ig-gaw wihish', tr:'Hava kötü', en:'The weather is bad'},
+    {ar:'رطوبة', lat:'rutuuba', tr:'Nem', en:'Humidity'},
+    {ar:'تلج', lat:'talg', tr:'Kar', en:'Snow'},
+  ],
+  animals:[
+    {ar:'قطة', lat:"ʾuṭṭa", tr:'Kedi', en:'Cat'},
+    {ar:'كلب', lat:'kalb', tr:'Köpek', en:'Dog'},
+    {ar:'عصفور', lat:"'asfoor", tr:'Kuş', en:'Bird'},
+    {ar:'سمكة', lat:'samaka', tr:'Balık', en:'Fish'},
+    {ar:'حصان', lat:'husaan', tr:'At', en:'Horse'},
+    {ar:'أسد', lat:'asad', tr:'Aslan', en:'Lion'},
+    {ar:'فيل', lat:'feel', tr:'Fil', en:'Elephant'},
+    {ar:'جمل', lat:'gamal', tr:'Deve', en:'Camel'},
+    {ar:'أرنب', lat:'arnab', tr:'Tavşan', en:'Rabbit'},
+    {ar:'دجاجة', lat:'dagaaga', tr:'Tavuk', en:'Chicken'},
+  ],
+  jobs:[
+    {ar:'دكتور', lat:'doktoor', tr:'Doktor', en:'Doctor'},
+    {ar:'مدرس', lat:'mudarris', tr:'Öğretmen', en:'Teacher'},
+    {ar:'مهندس', lat:'muhandis', tr:'Mühendis', en:'Engineer'},
+    {ar:'ممرضة', lat:'mumarrida', tr:'Hemşire', en:'Nurse'},
+    {ar:'شرطي', lat:'shurti', tr:'Polis', en:'Police officer'},
+    {ar:'سواق', lat:"sawwaa'", tr:'Şoför', en:'Driver'},
+    {ar:'طباخ', lat:'tabbaakh', tr:'Aşçı', en:'Cook'},
+    {ar:'محامي', lat:'muhaami', tr:'Avukat', en:'Lawyer'},
+    {ar:'موظف', lat:'muwazzaf', tr:'Memur / Çalışan', en:'Employee'},
+    {ar:'تاجر', lat:'taagir', tr:'Tüccar', en:'Merchant'},
+  ],
+  clothes:[
+    {ar:'قميص', lat:'ʾameeṣ', tr:'Gömlek', en:'Shirt'},
+    {ar:'بنطلون', lat:'banṭaloon', tr:'Pantolon', en:'Trousers'},
+    {ar:'جزمة', lat:'gazma', tr:'Ayakkabı', en:'Shoes'},
+    {ar:'فستان', lat:'fustaan', tr:'Elbise', en:'Dress'},
+    {ar:'جاكيت', lat:'jaakeet', tr:'Ceket', en:'Jacket'},
+    {ar:'شنطة', lat:'shanta', tr:'Çanta', en:'Bag'},
+    {ar:'ساعة', lat:"saa'a", tr:'Kol saati', en:'Watch'},
+    {ar:'نضارة', lat:'naddaara', tr:'Gözlük', en:'Glasses'},
+  ],
+  transport:[
+    {ar:'عربية', lat:"'arabiyya", tr:'Araba', en:'Car'},
+    {ar:'أتوبيس', lat:'otobees', tr:'Otobüs', en:'Bus'},
+    {ar:'قطر', lat:'ʾaṭr', tr:'Tren', en:'Train'},
+    {ar:'طيارة', lat:'ṭayyaara', tr:'Uçak', en:'Airplane'},
+    {ar:'تاكسي', lat:'taksi', tr:'Taksi', en:'Taxi'},
+    {ar:'مترو', lat:'metro', tr:'Metro', en:'Metro'},
+    {ar:'مركب', lat:'markib', tr:'Tekne', en:'Boat'},
+    {ar:'عجلة', lat:"'agala", tr:'Bisiklet', en:'Bicycle'},
+  ],
+  home:[
+    {ar:'طرابيزة', lat:'ṭarabeeza', tr:'Masa', en:'Table'},
+    {ar:'كرسي', lat:'kursi', tr:'Sandalye', en:'Chair'},
+    {ar:'سرير', lat:'sireer', tr:'Yatak', en:'Bed'},
+    {ar:'باب', lat:'baab', tr:'Kapı', en:'Door'},
+    {ar:'شباك', lat:'shibbaak', tr:'Pencere', en:'Window'},
+    {ar:'تلاجة', lat:'tallaaga', tr:'Buzdolabı', en:'Fridge'},
+    {ar:'مطبخ', lat:'maṭbakh', tr:'Mutfak', en:'Kitchen'},
+    {ar:'حمام', lat:'hammaam', tr:'Banyo', en:'Bathroom'},
+    {ar:'أوضة', lat:'oda', tr:'Oda', en:'Room'},
+  ],
+  health:[
+    {ar:'عيان', lat:"'ayyaan", tr:'Hasta', en:'Sick'},
+    {ar:'دوا', lat:'dawa', tr:'İlaç', en:'Medicine'},
+    {ar:'وجع', lat:"waga'", tr:'Ağrı', en:'Pain'},
+    {ar:'صداع', lat:"suda'a", tr:'Baş ağrısı', en:'Headache'},
+    {ar:'حرارة', lat:'haraara', tr:'Ateş (vücut)', en:'Fever'},
+    {ar:'كحة', lat:'kohha', tr:'Öksürük', en:'Cough'},
+  ],
+  school:[
+    {ar:'كتاب', lat:'kitaab', tr:'Kitap', en:'Book'},
+    {ar:'قلم', lat:'ʾalam', tr:'Kalem', en:'Pen'},
+    {ar:'كراسة', lat:'kurraasa', tr:'Defter', en:'Notebook'},
+    {ar:'امتحان', lat:'imtihaan', tr:'Sınav', en:'Exam'},
+    {ar:'فصل', lat:'fasl', tr:'Sınıf', en:'Classroom'},
+    {ar:'طالب', lat:'ṭaalib', tr:'Öğrenci', en:'Student'},
   ],
 };
 
