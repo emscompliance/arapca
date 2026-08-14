@@ -13,7 +13,7 @@
    fully offline.
    ══════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'masrawy-v11';
+const CACHE_NAME = 'masrawy-v12';
 const APP_SHELL = [
   './',
   './index.html',
