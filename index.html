@@ -27,7 +27,7 @@
     --ink:#16232E; --ink-dim:#5C7186; --ink-faint:#9AACBC;
     --gold:#2196F3; --gold-soft:#64B5F6; --gold-text:#1565C0; --gold-glow:rgba(33,150,243,0.24);
     --red:#FF7043; --red-soft:#FFAB85; --red-glow:rgba(255,112,67,0.28);
-    --brand-red:#E5393B;
+    --brand-red:#FF7043;
     --teal:#00BFA5; --teal-soft:#5CE0CB; --teal-glow:rgba(0,191,165,0.24);
     --radius-lg:26px; --radius-md:18px; --radius-sm:12px;
     --nav-h:70px;
@@ -90,7 +90,7 @@
        exactly, clicking it returns to the home screen ── */
   .logo-mark{
     font-family:"Amiri","Noto Naskh Arabic",serif; color:var(--brand-red); font-weight:700; line-height:0.8;
-    font-size:30px; flex-shrink:0; direction:rtl; text-shadow:0 4px 14px rgba(229,57,59,0.28);
+    font-size:30px; flex-shrink:0; direction:rtl; text-shadow:0 4px 14px rgba(255,112,67,0.28);
   }
   .brand-text{line-height:1.2; text-align:left;}
   .brand-text .kufi{font-size:15px; font-weight:700; color:var(--ink);}
@@ -770,6 +770,27 @@ const WORDS = {
     {ar:'معلش', lat:"ma'lesh", tr:'Sorun değil / Boşver', en:"It's ok / never mind"},
     {ar:'خلاص', lat:'khalas', tr:'Tamam / Bitti', en:'Okay / that\u2019s it'},
     {ar:'أنا', lat:'ana', tr:'Ben', en:'I / me'},
+    {ar:'إنت', lat:'inta', tr:'Sen (erkeğe)', en:'You (to a male)'},
+    {ar:'إنتي', lat:'inti', tr:'Sen (kıza)', en:'You (to a female)'},
+    {ar:'هو', lat:'howa', tr:'O (erkek)', en:'He'},
+    {ar:'هي', lat:'heyya', tr:'O (kadın)', en:'She'},
+    {ar:'إنتو', lat:'intu', tr:'Siz', en:'You (plural)'},
+    {ar:'هما', lat:'homma', tr:'Onlar', en:'They'},
+    {ar:'إزيك؟ عامل إيه؟', lat:'izzayyak? aamil eih?', tr:'Nasılsın, iyi misin?', en:'How are you, are you well?'},
+    {ar:'إيه الأخبار؟', lat:"eih el-akhbaar?", tr:'Nasıl gidiyor? Ne haber?', en:"How's it going?"},
+    {ar:'يوم سعيد', lat:"yohm sa'eed", tr:'İyi günler', en:'Have a nice day'},
+    {ar:'كل سنة وإنت طيب', lat:'kolli sana wi inta tayyib', tr:'Nice/bayram/doğum günü kutlaması', en:'Annual celebration greeting (birthday, holiday)'},
+    {ar:'عايز', lat:"'aayiz (m) / 'ayza (f)", tr:'İstiyorum', en:'I want'},
+    {ar:'مش عايز', lat:"mish 'aayiz", tr:'İstemiyorum', en:"I don't want"},
+    {ar:'فيه', lat:'fee', tr:'Var', en:'There is'},
+    {ar:'مفيش', lat:'mafeesh', tr:'Yok', en:"There isn't"},
+    {ar:'ينفع', lat:'yinfa', tr:'Olur mu, mümkün mü', en:'Is it possible / okay?'},
+    {ar:'معايا', lat:"ma'aaya", tr:'Yanımda, benimle', en:'With me'},
+    {ar:'معاك', lat:"ma'aak", tr:'Seninle, yanında', en:'With you'},
+    {ar:'ده / دي', lat:'da (erkek) / di (kadın)', tr:'Bu (işaret sıfatı)', en:'This (m/f)'},
+    {ar:'ده مش كويس', lat:'da mish kwayyes', tr:'Bu iyi değil', en:"This isn't good"},
+    {ar:'كله تمام', lat:'kollo tamam', tr:'Her şey yolunda', en:"Everything's fine"},
+    {ar:'ولا حاجة', lat:'wala haga', tr:'Hiçbir şey', en:'Nothing at all'},
     {ar:'عايز شاي', lat:'aayiz shai', tr:'Çay istiyorum', en:'I want tea'},
     {ar:'عايز الحساب', lat:'aayiz el-hesab', tr:'Hesap lütfen', en:'The bill, please'},
     {ar:'مافيش مشكلة', lat:'mafeesh moshkela', tr:'Sorun yok', en:'No problem'},
@@ -1423,12 +1444,40 @@ function runSearch(q){
     return out;
   }
 
+  // ═══ YENİ ═══ Basit Türkçe ek ayıklama (kaba kök bulma) — kullanıcı "gidiyor", "biliyor musun",
+  // "güzelsin" gibi ÇEKİMLİ kelimeler yazdığında, sözlükte o TAM çekim yoksa bile kelimenin KÖKÜNÜ
+  // bulup eşleştirmeyi dener. Tam bir dilbilgisi motoru değildir, ama en yaygın ekleri (-yor, -mısın,
+  // -sin, -ler, -dı vb.) kırparak isabet oranını belirgin şekilde artırır. /
+  // ═══ NEW ═══ Simple Turkish suffix stripping (crude stemming) — when the user types a CONJUGATED
+  // word like "gidiyor", "biliyor musun", "güzelsin" and that exact form isn't in the dictionary, it
+  // tries stripping the word down to its ROOT and matching that instead. Not a full grammar engine,
+  // but trimming the most common suffixes (-yor, -mısın, -sin, -ler, -dı, etc.) meaningfully improves
+  // the hit rate.
+  const TR_SUFFIXES = ['mısınız','misiniz','musunuz','müsünüz','mısın','misin','musun','müsün',
+    'yorsunuz','yorsun','yorum','yoruz','ıyor','iyor','uyor','üyor','yor',
+    'dığım','diğim','duğum','düğüm','dık','dik','duk','dük',
+    'dım','dim','dum','düm','dın','din','dun','dün','dı','di','du','dü',
+    'sınız','siniz','sunuz','sünüz','sın','sin','sun','sün',
+    'ecek','acak','miş','mış','muş','müş',
+    'ler','lar','lık','lik','luk','lük','sı','si','su','sü',
+    'im','ım','um','üm','in','ın','un','ün'];
+  function stem(token){
+    for (const suf of TR_SUFFIXES) {
+      if (token.length - suf.length >= 2 && token.endsWith(suf)) return token.slice(0, -suf.length);
+    }
+    return token;
+  }
+
   let scored = scoreAgainst(q);
   let partial = false;
 
   if (!scored.length) {
-    const tokens = q.split(/\s+/).filter(t => t.length >= 2);
-    if (tokens.length > 1) {
+    const rawTokens = q.split(/\s+/).filter(t => t.length >= 2);
+    // Her token için hem kendisini hem de ek-ayıklanmış kökünü aramaya dahil et / Include both the
+    // token itself and its stemmed root in the search
+    const tokens = new Set();
+    rawTokens.forEach(t => { tokens.add(t); const s = stem(t); if (s.length >= 2) tokens.add(s); });
+    if (tokens.size) {
       const byId = new Map();
       tokens.forEach(tok => {
         scoreAgainst(tok).forEach(({ w, score }) => {
@@ -1443,7 +1492,16 @@ function runSearch(q){
 
   scored.sort((a,b) => b.score - a.score);
   const hits = scored.slice(0, 12).map(s => s.w);
-  if (!hits.length) { box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı. Farklı bir kelime dene ya da Okuma Rehberi'ne göz at.</div>`; return; }
+  if (!hits.length) {
+    // ═══ YENİ ═══ Boş sonuç ekranı artık NEDENİNİ de açıklıyor — bu bir çeviri motoru değil, sabit
+    // bir kelime/cümle rehberi (512 kayıt) olduğu için her cümleyi bulamayabilir. Kullanıcı bunun bir
+    // "hata" değil, kapsam sınırı olduğunu bilsin. /
+    // ═══ NEW ═══ The empty-result screen now also explains WHY — since this is a fixed word/phrase
+    // guide (512 entries), not a live translation engine, it may not find every sentence. The user
+    // should know this is a scope limit, not a "bug".
+    box.innerHTML = `<div class="search-empty">"${q}" için sonuç bulunamadı.<br><span style="font-size:11.5px; opacity:.8;">Bu bir kelime/cümle rehberidir (${words.length} kayıt) — canlı çeviri motoru değildir, her cümleyi bulamayabilir. Daha kısa/basit bir kelime dene ya da kategorilere göz at.</span></div>`;
+    return;
+  }
   box.innerHTML = (partial ? `<div class="search-empty" style="padding:4px 4px 10px; text-align:left;">Tam cümle bulunamadı — içindeki bilinen kelimeler:</div>` : '') + hits.map((w, i) => `
     <div class="search-hit ${i === 0 ? 'top-hit' : ''}" onclick="openCategory('${w.cat}')">
       <span class="ar">${w.ar}</span>
