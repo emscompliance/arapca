@@ -27,7 +27,7 @@
    and while offline the last successfully cached version keeps working.
    ══════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'masrawy-v28';
+const CACHE_NAME = 'masrawy-v29';
 const APP_SHELL = [
   './',
   './index.html',
