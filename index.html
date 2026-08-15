@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A5FC2">
+<meta name="theme-color" content="#1A2B51">
 <meta name="description" content="Mısır Arapçası (Amiyye) günlük kelime ve cümle rehberi — okunuşuyla, çevrimdışı çalışır.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,9 +26,9 @@
     --bg0:#F3F5F8; --bg1:#FFFFFF;
     --glass:#FFFFFF; --glass-hi:#F7F9FB; --glass-border:#E4E8EE;
     --ink:#14181F; --ink-dim:#5B6472; --ink-faint:#8B93A1;
-    --gold:#0A5FC2; --gold-soft:#4A8FDB; --gold-text:#0A5FC2; --gold-glow:rgba(10,95,194,0.16);
-    --red:#DC2626; --red-soft:#F87171; --red-glow:rgba(220,38,38,0.14);
-    --brand-red:#0A5FC2;
+    --gold:#1A2B51; --gold-soft:#4A5C87; --gold-text:#1A2B51; --gold-glow:rgba(26,43,81,0.16);
+    --red:#FF751F; --red-soft:#FFA366; --red-glow:rgba(255,117,31,0.16);
+    --brand-red:#1A2B51;
     --teal:#16A34A; --teal-soft:#4ADE80; --teal-glow:rgba(22,163,74,0.14);
     --radius-lg:14px; --radius-md:12px; --radius-sm:8px;
     --nav-h:64px;
@@ -74,15 +74,14 @@
 
   .topbar{padding:calc(16px + var(--sat)) 16px 8px;}
   .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  /* ── Mezuniyet kepi logo işareti — verdiğin logodan esinlenilmiş, site rengine (indigo) uyarlanmış /
-       Graduation-cap logo mark — inspired by your logo, adapted to the site's indigo color ── */
-  .cap-logo{fill:var(--gold);}
+  /* ── Gerçek logo görseli — verdiğin dosyanın kendisi, favicon ile aynı köken / Real logo image —
+       your actual file, same source as the favicon ── */
   .home-btn{
-    width:40px; height:40px; border-radius:12px; background:var(--glass); border:1px solid var(--glass-border);
-    display:flex; align-items:center; justify-content:center; color:var(--gold); box-shadow:var(--shadow-card);
+    width:48px; height:48px; border-radius:10px; background:var(--glass); border:1px solid var(--glass-border);
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card); padding:4px; overflow:hidden;
   }
-  .home-btn svg{width:19px; height:19px;}
-  .home-btn:active{transform:scale(.94);}
+  .home-logo-img{width:100%; height:100%; object-fit:contain;}
+  .home-btn:active{opacity:.85;}
   .flags-x{color:var(--ink-faint); font-size:11px; font-weight:700;}
   .flag-pill{
     display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim);
@@ -128,7 +127,7 @@
   .search-hit .ar{font-size:20px; color:var(--gold-text); flex-shrink:0; min-width:64px;}
   .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
   .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
-  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(10,95,194,0.10); border:none; color:var(--gold-text); font-size:14px; flex-shrink:0;}
+  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(26,43,81,0.10); border:none; color:var(--gold-text); font-size:14px; flex-shrink:0;}
   .search-empty{padding:16px; text-align:center; color:var(--ink-faint); font-size:13px;}
   .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px;}
   .hint-chip{background:#F5F9FD; border:1px solid var(--glass-border); color:var(--ink-dim); border-radius:99px; padding:6px 12px; font-size:11.5px; font-weight:700;}
@@ -177,7 +176,7 @@
   .cat-row .count{font-size:11px; color:var(--ink-faint); font-weight:600; flex-shrink:0; text-align:right;}
   .cat-row .chevron{color:var(--ink-faint); font-size:16px; flex-shrink:0;}
 
-  .guide-link{display:flex; align-items:center; gap:10px; padding:14px 16px; font-size:12.5px; font-weight:700; color:var(--gold-text); width:100%; text-align:left; min-height:46px; border:1px solid var(--glass-border); border-radius:var(--radius-md); background:rgba(10,95,194,0.08);}
+  .guide-link{display:flex; align-items:center; gap:10px; padding:14px 16px; font-size:12.5px; font-weight:700; color:var(--gold-text); width:100%; text-align:left; min-height:46px; border:1px solid var(--glass-border); border-radius:var(--radius-md); background:rgba(26,43,81,0.08);}
   .guide-link .ic{font-size:18px;}
 
   /* ── Kelime kartları: dikey istif (Arapça / okunuş / anlam alt alta) / Word cards: vertical stack ── */
@@ -207,7 +206,7 @@
     align-items:center; justify-content:center; text-align:center; padding:32px 24px; position:relative;
     touch-action:pan-y; user-select:none; will-change:transform; overflow:hidden;
   }
-  .flash::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(10,95,194,0.14), transparent 55%);}
+  .flash::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(26,43,81,0.14), transparent 55%);}
   .flash-face-a .ar{font-size:46px; color:var(--ink); margin-bottom:14px; position:relative;}
   .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:18px; font-weight:600; position:relative;}
   .flash-face-b{display:none;}
@@ -215,7 +214,7 @@
   .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center; gap:11px; position:relative;}
   .flash-face-b .tr{font-size:22px; font-weight:800; color:var(--ink);}
   .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:6px;}
-  .flash-cat-tag{position:absolute; top:16px; left:16px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-text); background:rgba(10,95,194,0.14); padding:5px 10px; border-radius:99px; z-index:2;}
+  .flash-cat-tag{position:absolute; top:16px; left:16px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-text); background:rgba(26,43,81,0.14); padding:5px 10px; border-radius:99px; z-index:2;}
   .flash-swipe-badge{position:absolute; top:18px; padding:7px 15px; border-radius:99px; font-size:12px; font-weight:900; text-transform:uppercase; opacity:0; transform:scale(.8); pointer-events:none; letter-spacing:.03em; z-index:2;}
   .flash-swipe-badge.left{right:18px; background:var(--red); color:#fff;}
   .flash-swipe-badge.right{left:18px; background:var(--teal); color:#0B0B0B;}
@@ -288,7 +287,7 @@
   .footer-flags{font-size:18px; margin-bottom:16px; letter-spacing:2px;}
   .footer-contact{
     display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:99px;
-    background:rgba(10,95,194,0.10); border:1px solid rgba(10,95,194,0.28); color:var(--gold-text);
+    background:rgba(26,43,81,0.10); border:1px solid rgba(26,43,81,0.28); color:var(--gold-text);
     font-size:12.5px; font-weight:700; margin-bottom:16px; word-break:break-all;
   }
   .footer-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-bottom:16px;}
@@ -302,17 +301,14 @@
     body{padding:24px 0;}
     #app{gap:26px; align-items:flex-start;}
     #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
-    .side-brand{display:flex; align-items:center; gap:11px; padding:2px 6px 18px; background:none; border:none; width:100%; cursor:pointer; text-align:left;}
-    .side-brand:active{opacity:.8;}
-    .side-brand .cap-logo{width:34px; height:34px; flex-shrink:0;}
-    .side-brand-text{line-height:1.25;}
-    .side-brand-text .l1{font-size:15px; font-weight:800; color:var(--ink); letter-spacing:.02em;}
-    .side-brand-text .l2{font-size:10.5px; font-weight:800; color:var(--gold); letter-spacing:.04em;}
+    .side-brand{display:flex; align-items:center; justify-content:center; padding:6px 6px 18px; background:none; border:none; width:100%; cursor:pointer;}
+    .side-brand:active{opacity:.85;}
+    .side-logo-img{width:100%; max-width:170px; height:auto; object-fit:contain;}
     .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:4px 0 18px; font-size:22px; border-bottom:1px solid var(--glass-border); margin-bottom:10px;}
     .side-link{display:flex; align-items:center; gap:12px; padding:12px 13px; border-radius:14px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-dim); text-align:left; width:100%;}
     .side-link .ic{font-size:17px; width:20px; flex-shrink:0; text-align:center;}
     .side-link .lbl{flex:1;}
-    .side-link.active{background:linear-gradient(135deg,rgba(10,95,194,0.18),rgba(10,95,194,0.06)); color:var(--gold-text);}
+    .side-link.active{background:linear-gradient(135deg,rgba(26,43,81,0.18),rgba(26,43,81,0.06)); color:var(--gold-text);}
     .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
     #main-col{padding-bottom:24px;}
     #bottom-nav{display:none;}
@@ -327,8 +323,7 @@
 <div id="app">
   <nav id="sidebar" class="glass">
     <button class="side-brand" onclick="goHome()" title="Ana sayfaya dön">
-      <svg class="cap-logo" viewBox="0 0 100 100"><polygon points="37,24.5 50,15.5 63,24.5 50,20.7"/><polygon points="31,37 50,27 69,37 50,32.8"/><polygon points="24,49.5 50,38.5 76,49.5 50,44.8"/><polygon points="16,62.5 50,50.5 84,62.5 50,57.4"/><ellipse cx="50" cy="76" rx="20" ry="15.5"/></svg>
-      <div class="side-brand-text"><div class="l1">ARAPÇA</div><div class="l2">ÖĞRENİYORUM</div></div>
+      <img src="logo-full.png" alt="Arapça Öğren" class="side-logo-img">
     </button>
     <div class="side-flags"><svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg> <span class="flags-x">✕</span> <svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
     <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
@@ -345,7 +340,7 @@
     <header class="topbar">
       <div class="topbar-row">
         <button class="home-btn" onclick="goHome()" title="Ana sayfa">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+          <img src="favicon-192.png" alt="Logo" class="home-logo-img">
         </button>
         <div style="display:flex; align-items:center;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
@@ -411,31 +406,31 @@
 <script>
 /* ══════════════════════════ VERİ: MISIR ARAPÇASI (AMİYYE) ══════════════════════════ */
 const CATS = [
-  { id:'alphabet',   ar:'الأبجدية',   tr:'Arapça Alfabesi',      en:'Arabic Alphabet',     mark:'ا', c1:'#0A5FC2', c2:'#0A5FC2' },
-  { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', c1:'#F59E0B', c2:'#B45309' },
-  { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', c1:'#8B5CF6', c2:'#6D28D9' },
-  { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', c1:'#14B8A6', c2:'#0F766E' },
-  { id:'family',     ar:'العيلة',     tr:'Aile',                 en:'Family',              mark:'⌂', c1:'#F43F5E', c2:'#BE123C' },
-  { id:'time',       ar:'الوقت',      tr:'Zaman',                en:'Time',                mark:'◔', c1:'#0EA5E9', c2:'#0369A1' },
-  { id:'food',       ar:'الأكل',      tr:'Yiyecek & İçecek',     en:'Food & Drink',        mark:'❋', c1:'#FB923C', c2:'#C2410C' },
-  { id:'colors',     ar:'الألوان',    tr:'Renkler',              en:'Colors',              mark:'✦', c1:'#D946EF', c2:'#A21CAF' },
-  { id:'shopping',   ar:'التسوق',     tr:'Alışveriş',            en:'Shopping',            mark:'⚖', c1:'#10B981', c2:'#047857' },
-  { id:'directions', ar:'الاتجاهات',  tr:'Yön Tarifi',           en:'Directions',          mark:'⟐', c1:'#22D3EE', c2:'#0E7490' },
-  { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', c1:'#FB7185', c2:'#E11D48' },
-  { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', c1:'#818CF8', c2:'#4F46E5' },
-  { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', c1:'#A78BFA', c2:'#7C3AED' },
-  { id:'places',     ar:'أماكن',      tr:'Yerler & Mekanlar',    en:'Places',              mark:'⌘', c1:'#38BDF8', c2:'#0284C7' },
-  { id:'body',       ar:'الجسم',      tr:'Vücut Bölümleri',      en:'Body Parts',          mark:'✚', c1:'#FB7185', c2:'#9F1239' },
-  { id:'days',       ar:'أيام الأسبوع', tr:'Haftanın Günleri',   en:'Days of the Week',    mark:'📅', c1:'#C084FC', c2:'#7E22CE' },
-  { id:'weather',    ar:'الجو',       tr:'Hava Durumu',          en:'Weather',             mark:'☁', c1:'#38BDF8', c2:'#075985' },
-  { id:'animals',    ar:'الحيوانات',  tr:'Hayvanlar',            en:'Animals',             mark:'🐾', c1:'#A3E635', c2:'#4D7C0F' },
-  { id:'jobs',       ar:'المهن',      tr:'Meslekler',            en:'Jobs',                mark:'💼', c1:'#0A5FC2', c2:'#3730A3' },
-  { id:'clothes',    ar:'الهدوم',     tr:'Giysiler',             en:'Clothes',             mark:'👕', c1:'#FBBF24', c2:'#B45309' },
-  { id:'transport',  ar:'المواصلات',  tr:'Ulaşım',               en:'Transport',           mark:'🚗', c1:'#2DD4BF', c2:'#115E59' },
-  { id:'home',       ar:'البيت',      tr:'Ev Eşyaları',          en:'Home',                mark:'🛋', c1:'#FDBA74', c2:'#9A3412' },
-  { id:'health',     ar:'الصحة',      tr:'Sağlık',               en:'Health',              mark:'✚', c1:'#FB7185', c2:'#9F1239' },
-  { id:'school',     ar:'المدرسة',    tr:'Okul & Eğitim',        en:'School',              mark:'📖', c1:'#34D399', c2:'#065F46' },
-  { id:'workshop',   ar:'ورشة العمل', tr:'Atölye & Teknik',      en:'Workshop & Technical', mark:'🔧', c1:'#94A3B8', c2:'#334155' },
+  { id:'alphabet',   ar:'الأبجدية',   tr:'Arapça Alfabesi',      en:'Arabic Alphabet',     mark:'ا', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'greetings',  ar:'التحية',     tr:'Selamlaşma',           en:'Greetings',           mark:'☾', c1:'#FF751F', c2:'#FF751F' },
+  { id:'phrases',    ar:'جمل يومية',  tr:'Günlük Cümleler',      en:'Daily Sentences',     mark:'☰', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'numbers',    ar:'الأرقام',    tr:'Sayılar',              en:'Numbers',             mark:'٣', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'family',     ar:'العيلة',     tr:'Aile',                 en:'Family',              mark:'⌂', c1:'#FF751F', c2:'#FF751F' },
+  { id:'time',       ar:'الوقت',      tr:'Zaman',                en:'Time',                mark:'◔', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'food',       ar:'الأكل',      tr:'Yiyecek & İçecek',     en:'Food & Drink',        mark:'❋', c1:'#FF751F', c2:'#FF751F' },
+  { id:'colors',     ar:'الألوان',    tr:'Renkler',              en:'Colors',              mark:'✦', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'shopping',   ar:'التسوق',     tr:'Alışveriş',            en:'Shopping',            mark:'⚖', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'directions', ar:'الاتجاهات',  tr:'Yön Tarifi',           en:'Directions',          mark:'⟐', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'emotions',   ar:'المشاعر',    tr:'Duygular & Sıfatlar',  en:'Emotions & Adjectives', mark:'♡', c1:'#FF751F', c2:'#FF751F' },
+  { id:'questions',  ar:'أسئلة',      tr:'Soru Kelimeleri',      en:'Question Words',      mark:'?', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'verbs',      ar:'الأفعال',    tr:'Yaygın Fiiller',       en:'Common Verbs',        mark:'➤', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'places',     ar:'أماكن',      tr:'Yerler & Mekanlar',    en:'Places',              mark:'⌘', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'body',       ar:'الجسم',      tr:'Vücut Bölümleri',      en:'Body Parts',          mark:'✚', c1:'#FF751F', c2:'#FF751F' },
+  { id:'days',       ar:'أيام الأسبوع', tr:'Haftanın Günleri',   en:'Days of the Week',    mark:'📅', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'weather',    ar:'الجو',       tr:'Hava Durumu',          en:'Weather',             mark:'☁', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'animals',    ar:'الحيوانات',  tr:'Hayvanlar',            en:'Animals',             mark:'🐾', c1:'#FF751F', c2:'#FF751F' },
+  { id:'jobs',       ar:'المهن',      tr:'Meslekler',            en:'Jobs',                mark:'💼', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'clothes',    ar:'الهدوم',     tr:'Giysiler',             en:'Clothes',             mark:'👕', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'transport',  ar:'المواصلات',  tr:'Ulaşım',               en:'Transport',           mark:'🚗', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'home',       ar:'البيت',      tr:'Ev Eşyaları',          en:'Home',                mark:'🛋', c1:'#FF751F', c2:'#FF751F' },
+  { id:'health',     ar:'الصحة',      tr:'Sağlık',               en:'Health',              mark:'✚', c1:'#4A5C87', c2:'#4A5C87' },
+  { id:'school',     ar:'المدرسة',    tr:'Okul & Eğitim',        en:'School',              mark:'📖', c1:'#1A2B51', c2:'#1A2B51' },
+  { id:'workshop',   ar:'ورشة العمل', tr:'Atölye & Teknik',      en:'Workshop & Technical', mark:'🔧', c1:'#4A5C87', c2:'#4A5C87' },
 ];
 
 const WORDS = {
@@ -1559,15 +1554,31 @@ function waitForVoices(){
   });
   return _voicesReadyPromise;
 }
+// ═══ YENİ ═══ Kadın ses tercihi — bilinen kadın Arapça ses adları (Hoda, Salma, Laila, Zariah,
+// Tarik değil vb.) öncelikli seçiliyor; tarayıcı/işletim sistemi kadın/erkek etiketini doğrudan
+// vermediği için isim eşleştirmesiyle en iyi tahmini yapıyoruz. /
+// ═══ NEW ═══ Female voice preference — known female Arabic voice names (Hoda, Salma, Laila,
+// Zariah, etc.) are prioritized; since browsers/OSes don't expose gender directly, we make the best
+// guess via name matching.
+const FEMALE_VOICE_HINTS = ['hoda','salma','laila','layla','zariah','amira','fatima','mariam','maryam','hala','rania','female','kadın'];
+const MALE_VOICE_HINTS = ['naayf','maged','majed','tarik','hamed','male','erkek'];
+function pickBestArabicVoice(voices, langFilter){
+  const candidates = voices.filter(v => v.lang && langFilter(v.lang.toLowerCase()));
+  if (!candidates.length) return null;
+  const female = candidates.find(v => FEMALE_VOICE_HINTS.some(h => v.name.toLowerCase().includes(h)));
+  if (female) return female;
+  const notMale = candidates.find(v => !MALE_VOICE_HINTS.some(h => v.name.toLowerCase().includes(h)));
+  return notMale || candidates[0];
+}
 async function speak(text){
   if (!('speechSynthesis' in window)) { showToast('🔇 Bu cihaz/tarayıcı sesli okumayı desteklemiyor.'); return; }
   try {
     const voices = await waitForVoices();
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.85;
-    const egVoice = voices.find(v => v.lang && v.lang.toLowerCase() === 'ar-eg');
-    const anyArVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+    u.rate = 0.85; u.pitch = 1.05;
+    const egVoice = pickBestArabicVoice(voices, l => l === 'ar-eg');
+    const anyArVoice = pickBestArabicVoice(voices, l => l.startsWith('ar'));
     const chosen = egVoice || anyArVoice;
     if (chosen) { u.voice = chosen; u.lang = chosen.lang; } else { u.lang = 'ar'; }
     if (!chosen && !voices.length) { showToast('🔇 Ses motoru yüklenemedi. İnternete bağlıyken bir kez açman yeterli.'); return; }
