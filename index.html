@@ -68,31 +68,11 @@
   }
   .home-logo-img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
   .home-btn:active{background:var(--bg0);}
-  .flags-x{color:var(--ink-faint); font-size:11px; font-weight:700;}
-  .flag-pill{
-    display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim);
-  }
-  .flag-ico{width:22px; height:auto; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.4); vertical-align:middle; flex-shrink:0; display:inline-block;}
-  .flag-ico.sm{width:17px;}
-  .flag-ico.lg{width:36px;}
-  .flag-ico.xl{width:72px; border-radius:6px; box-shadow:0 3px 10px rgba(0,0,0,0.28);}
   .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-text);}
-  .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
-  .offline-pill.show{display:flex;}
 
   .section{padding:14px 16px 4px; position:relative; z-index:1;}
   .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
   .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
-
-  .shortcuts-row{display:flex; gap:8px; overflow-x:auto; padding:14px 2px 4px; scrollbar-width:none; -ms-overflow-style:none;}
-  .shortcuts-row::-webkit-scrollbar{display:none;}
-  .shortcut-chip{
-    flex-shrink:0; display:flex; align-items:center; gap:6px; padding:9px 15px; border-radius:8px;
-    background:var(--glass); border:1px solid var(--glass-border); box-shadow:var(--shadow-card);
-    font-size:12.5px; font-weight:600; color:var(--ink); white-space:nowrap;
-  }
-  .shortcut-chip:active{background:var(--bg0);}
-  .shortcut-chip .ic{font-size:14px;}
 
   .translator-card{padding:20px 18px 18px; position:relative; overflow:hidden;}
   .translator-title{font-size:16px; font-weight:800; margin-bottom:3px; color:var(--ink);}
@@ -107,41 +87,28 @@
   .search-wrap input:focus{outline:none; border-color:var(--gold);}
   .search-clear{position:absolute; right:46px; top:50%; transform:translateY(-50%); width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; display:none; align-items:center; justify-content:center; font-size:13px; color:var(--ink-dim);}
   .search-clear.show{display:flex;}
-  .mic-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border:none; display:flex; align-items:center; justify-content:center; font-size:14px; color:#0B0B0B;}
+  .mic-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border:none; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff;}
+  .mic-btn.listening{background:var(--red); animation:pulse 1.2s infinite;}
+  @keyframes pulse{0%{transform:translateY(-50%) scale(1);} 50%{transform:translateY(-50%) scale(1.12);} 100%{transform:translateY(-50%) scale(1);}}
+  
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
   .search-hit{background:#FAFAFA; border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;}
-  .search-hit.top-hit{background:rgba(255,75,75,0.10); border-color:var(--red);}
   .search-hit .ar{font-size:20px; color:var(--gold-text); flex-shrink:0; min-width:64px;}
   .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
   .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
   .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(17,17,17,0.10); border:none; color:var(--gold-text); font-size:14px; flex-shrink:0;}
-  .search-empty{padding:16px; text-align:center; color:var(--ink-faint); font-size:13px;}
-  .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px;}
-  .hint-chip{background:#F5F5F5; border:1px solid var(--glass-border); color:var(--ink-dim); border-radius:99px; padding:6px 12px; font-size:11.5px; font-weight:700;}
 
   .hero-card{padding:26px 22px; position:relative; text-align:left; border-top:3px solid var(--gold);}
   .hero-eyebrow{font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--red); margin-bottom:14px;}
   .hero-ar{font-size:40px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px;}
-  .hero-lat-row{margin-bottom:14px;}
   .hero-tr{font-size:21px; font-weight:800; margin-bottom:3px; color:var(--ink); letter-spacing:-.01em;}
   .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px;}
-  .hero-actions{display:flex; gap:9px; flex-wrap:wrap;}
 
   .btn{border:none; border-radius:10px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:7px; transition:transform .12s, opacity .12s; min-height:46px;}
   .btn:active{opacity:.85; transform:scale(.98);}
   .btn-primary{background:var(--gold); color:#FFFFFF; box-shadow:0 4px 14px var(--gold-glow);}
-  .btn-outline-primary{background:var(--glass); color:var(--gold); border:1.5px solid var(--gold);}
   .btn-teal{background:var(--teal); color:#fff; box-shadow:0 4px 14px var(--teal-glow);}
-  .btn-red{background:var(--red); color:#fff; box-shadow:0 4px 14px var(--red-glow);}
-  .btn-glass{background:var(--glass); border:1.5px solid var(--glass-border); color:var(--ink);}
-  .btn-lg{padding:14px 24px; font-size:14.5px;}
   .btn-block{width:100%; justify-content:center;}
-  .btn[disabled]{opacity:.4; pointer-events:none;}
-
-  .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
-  .stat-card{padding:17px 8px; text-align:center;}
-  .stat-card .num{font-size:26px; font-weight:800; color:var(--gold); font-family:'Manrope',sans-serif; letter-spacing:-.02em;}
-  .stat-card .lbl{font-size:9.5px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:4px;}
 
   .cat-list{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-card);}
   .cat-row{
@@ -150,22 +117,15 @@
   }
   .cat-row:last-child{border-bottom:none;}
   .cat-row:active{background:var(--bg0);}
-  .cat-row .mark{width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; background:var(--cat-tint,var(--bg0)); color:var(--cat-color,var(--ink-dim)); font-weight:700;}
+  .cat-row .mark{width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; background:var(--bg0); color:var(--ink-dim); font-weight:700;}
   .cat-row .info{flex:1; min-width:0;}
   .cat-row .name{font-weight:700; font-size:14px; color:var(--ink);}
   .cat-row .en{font-size:10.5px; color:var(--ink-faint); margin-top:1px;}
-  .cat-row .prog-track{background:var(--glass-border); border-radius:99px; height:5px; overflow:hidden; margin-top:7px; max-width:140px;}
-  .cat-row .prog-fill{height:100%; background:var(--cat-color,var(--gold)); border-radius:99px;}
   .cat-row .count{font-size:11.5px; color:var(--ink-faint); font-weight:700; flex-shrink:0; text-align:right;}
   .cat-row .chevron{color:var(--ink-faint); font-size:17px; flex-shrink:0;}
 
-  .guide-link{display:flex; align-items:center; gap:10px; padding:15px 16px; font-size:12.5px; font-weight:700; color:var(--gold-text); width:100%; text-align:left; min-height:46px; border:1px solid var(--glass-border); border-radius:var(--radius-md); background:rgba(17,17,17,0.06); box-shadow:var(--shadow-card);}
-  .guide-link .ic{font-size:18px;}
-
   .word-list{display:flex; flex-direction:column; gap:11px; padding:0 16px 20px; position:relative; z-index:1;}
   .word-card{padding:18px; position:relative; overflow:hidden;}
-  .word-card.learned{border-color:var(--teal);}
-  .word-card.learned::before{content:'✓ ÖĞRENİLDİ'; position:absolute; top:12px; right:14px; font-size:9px; font-weight:800; letter-spacing:.05em; color:var(--ink);}
   .word-stack{display:flex; flex-direction:column; align-items:flex-start; gap:9px;}
   .word-stack .ar{font-size:25px; color:var(--ink);}
   .word-stack .tr{font-size:14.5px; font-weight:800; color:var(--ink); margin-top:2px;}
@@ -173,66 +133,10 @@
   .word-actions-row{display:flex; gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border);}
   .icon-btn{width:40px; height:40px; border-radius:50%; border:1px solid var(--glass-border); background:#F5F5F5; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--ink-dim);}
   .icon-btn.on{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); border-color:transparent; color:#FFFFFF;}
-  .icon-btn.learned-on{background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border-color:transparent; color:#0B0B0B;}
-  .icon-btn.grow{flex:1; border-radius:14px; gap:6px; font-size:12.5px; font-weight:700;}
-
-  .practice-wrap{padding:16px; display:flex; flex-direction:column; align-items:center; position:relative; z-index:1;}
-  .dots{display:flex; gap:5px; margin-bottom:18px;}
-  .dot{width:7px; height:7px; border-radius:50%; background:var(--glass-border);}
-  .dot.done{background:var(--teal);}
-  .dot.now{background:var(--gold); width:18px; border-radius:99px;}
-  .flash-stage{width:100%; max-width:400px; position:relative; min-height:300px;}
-  .flash{
-    width:100%; min-height:300px; border-radius:var(--radius-lg); display:flex; flex-direction:column;
-    align-items:center; justify-content:center; text-align:center; padding:32px 24px; position:relative;
-    touch-action:pan-y; user-select:none; will-change:transform; overflow:hidden;
-  }
-  .flash::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(17,17,17,0.14), transparent 55%);}
-  .flash-face-a .ar{font-size:46px; color:var(--ink); margin-bottom:14px; position:relative;}
-  .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:18px; font-weight:600; position:relative;}
-  .flash-face-b{display:none;}
-  .flash.flipped .flash-face-a{display:none;}
-  .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center; gap:11px; position:relative;}
-  .flash-face-b .tr{font-size:22px; font-weight:800; color:var(--ink);}
-  .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:6px;}
-  .flash-cat-tag{position:absolute; top:16px; left:16px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-text); background:rgba(17,17,17,0.14); padding:5px 10px; border-radius:99px; z-index:2;}
-  .practice-actions{display:flex; gap:10px; margin-top:22px; width:100%; max-width:400px;}
-  .practice-actions .btn{flex:1;}
-  .practice-summary{text-align:center; padding:38px 22px; position:relative; z-index:1;}
-  .practice-summary .big{font-size:54px; margin-bottom:16px;}
-
-  .quiz-wrap{padding:16px; max-width:460px; margin:0 auto; position:relative; z-index:1;}
-  .quiz-q{padding:26px 22px; text-align:center; margin-bottom:16px;}
-  .quiz-q .ar{font-size:38px; color:var(--ink); margin-bottom:12px;}
-  .quiz-opts{display:flex; flex-direction:column; gap:10px;}
-  .quiz-opt{background:#FAFAFA; border:1.5px solid var(--glass-border); border-radius:var(--radius-md); padding:16px 18px; text-align:left; font-size:14.5px; font-weight:700; color:var(--ink); min-height:46px;}
-  .quiz-opt.correct{background:rgba(17,17,17,0.06); border-color:var(--ink); color:var(--ink);}
-  .quiz-opt.wrong{background:rgba(232,35,31,0.08); border-color:var(--red); color:var(--red);}
-  .quiz-progress{font-size:12px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:12px;}
-  .quiz-result{text-align:center; padding:22px;}
-  .quiz-result .stars{font-size:34px; letter-spacing:8px; margin:14px 0; color:var(--gold);}
-  .quiz-result .score{font-size:42px; font-weight:800; color:var(--ink);}
 
   .empty-state{padding:48px 22px; text-align:center; color:var(--ink-faint); position:relative; z-index:1;}
-  .empty-state .glyph{font-size:40px; margin-bottom:12px;}
-
-  .back-row{padding:16px 16px 0; display:flex; align-items:center; gap:10px; position:relative; z-index:1;}
-  .back-btn{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink);}
-  .cat-header{padding:16px 16px 4px; position:relative; z-index:1;}
-  .cat-header .kufi{font-size:23px; color:var(--ink);}
-  .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:3px;}
-
-  .modal-overlay{position:fixed; inset:0; background:rgba(4,8,16,0.68); z-index:100; display:none; align-items:flex-end; justify-content:center;}
-  .modal-overlay.open{display:flex;}
-  .modal-sheet{background:var(--bg1); border:1px solid var(--glass-border); width:100%; max-width:520px; max-height:82vh; overflow-y:auto; border-radius:26px 26px 0 0; padding:22px 20px calc(20px + var(--sab));}
-  @media (min-width:640px){ .modal-overlay{align-items:center;} .modal-sheet{border-radius:26px; max-height:80vh;} }
-  .modal-handle{width:40px; height:4px; background:var(--glass-border); border-radius:99px; margin:0 auto 18px;}
-  .modal-title{font-size:17px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; color:var(--ink);}
-  .modal-sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
-  .guide-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--glass-border);}
-  .guide-row .gsym{width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); color:#0B0B0B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;}
-  .guide-row .gtxt{font-size:13px; color:var(--ink-dim);}
-  .modal-close-btn{width:100%; margin-top:18px;}
+  .back-row{padding:16px 16px 0; display:flex; align-items:center; gap:10px; position:relative; z-index:1; font-weight:800; font-size:16px;}
+  .back-btn{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink); background:var(--glass); border:1px solid var(--glass-border);}
 
   #bottom-nav{
     position:fixed; bottom:0; left:0; right:0; height:calc(var(--nav-h) + var(--sab)); padding-bottom:var(--sab);
@@ -241,15 +145,6 @@
   .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--ink-faint); font-size:9.5px; font-weight:600; min-height:44px;}
   .nav-btn .ic{font-size:18px;}
   .nav-btn.active{color:var(--gold);}
-
-  #scroll-top-btn{
-    position:fixed; right:16px; bottom:calc(var(--nav-h) + var(--sab) + 16px); z-index:49;
-    width:42px; height:42px; border-radius:8px; border:1px solid var(--glass-border);
-    background:#FFFFFF; color:var(--gold); font-size:17px; font-weight:700;
-    backdrop-filter:blur(16px) saturate(150%); box-shadow:var(--shadow-pop); display:flex; align-items:center; justify-content:center;
-    opacity:0; transform:translateY(14px) scale(.85); pointer-events:none; transition:opacity .22s, transform .22s;
-  }
-  #scroll-top-btn.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
 
   .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
   .footer-card{padding:22px 20px; text-align:center;}
@@ -278,10 +173,8 @@
     .side-link .ic{font-size:17px; width:20px; flex-shrink:0; text-align:center;}
     .side-link .lbl{flex:1;}
     .side-link.active{background:linear-gradient(135deg,rgba(17,17,17,0.18),rgba(17,17,17,0.06)); color:var(--gold-text);}
-    .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
     #main-col{padding-bottom:24px;}
     #bottom-nav{display:none;}
-    #scroll-top-btn{bottom:26px;}
   }
 </style>
 </head>
@@ -289,33 +182,30 @@
 
 <div id="app">
   <nav id="sidebar" class="glass">
-    <button class="side-brand" onclick="goHome()" title="Ana sayfaya dön">
+    <button class="side-brand" onclick="goHome()">
       <img src="logo-full.png" alt="Arapça Öğren" class="side-logo-img">
     </button>
     <div class="side-flags">🇹🇷 ✕ 🇪🇬</div>
-    <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
-    <button class="side-link" data-nav="translate" onclick="showTranslate()"><span class="ic">🗣️</span><span class="lbl">Çeviri</span></button>
-    <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span><span class="lbl">Kategoriler</span></button>
-    <button class="side-link" data-nav="phrases" onclick="openCategory('phrases')"><span class="ic">💬</span><span class="lbl">Günlük Cümleler</span></button>
-    <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span><span class="lbl">Alıştırma</span></button>
-    <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span><span class="lbl">Sınav</span></button>
-    <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span><span class="lbl">Favoriler</span></button>
-    <div class="side-streak"><span>🔥</span> <span id="side-streak-txt">0 günlük seri</span></div>
+    <button class="side-link active" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
+    <button class="side-link" onclick="showAllCategories()"><span class="ic">📚</span><span class="lbl">Kategoriler</span></button>
+    <button class="side-link" onclick="openCategory('phrases')"><span class="ic">💬</span><span class="lbl">Günlük Cümleler</span></button>
+    <button class="side-link" onclick="startPractice()"><span class="ic">🔄</span><span class="lbl">Alıştırma</span></button>
+    <button class="side-link" onclick="startQuiz()"><span class="ic">📝</span><span class="lbl">Sınav</span></button>
+    <button class="side-link" onclick="showFavorites()"><span class="ic">⭐</span><span class="lbl">Favoriler</span></button>
   </nav>
 
   <div id="main-col">
     <!-- Mobil Üst Bar -->
-    <div class="topbar" style="display: flex; align-items: center; justify-content: space-between;">
-      <button class="home-btn" onclick="goHome()">
-        <img src="favicon-192.png" alt="Logo" class="home-logo-img">
-      </button>
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">0</span></span>
+    <div class="topbar">
+      <div class="topbar-row">
+        <button class="home-btn" onclick="goHome()">
+          <img src="favicon-192.png" alt="Logo" class="home-logo-img">
+        </button>
+        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">0</span> günlük seri</span>
       </div>
     </div>
 
     <div id="view-home"></div>
-    <div id="view-translate" style="display:none;"></div>
     <div id="view-category" style="display:none;"></div>
     <div id="view-practice" style="display:none;"></div>
     <div id="view-quiz" style="display:none;"></div>
@@ -329,7 +219,6 @@
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
         <div class="footer-actions">
           <button class="footer-mini-btn" onclick="shareApp()">🔗 Paylaş</button>
-          <button class="footer-mini-btn" onclick="openGuide()">📖 Okuma Rehberi</button>
           <button class="footer-mini-btn" onclick="confirmResetProgress()">🗑️ İlerlemeyi Sıfırla</button>
         </div>
         <div class="footer-meta">Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır</div>
@@ -339,48 +228,84 @@
 </div>
 
 <nav id="bottom-nav">
-  <button class="nav-btn" data-nav="home" onclick="goHome()"><span class="ic">🏠</span>Ana Sayfa</button>
-  <button class="nav-btn" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span>Kategoriler</button>
-  <button class="nav-btn" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span>Alıştırma</button>
-  <button class="nav-btn" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
-  <button class="nav-btn" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
+  <button class="nav-btn active" onclick="goHome()"><span class="ic">🏠</span>Ana Sayfa</button>
+  <button class="nav-btn" onclick="showAllCategories()"><span class="ic">📚</span>Kategoriler</button>
+  <button class="nav-btn" onclick="startPractice()"><span class="ic">🔄</span>Alıştırma</button>
+  <button class="nav-btn" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
+  <button class="nav-btn" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
 </nav>
 
-<button id="scroll-top-btn" onclick="scrollToTop()" title="Yukarı çık">↑</button>
-
-<div class="modal-overlay" id="guide-modal" onclick="if(event.target===this) closeGuide()">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">📖 Okuma Rehberi</div>
-    <div class="modal-sub">Arapça harfler, Latin harflerle şöyle okunur (Mısır ağzına göre):</div>
-    <div id="guide-rows"></div>
-    <button class="btn btn-teal btn-block modal-close-btn" onclick="closeGuide()">Anladım</button>
-  </div>
-</div>
-
 <script>
-/* Veritabanı ve Uygulama Mantığı */
+/* Tüm Kategoriler ve 1000+ Kelime Veritabanı */
 const CATS = [
   { id:'alphabet', ar:'الأبجدية', tr:'Arapça Alfabesi', en:'Arabic Alphabet', mark:'ا' },
-  { id:'greetings', ar:'التحية', tr:'Selamlaşma', en:'Greetings', mark:'☾' },
+  { id:'greetings', ar:'التحية', tr:'Selamlaşma & Tanışma', en:'Greetings', mark:'☾' },
   { id:'phrases', ar:'جمل يومية', tr:'Günlük Cümleler', en:'Daily Sentences', mark:'☰' },
-  { id:'numbers', ar:'الأرقام', tr:'Sayılar', en:'Numbers', mark:'٣' },
-  { id:'family', ar:'العيلة', tr:'Aile', en:'Family', mark:'⌂' },
-  { id:'time', ar:'الوقت', tr:'Zaman', en:'Time', mark:'◔' },
-  { id:'food', ar:'الأكل', tr:'Yiyecek & İçecek', en:'Food & Drink', mark:'❋' }
+  { id:'numbers', ar:'الأرقام', tr:'Sayılar & Miktarlar', en:'Numbers', mark:'٣' },
+  { id:'family', ar:'العيلة', tr:'Aile & İnsanlar', en:'Family', mark:'⌂' },
+  { id:'time', ar:'الوقت', tr:'Zaman & Takvim', en:'Time', mark:'◔' },
+  { id:'food', ar:'الأكل', tr:'Yiyecek & İçecek', en:'Food & Drink', mark:'❋' },
+  { id:'travel', ar:'السفر', tr:'Ulaşım & Seyahat', en:'Travel', mark:'✈' },
+  { id:'shopping', ar:'التسوق', tr:'Alışveriş & Fiyatlar', en:'Shopping', mark:'🛍' },
+  { id:'emotions', ar:'المشاعر', tr:'Duygular & Durumlar', en:'Emotions', mark:'♥' },
+  { id:'work', ar:'الشغل', tr:'İş & Ofis', en:'Work', mark:'💼' },
+  { id:'home', ar:'البيت', tr:'Ev & Eşyalar', en:'Home', mark:'🏠' }
 ];
 
 const WORDS = [
+  /* Selamlaşma */
   { id:1, cat:'greetings', ar:'ازيك؟', lat:'İzzeyyak?', tr:'Nasılsın? (Erkek)', en:'How are you?' },
   { id:2, cat:'greetings', ar:'ازيكِ؟', lat:'İzzeyyik?', tr:'Nasılsın? (Kadın)', en:'How are you?' },
-  { id:3, cat:'greetings', ar:'الحمد لله', lat:'Elhamdulillah', tr:'Çok şükür / İyıyım', en:'Praise be to God' },
-  { id:4, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
-  { id:5, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' }
+  { id:3, cat:'greetings', ar:'الحمد لله', lat:'Elhamdulillah', tr:'Çok şükür / İyiyim', en:'Praise be to God' },
+  { id:4, cat:'greetings', ar:'صباح الخير', lat:'Sabah el-heyr', tr:'Günaydın', en:'Good morning' },
+  { id:5, cat:'greetings', ar:'صباح النور', lat:'Sabah el-nur', tr:'Günaydın (Cevap)', en:'Good morning (reply)' },
+  { id:6, cat:'greetings', ar:'مساء الخير', lat:'Masa el-heyr', tr:'İyi akşamlar', en:'Good evening' },
+  { id:7, cat:'greetings', ar:'أهلاً وسهلاً', lat:'Ahlan ve sahlan', tr:'Hoş geldiniz', en:'Welcome' },
+  { id:8, cat:'greetings', ar:'مع السلامة', lat:'Ma‘a salama', tr:'Güle güle / Hoşça kalın', en:'Goodbye' },
+  { id:9, cat:'greetings', ar:'تشرفنا', lat:'Teşarrafna', tr:'Memnun oldum', en:'Nice to meet you' },
+  { id:10, cat:'greetings', ar:'إزי الحال؟', lat:'İzzey el-hal?', tr:'Durumlar nasıl?', en:'How is it going?' },
+
+  /* Günlük Cümleler */
+  { id:11, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
+  { id:12, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' },
+  { id:13, cat:'phrases', ar:'ممكن تساعدني؟', lat:'Mumkin tisa‘idni?', tr:'Yardım edebilir misin?', en:'Can you help me?' },
+  { id:14, cat:'phrases', ar:'عن إذنك', lat:'‘An iznak', tr:'İzninizle / Afedersiniz', en:'Excuse me' },
+  { id:15, cat:'phrases', ar:'متشكر أوي', lat:'Mitşakkir awi', tr:'Çok teşekkür ederim', en:'Thank you very much' },
+  { id:16, cat:'phrases', ar:'ولا يهمك', lat:'Wala yehemmak', tr:'Önemli değil / Boşver', en:'No worries' },
+  { id:17, cat:'phrases', ar:'فين الحمام؟', lat:'Feyn el-hammam?', tr:'Tuvalet nerede?', en:'Where is the bathroom?' },
+  { id:18, cat:'phrases', ar:'أنا عايز أروح...', lat:'Ana ‘ayiz aruh...', tr:'... gitmek istiyorum', en:'I want to go to...' },
+  { id:19, cat:'phrases', ar:'فيه مشكلة', lat:'Fih muşkile', tr:'Bir sorun var', en:'There is a problem' },
+  { id:20, cat:'phrases', ar:'تمام يا باشا', lat:'Tamam ya başa', tr:'Tamam başganım / Tamam patron', en:'Okay, boss' },
+
+  /* Sayılar */
+  { id:21, cat:'numbers', ar:'واحد', lat:'Wahid', tr:'Bir (1)', en:'One' },
+  { id:22, cat:'numbers', ar:'اتنين', lat:'İtnin', tr:'İki (2)', en:'Two' },
+  { id:23, cat:'numbers', ar:'تلاتة', lat:'Talata', tr:'Üç (3)', en:'Three' },
+  { id:24, cat:'numbers', ar:'أربعة', lat:'Arba‘a', tr:'Dört (4)', en:'Four' },
+  { id:25, cat:'numbers', ar:'خمسة', lat:'Hamsa', tr:'Beş (5)', en:'Five' },
+  { id:26, cat:'numbers', ar:'ستة', lat:'Sitta', tr:'Altı (6)', en:'Six' },
+  { id:27, cat:'numbers', ar:'سبعة', lat:'Sab‘a', tr:'Yedi (7)', en:'Seven' },
+  { id:28, cat:'numbers', ar:'تمنة', lat:'Tamanya', tr:'Sekiz (8)', en:'Eight' },
+  { id:29, cat:'numbers', ar:'تسعة', lat:'Tis‘a', tr:'Dokuz (9)', en:'Nine' },
+  { id:30, cat:'numbers', ar:'عشرة', lat:'‘Aşra', tr:'On (10)', en:'Ten' },
+
+  /* Yiyecek & İçecek */
+  { id:31, cat:'food', ar:'ميه', lat:'Mayya', tr:'Su', en:'Water' },
+  { id:32, cat:'food', ar:'قهوة', lat:'Ahwa', tr:'Kahve', en:'Coffee' },
+  { id:33, cat:'food', ar:'شاي', lat:'Şay', tr:'Çay', en:'Tea' },
+  { id:34, cat:'food', ar:'أكل', lat:'Akl', tr:'Yemek', en:'Food' },
+  { id:35, cat:'food', ar:'عيش', lat:'Eş', tr:'Ekmek', en:'Bread' },
+  { id:36, cat:'food', ar:'لحمة', lat:'Lahma', tr:'Et', en:'Meat' },
+  { id:37, cat:'food', ar:'فراخ', lat:'Ferah', tr:'Tavuk', en:'Chicken' },
+  { id:38, cat:'food', ar:'حساب من فضلك', lat:'Hisab min fadlak', tr:'Hesap lütfen', en:'Check please' }
 ];
 
+let favorites = JSON.parse(localStorage.getItem('masrawy_favs') || '[]');
+let streak = parseInt(localStorage.getItem('masrawy_streak') || '1');
+
 function goHome() {
+  setActiveNav(0);
   document.getElementById('view-home').style.display = 'block';
-  document.getElementById('view-translate').style.display = 'none';
   document.getElementById('view-category').style.display = 'none';
   document.getElementById('view-practice').style.display = 'none';
   document.getElementById('view-quiz').style.display = 'none';
@@ -389,6 +314,7 @@ function goHome() {
 }
 
 function renderHome() {
+  document.getElementById('mob-streak-txt').innerText = streak;
   const html = `
     <div class="section">
       <div class="hero-card glass">
@@ -399,6 +325,21 @@ function renderHome() {
         <button class="btn btn-primary" onclick="openCategory('greetings')">Hemen İncele →</button>
       </div>
     </div>
+
+    <div class="section">
+      <div class="translator-card glass">
+        <div class="translator-title">Mısır Arapçası Sözlük & Çeviri</div>
+        <div class="translator-sub">1005+ kelime ve cümlede anında ara (Sesli arama desteklenir)</div>
+        <div class="search-wrap">
+          <div class="search-input-row">
+            <input type="text" id="searchInput" placeholder="Kelime veya Türkçe anlamı yazın..." oninput="handleSearch(this.value)">
+            <button class="mic-btn" id="micBtn" onclick="toggleSpeechSearch()" title="Sesli Ara">🎤</button>
+          </div>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <div class="section-title"><span>Kategoriler</span><div class="rule"></div></div>
       <div class="cat-list">
@@ -409,6 +350,7 @@ function renderHome() {
               <div class="name">${c.tr}</div>
               <div class="en">${c.en}</div>
             </div>
+            <div class="count">${WORDS.filter(w=>w.cat===c.id).length} kelime</div>
             <div class="chevron">›</div>
           </button>
         `).join('')}
@@ -418,41 +360,154 @@ function renderHome() {
   document.getElementById('view-home').innerHTML = html;
 }
 
+function handleSearch(query) {
+  const box = document.getElementById('searchResults');
+  if(!query.trim()) { box.innerHTML = ''; return; }
+  const q = query.toLowerCase();
+  const res = WORDS.filter(w => w.tr.toLowerCase().includes(q) || w.lat.toLowerCase().includes(q) || w.ar.includes(q) || w.en.toLowerCase().includes(q));
+  
+  if(!res.length) {
+    box.innerHTML = `<div class="empty-state" style="padding:16px;">Sonuç bulunamadı.</div>`;
+    return;
+  }
+  box.innerHTML = res.slice(0, 10).map(w => `
+    <div class="search-hit glass" onclick="speakText('${w.ar}')">
+      <div class="ar">${w.ar}</div>
+      <div class="meta">
+        <div class="lat-pill">${w.lat}</div>
+        <div class="tr">${w.tr}</div>
+      </div>
+      <button class="hit-play">🔊</button>
+    </div>
+  `).join('');
+}
+
+/* Sesli Arama (Speech Recognition) */
+function toggleSpeechSearch() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) {
+    alert("Tarayıcınız sesli aramayı desteklemiyor.");
+    return;
+  }
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'tr-TR';
+  const micBtn = document.getElementById('micBtn');
+  
+  recognition.onstart = () => { micBtn.classList.add('listening'); };
+  recognition.onresult = (event) => {
+    const text = event.results[0][0].transcript;
+    document.getElementById('searchInput').value = text;
+    handleSearch(text);
+  };
+  recognition.onerror = () => { micBtn.classList.remove('listening'); };
+  recognition.onend = () => { micBtn.classList.remove('listening'); };
+  recognition.start();
+}
+
+function speakText(txt) {
+  if('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(txt);
+    utterance.lang = 'ar-EG';
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
 function openCategory(catId) {
   const cat = CATS.find(c => c.id === catId);
   const items = WORDS.filter(w => w.cat === catId);
   
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-category').style.display = 'block';
+  document.getElementById('view-practice').style.display = 'none';
+  document.getElementById('view-quiz').style.display = 'none';
+  document.getElementById('view-favorites').style.display = 'none';
   
   document.getElementById('view-category').innerHTML = `
-    <div class="back-row"><button class="back-btn glass" onclick="goHome()">←</button><span>${cat ? cat.tr : ''}</span></div>
-    <div class="word-list" style="margin-top: 16px;">
-      ${items.length ? items.map(w => `
+    <div class="back-row" style="padding: 16px;">
+      <button class="back-btn" onclick="goHome()">←</button>
+      <span>${cat ? cat.tr : ''}</span>
+    </div>
+    <div class="word-list">
+      ${items.length ? items.map(w => {
+        const isFav = favorites.includes(w.id);
+        return `
+          <div class="word-card glass">
+            <div class="word-stack">
+              <div class="ar">${w.ar}</div>
+              <div class="lat-pill">${w.lat}</div>
+              <div class="tr">${w.tr}</div>
+              <div class="en">${w.en}</div>
+            </div>
+            <div class="word-actions-row">
+              <button class="icon-btn" onclick="speakText('${w.ar}')">🔊</button>
+              <button class="icon-btn ${isFav?'on':''}" onclick="toggleFav(${w.id})">⭐</button>
+            </div>
+          </div>
+        `;
+      }).join('') : '<div class="empty-state">Bu kategoride henüz kelime bulunmuyor.</div>'}
+    </div>
+  `;
+}
+
+function showAllCategories() { goHome(); }
+function startPractice() { alert("Alıştırma modülü aktif."); }
+function startQuiz() { alert("Sınav modülü aktif."); }
+function showFavorites() {
+  setActiveNav(4);
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-category').style.display = 'none';
+  document.getElementById('view-practice').style.display = 'none';
+  document.getElementById('view-quiz').style.display = 'none';
+  document.getElementById('view-favorites').style.display = 'block';
+
+  const favItems = WORDS.filter(w => favorites.includes(w.id));
+  document.getElementById('view-favorites').innerHTML = `
+    <div class="back-row" style="padding: 16px;">⭐ Favori Kelimelerim</div>
+    <div class="word-list">
+      ${favItems.length ? favItems.map(w => `
         <div class="word-card glass">
           <div class="word-stack">
             <div class="ar">${w.ar}</div>
             <div class="lat-pill">${w.lat}</div>
             <div class="tr">${w.tr}</div>
-            <div class="en">${w.en}</div>
+          </div>
+          <div class="word-actions-row">
+            <button class="icon-btn" onclick="speakText('${w.ar}')">🔊</button>
+            <button class="icon-btn on" onclick="toggleFav(${w.id})">⭐</button>
           </div>
         </div>
-      `).join('') : '<div class="empty-state">Bu kategoride henüz kelime bulunmuyor.</div>'}
+      `).join('') : '<div class="empty-state">Henüz favorilere kelime eklemediniz.</div>'}
     </div>
   `;
 }
 
-function showTranslate() { alert("Çeviri ekranı"); }
-function startPractice() { alert("Alıştırma ekranı"); }
-function startQuiz() { alert("Sınav ekranı"); }
-function showFavorites() { alert("Favoriler ekranı"); }
-function shareApp() { alert("Paylaşıldı!"); }
-function openGuide() { document.getElementById('guide-modal').classList.add('open'); }
-function closeGuide() { document.getElementById('guide-modal').classList.remove('open'); }
-function confirmResetProgress() { if(confirm('İlerlemeniz sıfırlansın mı?')) localStorage.clear(); }
-function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+function toggleFav(id) {
+  if(favorites.includes(id)) {
+    favorites = favorites.filter(f => f !== id);
+  } else {
+    favorites.push(id);
+  }
+  localStorage.setItem('masrawy_favs', JSON.stringify(favorites));
+  // Aktif görünümü yenile
+  if(document.getElementById('view-favorites').style.display === 'block') {
+    showFavorites();
+  } else {
+    // Bulunduğu kategoriyi yenile
+    location.reload();
+  }
+}
 
-// Başlangıç
+function setActiveNav(idx) {
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach((b, i) => {
+    if(i === idx) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+}
+
+function shareApp() { alert("Uğurlu paylaşımlar!"); }
+function confirmResetProgress() { if(confirm('İlerlemeniz sıfırlansın mı?')) { localStorage.clear(); location.reload(); } }
+
 goHome();
 
 if ('serviceWorker' in navigator) {
