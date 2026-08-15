@@ -27,15 +27,11 @@
    and while offline the last successfully cached version keeps working.
    ══════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'masrawy-v16';
+const CACHE_NAME = 'masrawy-v17';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-apple-180.png',
-  './logo-full.png',
 ];
 
 self.addEventListener('install', (event) => {
