@@ -50,13 +50,207 @@
   a{color:inherit;}
   ::selection{background:var(--gold); color:#FFFFFF;}
   input{color:var(--ink); user-select:text;}
+
   .glass{
     background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
     box-shadow:var(--shadow-card);
   }
+
   #app{max-width:1180px; margin:0 auto; min-height:100%; display:flex; position:relative; z-index:1;}
   #sidebar{display:none;}
   #main-col{flex:1; min-width:0; padding-bottom:calc(var(--nav-h) + var(--sab) + 28px);}
+
+  .topbar{padding:calc(16px + var(--sat)) 16px 12px; background:var(--bg1); border-bottom:1px solid var(--glass-border);}
+  .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .home-btn{
+    width:44px; height:44px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border);
+    display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:var(--shadow-card); padding:2px;
+  }
+  .home-logo-img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
+  .home-btn:active{background:var(--bg0);}
+  .flags-x{color:var(--ink-faint); font-size:11px; font-weight:700;}
+  .flag-pill{
+    display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim);
+  }
+  .flag-ico{width:22px; height:auto; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.4); vertical-align:middle; flex-shrink:0; display:inline-block;}
+  .flag-ico.sm{width:17px;}
+  .flag-ico.lg{width:36px;}
+  .flag-ico.xl{width:72px; border-radius:6px; box-shadow:0 3px 10px rgba(0,0,0,0.28);}
+  .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-text);}
+  .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
+  .offline-pill.show{display:flex;}
+
+  .section{padding:14px 16px 4px; position:relative; z-index:1;}
+  .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
+  .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
+
+  .shortcuts-row{display:flex; gap:8px; overflow-x:auto; padding:14px 2px 4px; scrollbar-width:none; -ms-overflow-style:none;}
+  .shortcuts-row::-webkit-scrollbar{display:none;}
+  .shortcut-chip{
+    flex-shrink:0; display:flex; align-items:center; gap:6px; padding:9px 15px; border-radius:8px;
+    background:var(--glass); border:1px solid var(--glass-border); box-shadow:var(--shadow-card);
+    font-size:12.5px; font-weight:600; color:var(--ink); white-space:nowrap;
+  }
+  .shortcut-chip:active{background:var(--bg0);}
+  .shortcut-chip .ic{font-size:14px;}
+
+  .translator-card{padding:20px 18px 18px; position:relative; overflow:hidden;}
+  .translator-title{font-size:16px; font-weight:800; margin-bottom:3px; color:var(--ink);}
+  .translator-sub{color:var(--ink-dim); font-size:12px; margin-bottom:14px;}
+  .search-wrap{position:relative;}
+  .search-input-row{position:relative;}
+  .search-wrap input{
+    width:100%; border:1.5px solid var(--glass-border); border-radius:16px; padding:16px 90px 16px 16px;
+    font-size:16px; background:#F5F5F5; color:var(--ink); font-weight:600;
+  }
+  .search-wrap input::placeholder{color:var(--ink-faint); font-weight:500;}
+  .search-wrap input:focus{outline:none; border-color:var(--gold);}
+  .search-clear{position:absolute; right:46px; top:50%; transform:translateY(-50%); width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; display:none; align-items:center; justify-content:center; font-size:13px; color:var(--ink-dim);}
+  .search-clear.show{display:flex;}
+  .mic-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border:none; display:flex; align-items:center; justify-content:center; font-size:14px; color:#0B0B0B;}
+  .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
+  .search-hit{background:#FAFAFA; border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;}
+  .search-hit.top-hit{background:rgba(255,75,75,0.10); border-color:var(--red);}
+  .search-hit .ar{font-size:20px; color:var(--gold-text); flex-shrink:0; min-width:64px;}
+  .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
+  .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
+  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(17,17,17,0.10); border:none; color:var(--gold-text); font-size:14px; flex-shrink:0;}
+  .search-empty{padding:16px; text-align:center; color:var(--ink-faint); font-size:13px;}
+  .search-hint-chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px;}
+  .hint-chip{background:#F5F5F5; border:1px solid var(--glass-border); color:var(--ink-dim); border-radius:99px; padding:6px 12px; font-size:11.5px; font-weight:700;}
+
+  .hero-card{padding:26px 22px; position:relative; text-align:left; border-top:3px solid var(--gold);}
+  .hero-eyebrow{font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--red); margin-bottom:14px;}
+  .hero-ar{font-size:40px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px;}
+  .hero-lat-row{margin-bottom:14px;}
+  .hero-tr{font-size:21px; font-weight:800; margin-bottom:3px; color:var(--ink); letter-spacing:-.01em;}
+  .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px;}
+  .hero-actions{display:flex; gap:9px; flex-wrap:wrap;}
+
+  .btn{border:none; border-radius:10px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:7px; transition:transform .12s, opacity .12s; min-height:46px;}
+  .btn:active{opacity:.85; transform:scale(.98);}
+  .btn-primary{background:var(--gold); color:#FFFFFF; box-shadow:0 4px 14px var(--gold-glow);}
+  .btn-outline-primary{background:var(--glass); color:var(--gold); border:1.5px solid var(--gold);}
+  .btn-teal{background:var(--teal); color:#fff; box-shadow:0 4px 14px var(--teal-glow);}
+  .btn-red{background:var(--red); color:#fff; box-shadow:0 4px 14px var(--red-glow);}
+  .btn-glass{background:var(--glass); border:1.5px solid var(--glass-border); color:var(--ink);}
+  .btn-lg{padding:14px 24px; font-size:14.5px;}
+  .btn-block{width:100%; justify-content:center;}
+  .btn[disabled]{opacity:.4; pointer-events:none;}
+
+  .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
+  .stat-card{padding:17px 8px; text-align:center;}
+  .stat-card .num{font-size:26px; font-weight:800; color:var(--gold); font-family:'Manrope',sans-serif; letter-spacing:-.02em;}
+  .stat-card .lbl{font-size:9.5px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:4px;}
+
+  .cat-list{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-card);}
+  .cat-row{
+    display:flex; align-items:center; gap:13px; padding:15px 16px; text-align:left; border:none;
+    background:none; border-bottom:1px solid var(--glass-border); width:100%;
+  }
+  .cat-row:last-child{border-bottom:none;}
+  .cat-row:active{background:var(--bg0);}
+  .cat-row .mark{width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; background:var(--cat-tint,var(--bg0)); color:var(--cat-color,var(--ink-dim)); font-weight:700;}
+  .cat-row .info{flex:1; min-width:0;}
+  .cat-row .name{font-weight:700; font-size:14px; color:var(--ink);}
+  .cat-row .en{font-size:10.5px; color:var(--ink-faint); margin-top:1px;}
+  .cat-row .prog-track{background:var(--glass-border); border-radius:99px; height:5px; overflow:hidden; margin-top:7px; max-width:140px;}
+  .cat-row .prog-fill{height:100%; background:var(--cat-color,var(--gold)); border-radius:99px;}
+  .cat-row .count{font-size:11.5px; color:var(--ink-faint); font-weight:700; flex-shrink:0; text-align:right;}
+  .cat-row .chevron{color:var(--ink-faint); font-size:17px; flex-shrink:0;}
+
+  .guide-link{display:flex; align-items:center; gap:10px; padding:15px 16px; font-size:12.5px; font-weight:700; color:var(--gold-text); width:100%; text-align:left; min-height:46px; border:1px solid var(--glass-border); border-radius:var(--radius-md); background:rgba(17,17,17,0.06); box-shadow:var(--shadow-card);}
+  .guide-link .ic{font-size:18px;}
+
+  .word-list{display:flex; flex-direction:column; gap:11px; padding:0 16px 20px; position:relative; z-index:1;}
+  .word-card{padding:18px; position:relative; overflow:hidden;}
+  .word-card.learned{border-color:var(--teal);}
+  .word-card.learned::before{content:'✓ ÖĞRENİLDİ'; position:absolute; top:12px; right:14px; font-size:9px; font-weight:800; letter-spacing:.05em; color:var(--ink);}
+  .word-stack{display:flex; flex-direction:column; align-items:flex-start; gap:9px;}
+  .word-stack .ar{font-size:25px; color:var(--ink);}
+  .word-stack .tr{font-size:14.5px; font-weight:800; color:var(--ink); margin-top:2px;}
+  .word-stack .en{font-size:11.5px; color:var(--ink-faint);}
+  .word-actions-row{display:flex; gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border);}
+  .icon-btn{width:40px; height:40px; border-radius:50%; border:1px solid var(--glass-border); background:#F5F5F5; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--ink-dim);}
+  .icon-btn.on{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); border-color:transparent; color:#FFFFFF;}
+  .icon-btn.learned-on{background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border-color:transparent; color:#0B0B0B;}
+  .icon-btn.grow{flex:1; border-radius:14px; gap:6px; font-size:12.5px; font-weight:700;}
+
+  .practice-wrap{padding:16px; display:flex; flex-direction:column; align-items:center; position:relative; z-index:1;}
+  .dots{display:flex; gap:5px; margin-bottom:18px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--glass-border);}
+  .dot.done{background:var(--teal);}
+  .dot.now{background:var(--gold); width:18px; border-radius:99px;}
+  .flash-stage{width:100%; max-width:400px; position:relative; min-height:300px;}
+  .flash{
+    width:100%; min-height:300px; border-radius:var(--radius-lg); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:32px 24px; position:relative;
+    touch-action:pan-y; user-select:none; will-change:transform; overflow:hidden;
+  }
+  .flash::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 0%, rgba(17,17,17,0.14), transparent 55%);}
+  .flash-face-a .ar{font-size:46px; color:var(--ink); margin-bottom:14px; position:relative;}
+  .flash-hint{font-size:11.5px; color:var(--ink-faint); margin-top:18px; font-weight:600; position:relative;}
+  .flash-face-b{display:none;}
+  .flash.flipped .flash-face-a{display:none;}
+  .flash.flipped .flash-face-b{display:flex; flex-direction:column; align-items:center; gap:11px; position:relative;}
+  .flash-face-b .tr{font-size:22px; font-weight:800; color:var(--ink);}
+  .flash-face-b .en{font-size:12.5px; color:var(--ink-faint); margin-bottom:6px;}
+  .flash-cat-tag{position:absolute; top:16px; left:16px; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--gold-text); background:rgba(17,17,17,0.14); padding:5px 10px; border-radius:99px; z-index:2;}
+  .practice-actions{display:flex; gap:10px; margin-top:22px; width:100%; max-width:400px;}
+  .practice-actions .btn{flex:1;}
+  .practice-summary{text-align:center; padding:38px 22px; position:relative; z-index:1;}
+  .practice-summary .big{font-size:54px; margin-bottom:16px;}
+
+  .quiz-wrap{padding:16px; max-width:460px; margin:0 auto; position:relative; z-index:1;}
+  .quiz-q{padding:26px 22px; text-align:center; margin-bottom:16px;}
+  .quiz-q .ar{font-size:38px; color:var(--ink); margin-bottom:12px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:10px;}
+  .quiz-opt{background:#FAFAFA; border:1.5px solid var(--glass-border); border-radius:var(--radius-md); padding:16px 18px; text-align:left; font-size:14.5px; font-weight:700; color:var(--ink); min-height:46px;}
+  .quiz-opt.correct{background:rgba(17,17,17,0.06); border-color:var(--ink); color:var(--ink);}
+  .quiz-opt.wrong{background:rgba(232,35,31,0.08); border-color:var(--red); color:var(--red);}
+  .quiz-progress{font-size:12px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:12px;}
+  .quiz-result{text-align:center; padding:22px;}
+  .quiz-result .stars{font-size:34px; letter-spacing:8px; margin:14px 0; color:var(--gold);}
+  .quiz-result .score{font-size:42px; font-weight:800; color:var(--ink);}
+
+  .empty-state{padding:48px 22px; text-align:center; color:var(--ink-faint); position:relative; z-index:1;}
+  .empty-state .glyph{font-size:40px; margin-bottom:12px;}
+
+  .back-row{padding:16px 16px 0; display:flex; align-items:center; gap:10px; position:relative; z-index:1;}
+  .back-btn{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink);}
+  .cat-header{padding:16px 16px 4px; position:relative; z-index:1;}
+  .cat-header .kufi{font-size:23px; color:var(--ink);}
+  .cat-header .en{font-size:11.5px; color:var(--ink-faint); margin-top:3px;}
+
+  .modal-overlay{position:fixed; inset:0; background:rgba(4,8,16,0.68); z-index:100; display:none; align-items:flex-end; justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal-sheet{background:var(--bg1); border:1px solid var(--glass-border); width:100%; max-width:520px; max-height:82vh; overflow-y:auto; border-radius:26px 26px 0 0; padding:22px 20px calc(20px + var(--sab));}
+  @media (min-width:640px){ .modal-overlay{align-items:center;} .modal-sheet{border-radius:26px; max-height:80vh;} }
+  .modal-handle{width:40px; height:4px; background:var(--glass-border); border-radius:99px; margin:0 auto 18px;}
+  .modal-title{font-size:17px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; color:var(--ink);}
+  .modal-sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
+  .guide-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--glass-border);}
+  .guide-row .gsym{width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); color:#0B0B0B; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;}
+  .guide-row .gtxt{font-size:13px; color:var(--ink-dim);}
+  .modal-close-btn{width:100%; margin-top:18px;}
+
+  #bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; height:calc(var(--nav-h) + var(--sab)); padding-bottom:var(--sab);
+    background:#FFFFFF; border-top:1px solid var(--glass-border); display:flex; z-index:50;
+  }
+  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--ink-faint); font-size:9.5px; font-weight:600; min-height:44px;}
+  .nav-btn .ic{font-size:18px;}
+  .nav-btn.active{color:var(--gold);}
+
+  #scroll-top-btn{
+    position:fixed; right:16px; bottom:calc(var(--nav-h) + var(--sab) + 16px); z-index:49;
+    width:42px; height:42px; border-radius:8px; border:1px solid var(--glass-border);
+    background:#FFFFFF; color:var(--gold); font-size:17px; font-weight:700;
+    backdrop-filter:blur(16px) saturate(150%); box-shadow:var(--shadow-pop); display:flex; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(14px) scale(.85); pointer-events:none; transition:opacity .22s, transform .22s;
+  }
+  #scroll-top-btn.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
+
   .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
   .footer-card{padding:22px 20px; text-align:center;}
   .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
@@ -72,11 +266,22 @@
     font-weight:700; color:var(--ink-dim); background:#F5F5F5; border:1px solid var(--glass-border);
   }
   .footer-meta{font-size:10.5px; color:var(--ink-faint); border-top:1px solid var(--glass-border); padding-top:14px; line-height:1.7;}
+
   @media (min-width:901px){
     body{padding:24px 0;}
     #app{gap:26px; align-items:flex-start;}
     #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
+    .side-brand{display:flex; align-items:center; justify-content:center; padding:6px 6px 18px; background:none; border:none; width:100%; cursor:pointer;}
+    .side-logo-img{width:100%; max-width:170px; height:auto; object-fit:contain;}
+    .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:4px 0 18px; font-size:22px; border-bottom:1px solid var(--glass-border); margin-bottom:10px;}
+    .side-link{display:flex; align-items:center; gap:12px; padding:12px 13px; border-radius:14px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-dim); text-align:left; width:100%;}
+    .side-link .ic{font-size:17px; width:20px; flex-shrink:0; text-align:center;}
+    .side-link .lbl{flex:1;}
+    .side-link.active{background:linear-gradient(135deg,rgba(17,17,17,0.18),rgba(17,17,17,0.06)); color:var(--gold-text);}
+    .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
     #main-col{padding-bottom:24px;}
+    #bottom-nav{display:none;}
+    #scroll-top-btn{bottom:26px;}
   }
 </style>
 </head>
@@ -84,33 +289,175 @@
 
 <div id="app">
   <nav id="sidebar" class="glass">
-    <button class="side-brand" onclick="location.reload()">
-      <img src="logo-full.png" alt="Arapça Öğren" style="width:100%; max-width:170px;">
+    <button class="side-brand" onclick="goHome()" title="Ana sayfaya dön">
+      <img src="logo-full.png" alt="Arapça Öğren" class="side-logo-img">
     </button>
+    <div class="side-flags">🇹🇷 ✕ 🇪🇬</div>
+    <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
+    <button class="side-link" data-nav="translate" onclick="showTranslate()"><span class="ic">🗣️</span><span class="lbl">Çeviri</span></button>
+    <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span><span class="lbl">Kategoriler</span></button>
+    <button class="side-link" data-nav="phrases" onclick="openCategory('phrases')"><span class="ic">💬</span><span class="lbl">Günlük Cümleler</span></button>
+    <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span><span class="lbl">Alıştırma</span></button>
+    <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span><span class="lbl">Sınav</span></button>
+    <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span><span class="lbl">Favoriler</span></button>
+    <div class="side-streak"><span>🔥</span> <span id="side-streak-txt">0 günlük seri</span></div>
   </nav>
 
   <div id="main-col">
-    <div style="padding: 24px; text-align: center;">
-      <h1 class="ar" style="font-size: 36px; margin-bottom: 10px;">أتعلم العربية</h1>
-      <p style="color: var(--ink-dim);">Mısır Arapçası Günlük Rehberiniz Hazırdır.</p>
+    <!-- Mobil Üst Bar -->
+    <div class="topbar" style="display: flex; align-items: center; justify-content: space-between;">
+      <button class="home-btn" onclick="goHome()">
+        <img src="favicon-192.png" alt="Logo" class="home-logo-img">
+      </button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">0</span></span>
+      </div>
     </div>
+
+    <div id="view-home"></div>
+    <div id="view-translate" style="display:none;"></div>
+    <div id="view-category" style="display:none;"></div>
+    <div id="view-practice" style="display:none;"></div>
+    <div id="view-quiz" style="display:none;"></div>
+    <div id="view-favorites" style="display:none;"></div>
 
     <footer class="app-footer">
       <div class="footer-card glass">
         <div class="footer-tag" style="font-weight:800; font-size:14px; color:var(--ink); margin-bottom:6px;">Arapça Öğreniyorum</div>
         <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
+        <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
+        <div class="footer-actions">
+          <button class="footer-mini-btn" onclick="shareApp()">🔗 Paylaş</button>
+          <button class="footer-mini-btn" onclick="openGuide()">📖 Okuma Rehberi</button>
+          <button class="footer-mini-btn" onclick="confirmResetProgress()">🗑️ İlerlemeyi Sıfırla</button>
+        </div>
         <div class="footer-meta">Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır</div>
       </div>
     </footer>
   </div>
 </div>
 
+<nav id="bottom-nav">
+  <button class="nav-btn" data-nav="home" onclick="goHome()"><span class="ic">🏠</span>Ana Sayfa</button>
+  <button class="nav-btn" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span>Kategoriler</button>
+  <button class="nav-btn" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span>Alıştırma</button>
+  <button class="nav-btn" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
+  <button class="nav-btn" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
+</nav>
+
+<button id="scroll-top-btn" onclick="scrollToTop()" title="Yukarı çık">↑</button>
+
+<div class="modal-overlay" id="guide-modal" onclick="if(event.target===this) closeGuide()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📖 Okuma Rehberi</div>
+    <div class="modal-sub">Arapça harfler, Latin harflerle şöyle okunur (Mısır ağzına göre):</div>
+    <div id="guide-rows"></div>
+    <button class="btn btn-teal btn-block modal-close-btn" onclick="closeGuide()">Anladım</button>
+  </div>
+</div>
+
 <script>
-  // Service Worker Kayıt
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW kayıt hatası:', err));
-  }
+/* Veritabanı ve Uygulama Mantığı */
+const CATS = [
+  { id:'alphabet', ar:'الأبجدية', tr:'Arapça Alfabesi', en:'Arabic Alphabet', mark:'ا' },
+  { id:'greetings', ar:'التحية', tr:'Selamlaşma', en:'Greetings', mark:'☾' },
+  { id:'phrases', ar:'جمل يومية', tr:'Günlük Cümleler', en:'Daily Sentences', mark:'☰' },
+  { id:'numbers', ar:'الأرقام', tr:'Sayılar', en:'Numbers', mark:'٣' },
+  { id:'family', ar:'العيلة', tr:'Aile', en:'Family', mark:'⌂' },
+  { id:'time', ar:'الوقت', tr:'Zaman', en:'Time', mark:'◔' },
+  { id:'food', ar:'الأكل', tr:'Yiyecek & İçecek', en:'Food & Drink', mark:'❋' }
+];
+
+const WORDS = [
+  { id:1, cat:'greetings', ar:'ازيك؟', lat:'İzzeyyak?', tr:'Nasılsın? (Erkek)', en:'How are you?' },
+  { id:2, cat:'greetings', ar:'ازيكِ؟', lat:'İzzeyyik?', tr:'Nasılsın? (Kadın)', en:'How are you?' },
+  { id:3, cat:'greetings', ar:'الحمد لله', lat:'Elhamdulillah', tr:'Çok şükür / İyıyım', en:'Praise be to God' },
+  { id:4, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
+  { id:5, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' }
+];
+
+function goHome() {
+  document.getElementById('view-home').style.display = 'block';
+  document.getElementById('view-translate').style.display = 'none';
+  document.getElementById('view-category').style.display = 'none';
+  document.getElementById('view-practice').style.display = 'none';
+  document.getElementById('view-quiz').style.display = 'none';
+  document.getElementById('view-favorites').style.display = 'none';
+  renderHome();
+}
+
+function renderHome() {
+  const html = `
+    <div class="section">
+      <div class="hero-card glass">
+        <div class="hero-eyebrow">Günün Mısır Sözü</div>
+        <div class="hero-ar ar">ازيك يا باشا؟</div>
+        <div class="hero-tr">Nasılsın başganım?</div>
+        <div class="hero-en">How are you, boss?</div>
+        <button class="btn btn-primary" onclick="openCategory('greetings')">Hemen İncele →</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title"><span>Kategoriler</span><div class="rule"></div></div>
+      <div class="cat-list">
+        ${CATS.map(c => `
+          <button class="cat-row" onclick="openCategory('${c.id}')">
+            <div class="mark">${c.mark}</div>
+            <div class="info">
+              <div class="name">${c.tr}</div>
+              <div class="en">${c.en}</div>
+            </div>
+            <div class="chevron">›</div>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('view-home').innerHTML = html;
+}
+
+function openCategory(catId) {
+  const cat = CATS.find(c => c.id === catId);
+  const items = WORDS.filter(w => w.cat === catId);
+  
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-category').style.display = 'block';
+  
+  document.getElementById('view-category').innerHTML = `
+    <div class="back-row"><button class="back-btn glass" onclick="goHome()">←</button><span>${cat ? cat.tr : ''}</span></div>
+    <div class="word-list" style="margin-top: 16px;">
+      ${items.length ? items.map(w => `
+        <div class="word-card glass">
+          <div class="word-stack">
+            <div class="ar">${w.ar}</div>
+            <div class="lat-pill">${w.lat}</div>
+            <div class="tr">${w.tr}</div>
+            <div class="en">${w.en}</div>
+          </div>
+        </div>
+      `).join('') : '<div class="empty-state">Bu kategoride henüz kelime bulunmuyor.</div>'}
+    </div>
+  `;
+}
+
+function showTranslate() { alert("Çeviri ekranı"); }
+function startPractice() { alert("Alıştırma ekranı"); }
+function startQuiz() { alert("Sınav ekranı"); }
+function showFavorites() { alert("Favoriler ekranı"); }
+function shareApp() { alert("Paylaşıldı!"); }
+function openGuide() { document.getElementById('guide-modal').classList.add('open'); }
+function closeGuide() { document.getElementById('guide-modal').classList.remove('open'); }
+function confirmResetProgress() { if(confirm('İlerlemeniz sıfırlansın mı?')) localStorage.clear(); }
+function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+
+// Başlangıç
+goHome();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
+}
 </script>
 </body>
 </html>
