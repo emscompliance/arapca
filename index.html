@@ -76,11 +76,14 @@
   .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
   /* ── Gerçek logo görseli — verdiğin dosyanın kendisi, favicon ile aynı köken / Real logo image —
        your actual file, same source as the favicon ── */
+  /* ── Gerçek logo görseli — verdiğin dosyanın TAM hâli (yazılı), mobilde de görünsün diye üst barda
+       da kullanılıyor, sadece kenar menüde değil / Real logo image — the FULL version (with text)
+       you gave, used in the top bar too (not just the sidebar) so it's visible on mobile as well ── */
   .home-btn{
-    width:48px; height:48px; border-radius:10px; background:var(--glass); border:1px solid var(--glass-border);
-    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card); padding:4px; overflow:hidden;
+    height:50px; border-radius:8px; background:none; border:none;
+    display:flex; align-items:center; justify-content:flex-start; padding:0; overflow:hidden;
   }
-  .home-logo-img{width:100%; height:100%; object-fit:contain;}
+  .home-logo-img{height:100%; width:auto; object-fit:contain;}
   .home-btn:active{opacity:.85;}
   .flags-x{color:var(--ink-faint); font-size:11px; font-weight:700;}
   .flag-pill{
@@ -340,7 +343,7 @@
     <header class="topbar">
       <div class="topbar-row">
         <button class="home-btn" onclick="goHome()" title="Ana sayfa">
-          <img src="favicon-192.png" alt="Logo" class="home-logo-img">
+          <img src="logo-full.png" alt="Arapça Öğren" class="home-logo-img">
         </button>
         <div style="display:flex; align-items:center;">
           <div class="offline-pill" id="offline-pill">📴 Çevrimdışı</div>
