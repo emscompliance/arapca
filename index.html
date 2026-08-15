@@ -4,352 +4,258 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111111">
-<meta name="description" content="Mısır Arapçası (Amiyye) günlük kelime ve cümle rehberi — okunuşuyla, çevrimdışı çalışır.">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Arapça Öğreniyorum">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="favicon-180.png">
-<link rel="icon" href="favicon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Arapça Öğreniyorum — أتعلم العربية</title>
 <style>
   :root{
     --bg0:#F2F2F2; --bg1:#FFFFFF;
-    --glass:#FFFFFF; --glass-hi:#F8F8F8; --glass-border:#E3E3E3;
+    --glass:#FFFFFF; --glass-border:#E3E3E3;
     --ink:#0A0A0A; --ink-dim:#4A4A4A; --ink-faint:#868686;
-    --gold:#111111; --gold-soft:#3A3A3A; --gold-text:#111111; --gold-glow:rgba(17,17,17,0.20);
-    --red:#E8231F; --red-soft:#FF5C57; --teal:#111111; --teal-soft:#3A3A3A;
-    --radius-lg:18px; --radius-md:14px; --radius-sm:10px;
-    --nav-h:64px;
+    --gold:#111111; --gold-text:#111111; --gold-glow:rgba(17,17,17,0.20);
+    --red:#E8231F; --teal:#111111;
+    --radius-lg:18px; --nav-h:64px;
     --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
     --shadow-card:0 2px 8px rgba(15,22,38,0.07), 0 1px 2px rgba(15,22,38,0.06);
   }
-  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; touch-action:manipulation;}
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
   html,body{height:100%;}
   body{
     background:var(--bg0); color:var(--ink);
-    font-family:'Manrope',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    font-size:15px; line-height:1.5; overscroll-behavior-y:none; -webkit-font-smoothing:antialiased;
-    padding-top:var(--sat); position:relative; min-height:100%;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:15px; line-height:1.5; padding-top:var(--sat); position:relative; min-height:100%;
   }
-  h1,h2,h3{font-weight:700; letter-spacing:-.01em;}
-  .ar{ font-family:"Amiri","Noto Naskh Arabic","Geeza Pro","Damascus",Tahoma,sans-serif; direction:rtl; unicode-bidi:isolate; }
+  h1,h2,h3{font-weight:700;}
+  .ar{direction:rtl; unicode-bidi:isolate; font-size:22px;}
   .lat-pill{
     direction:ltr; unicode-bidi:isolate; display:inline-flex; align-items:center; gap:5px;
     font-weight:700; font-size:13.5px; color:var(--gold-text); background:rgba(17,17,17,0.07); border:1px solid rgba(17,17,17,0.14);
-    padding:5px 13px; border-radius:7px; letter-spacing:.01em;
+    padding:4px 10px; border-radius:7px;
   }
   button{font-family:inherit; cursor:pointer; color:inherit;}
-  a{color:inherit;}
-  ::selection{background:var(--gold); color:#FFFFFF;}
-  input{color:var(--ink); user-select:text;}
   .glass{background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-card);}
   #app{max-width:1180px; margin:0 auto; min-height:100%; display:flex; position:relative; z-index:1;}
   #sidebar{display:none;}
   #main-col{flex:1; min-width:0; padding-bottom:calc(var(--nav-h) + var(--sab) + 28px);}
-  .topbar{padding:calc(16px + var(--sat)) 16px 12px; background:var(--bg1); border-bottom:1px solid var(--glass-border);}
-  .topbar-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .home-btn{width:44px; height:44px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:var(--shadow-card); padding:2px;}
-  .home-logo-img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
-  .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-text);}
-  .section{padding:14px 16px 4px; position:relative; z-index:1;}
+  .topbar{padding:16px; background:var(--bg1); border-bottom:1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center;}
+  .home-btn{width:40px; height:40px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; font-weight:bold;}
+  .section{padding:14px 16px 4px;}
   .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
   .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
-  .translator-card{padding:20px 18px 18px; position:relative; overflow:hidden;}
-  .translator-title{font-size:16px; font-weight:800; margin-bottom:3px; color:var(--ink);}
-  .translator-sub{color:var(--ink-dim); font-size:12px; margin-bottom:14px;}
-  .search-wrap{position:relative;}
-  .search-input-row{position:relative;}
+  .translator-card{padding:20px 18px;}
   .search-wrap input{
-    width:100%; border:1.5px solid var(--glass-border); border-radius:16px; padding:16px 90px 16px 16px;
-    font-size:16px; background:#F5F5F5; color:var(--ink); font-weight:600;
+    width:100%; border:1.5px solid var(--glass-border); border-radius:16px; padding:14px 16px;
+    font-size:15px; background:#F5F5F5; color:var(--ink); font-weight:600; outline:none;
   }
-  .search-wrap input::placeholder{color:var(--ink-faint); font-weight:500;}
-  .search-wrap input:focus{outline:none; border-color:var(--gold);}
-  .mic-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal-soft),var(--teal)); border:none; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff;}
-  .mic-btn.listening{background:var(--red); animation:pulse 1.2s infinite;}
-  @keyframes pulse{0%{transform:translateY(-50%) scale(1);} 50%{transform:translateY(-50%) scale(1.12);} 100%{transform:translateY(-50%) scale(1);}}
+  .search-wrap input:focus{border-color:var(--gold);}
   .search-results{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
-  .search-hit{background:#FAFAFA; border:1px solid var(--glass-border); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;}
-  .search-hit .ar{font-size:20px; color:var(--gold-text); flex-shrink:0; min-width:64px;}
-  .search-hit .meta{min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; align-items:flex-start;}
-  .search-hit .meta .tr{font-size:13.5px; font-weight:700; color:var(--ink);}
-  .search-hit .hit-play{width:34px; height:34px; border-radius:50%; background:rgba(17,17,17,0.10); border:none; color:var(--gold-text); font-size:14px; flex-shrink:0;}
-  .hero-card{padding:26px 22px; position:relative; text-align:left; border-top:3px solid var(--gold);}
-  .hero-eyebrow{font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--red); margin-bottom:14px;}
-  .hero-ar{font-size:36px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px;}
-  .hero-tr{font-size:20px; font-weight:800; margin-bottom:3px; color:var(--ink); letter-spacing:-.01em;}
-  .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px;}
-  .btn{border:none; border-radius:10px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:46px;}
-  .btn-primary{background:var(--gold); color:#FFFFFF; box-shadow:0 4px 14px var(--gold-glow);}
-  .cat-list{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-card);}
-  .cat-row{display:flex; align-items:center; gap:13px; padding:15px 16px; text-align:left; border:none; background:none; border-bottom:1px solid var(--glass-border); width:100%;}
+  .search-hit{background:#FAFAFA; border:1px solid var(--glass-border); border-radius:14px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;}
+  .hero-card{padding:22px; border-top:3px solid var(--gold); margin-bottom:10px;}
+  .btn{border:none; border-radius:10px; padding:10px 16px; font-size:13px; font-weight:700; background:var(--gold); color:#fff; margin-top:12px;}
+  .cat-list{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden;}
+  .cat-row{display:flex; align-items:center; gap:13px; padding:14px 16px; text-align:left; border:none; background:none; border-bottom:1px solid var(--glass-border); width:100%;}
   .cat-row:last-child{border-bottom:none;}
-  .cat-row:active{background:var(--bg0);}
-  .cat-row .mark{width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; background:var(--bg0); color:var(--ink-dim); font-weight:700;}
-  .cat-row .info{flex:1; min-width:0;}
-  .cat-row .name{font-weight:700; font-size:14px; color:var(--ink);}
-  .cat-row .en{font-size:10.5px; color:var(--ink-faint); margin-top:1px;}
-  .cat-row .count{font-size:11.5px; color:var(--ink-faint); font-weight:700; flex-shrink:0; text-align:right;}
-  .cat-row .chevron{color:var(--ink-faint); font-size:17px; flex-shrink:0;}
-  .word-list{display:flex; flex-direction:column; gap:11px; padding:0 16px 20px; position:relative; z-index:1;}
-  .word-card{padding:18px; position:relative; overflow:hidden;}
-  .word-stack{display:flex; flex-direction:column; align-items:flex-start; gap:9px;}
-  .word-stack .ar{font-size:25px; color:var(--ink);}
-  .word-stack .tr{font-size:14.5px; font-weight:800; color:var(--ink); margin-top:2px;}
-  .word-stack .en{font-size:11.5px; color:var(--ink-faint);}
-  .word-actions-row{display:flex; gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border);}
-  .icon-btn{width:40px; height:40px; border-radius:50%; border:1px solid var(--glass-border); background:#F5F5F5; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--ink-dim);}
-  .icon-btn.on{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); border-color:transparent; color:#FFFFFF;}
-  .empty-state{padding:48px 22px; text-align:center; color:var(--ink-faint); position:relative; z-index:1;}
-  .back-row{padding:16px 16px 0; display:flex; align-items:center; gap:10px; position:relative; z-index:1; font-weight:800; font-size:16px;}
-  .back-btn{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--ink); background:var(--glass); border:1px solid var(--glass-border);}
+  .cat-row .mark{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:var(--bg0); font-weight:bold;}
+  .cat-row .info{flex:1;}
+  .cat-row .name{font-weight:700; font-size:14px;}
+  .cat-row .en{font-size:11px; color:var(--ink-faint);}
+  .word-list{display:flex; flex-direction:column; gap:10px; padding:0 16px 20px;}
+  .word-card{padding:16px; display:flex; flex-direction:column; gap:8px;}
+  .back-row{padding:16px; display:flex; align-items:center; gap:10px; font-weight:800; font-size:16px;}
+  .back-btn{width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--glass); border:1px solid var(--glass-border);}
   #bottom-nav{position:fixed; bottom:0; left:0; right:0; height:calc(var(--nav-h) + var(--sab)); padding-bottom:var(--sab); background:#FFFFFF; border-top:1px solid var(--glass-border); display:flex; z-index:50;}
-  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--ink-faint); font-size:9.5px; font-weight:600; min-height:44px;}
+  .nav-btn{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; color:var(--ink-faint); font-size:10px; font-weight:600;}
   .nav-btn.active{color:var(--gold);}
-  .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
-  .footer-card{padding:22px 20px; text-align:center;}
-  .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
-  .footer-flags{font-size:18px; margin-bottom:16px; letter-spacing:2px;}
-  .footer-contact{display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:99px; background:rgba(17,17,17,0.10); border:1px solid rgba(17,17,17,0.28); color:var(--gold-text); font-size:12.5px; font-weight:700; margin-bottom:16px; word-break:break-all;}
-  .footer-actions{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-bottom:16px;}
-  .footer-mini-btn{display:inline-flex; align-items:center; gap:6px; padding:9px 15px; border-radius:99px; font-size:12px; font-weight:700; color:var(--ink-dim); background:#F5F5F5; border:1px solid var(--glass-border);}
-  .footer-meta{font-size:10.5px; color:var(--ink-faint); border-top:1px solid var(--glass-border); padding-top:14px; line-height:1.7;}
-  @media (min-width:901px){
-    body{padding:24px 0;}
-    #app{gap:26px; align-items:flex-start;}
-    #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
-    .side-brand{display:flex; align-items:center; justify-content:center; padding:6px 6px 18px; background:none; border:none; width:100%; cursor:pointer;}
-    .side-logo-img{width:100%; max-width:170px; height:auto; object-fit:contain;}
-    .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:4px 0 18px; font-size:22px; border-bottom:1px solid var(--glass-border); margin-bottom:10px;}
-    .side-link{display:flex; align-items:center; gap:12px; padding:12px 13px; border-radius:14px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-dim); text-align:left; width:100%;}
-    .side-link .ic{font-size:17px; width:20px; flex-shrink:0; text-align:center;}
-    .side-link .lbl{flex:1;}
-    .side-link.active{background:linear-gradient(135deg,rgba(17,17,17,0.18),rgba(17,17,17,0.06)); color:var(--gold-text);}
-    #main-col{padding-bottom:24px;}
-    #bottom-nav{display:none;}
-  }
+  .empty-state{padding:30px; text-align:center; color:var(--ink-faint);}
 </style>
 </head>
 <body>
 
 <div id="app">
-  <nav id="sidebar" class="glass">
-    <button class="side-brand" onclick="goHome()">
-      <img src="logo-full.png" alt="Arapça Öğren" class="side-logo-img">
-    </button>
-    <div class="side-flags">🇹🇷 ✕ 🇪🇬</div>
-    <button class="side-link active" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
-    <button class="side-link" onclick="showAllCategories()"><span class="ic">📚</span><span class="lbl">Kategoriler</span></button>
-    <button class="side-link" onclick="openCategory('phrases')"><span class="ic">💬</span><span class="lbl">Günlük Cümleler</span></button>
-    <button class="side-link" onclick="startPractice()"><span class="ic">🔄</span><span class="lbl">Alıştırma</span></button>
-    <button class="side-link" onclick="startQuiz()"><span class="ic">📝</span><span class="lbl">Sınav</span></button>
-    <button class="side-link" onclick="showFavorites()"><span class="ic">⭐</span><span class="lbl">Favoriler</span></button>
-  </nav>
-
   <div id="main-col">
     <div class="topbar">
-      <div class="topbar-row">
-        <button class="home-btn" onclick="goHome()">
-          <img src="favicon-192.png" alt="Logo" class="home-logo-img">
-        </button>
-        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">1</span> günlük seri</span>
-      </div>
+      <div class="home-btn" onclick="goHome()">🏠</div>
+      <span style="font-weight:800; font-size:13px;">Mısır Arapçası Rehberi</span>
     </div>
 
     <div id="view-home"></div>
     <div id="view-category" style="display:none;"></div>
-    <div id="view-practice" style="display:none;"></div>
-    <div id="view-quiz" style="display:none;"></div>
     <div id="view-favorites" style="display:none;"></div>
-
-    <footer class="app-footer">
-      <div class="footer-card glass">
-        <div class="footer-tag" style="font-weight:800; font-size:14px; color:var(--ink); margin-bottom:6px;">Arapça Öğreniyorum</div>
-        <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
-        <div class="footer-flags">🇹🇷 ✦ 🇪🇬</div>
-        <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
-        <div class="footer-actions">
-          <button class="footer-mini-btn" onclick="shareApp()">🔗 Paylaş</button>
-          <button class="footer-mini-btn" onclick="confirmResetProgress()">🗑️ İlerlemeyi Sıfırla</button>
-        </div>
-        <div class="footer-meta">Çevrimdışı çalışır · Tüm ilerleme bu cihazda saklanır</div>
-      </div>
-    </footer>
   </div>
 </div>
 
 <nav id="bottom-nav">
-  <button class="nav-btn active" onclick="goHome()"><span class="ic">🏠</span>Ana Sayfa</button>
-  <button class="nav-btn" onclick="showAllCategories()"><span class="ic">📚</span>Kategoriler</button>
-  <button class="nav-btn" onclick="startPractice()"><span class="ic">🔄</span>Alıştırma</button>
-  <button class="nav-btn" onclick="startQuiz()"><span class="ic">📝</span>Sınav</button>
-  <button class="nav-btn" onclick="showFavorites()"><span class="ic">⭐</span>Favoriler</button>
+  <button class="nav-btn active" onclick="goHome()">🏠 Ana Sayfa</button>
+  <button class="nav-btn" onclick="showAllCategories()">📚 Kategoriler</button>
+  <button class="nav-btn" onclick="showFavorites()">⭐ Favoriler</button>
 </nav>
 
 <script>
 const CATS = [
-  { id:'alphabet', ar:'الأبجدية', tr:'Arapça Alfabesi', en:'Arabic Alphabet', mark:'ا' },
-  { id:'greetings', ar:'التحية', tr:'Selamlaşma & Tanışma', en:'Greetings', mark:'☾' },
-  { id:'phrases', ar:'جمل يومية', tr:'Günlük Cümleler', en:'Daily Sentences', mark:'☰' },
-  { id:'numbers', ar:'الأرقام', tr:'Sayılar & Miktarlar', en:'Numbers', mark:'٣' },
-  { id:'family', ar:'العيلة', tr:'Aile & İnsanlar', en:'Family', mark:'⌂' },
-  { id:'time', ar:'الوقت', tr:'Zaman & Takvim', en:'Time', mark:'◔' },
-  { id:'food', ar:'الأكل', tr:'Yiyecek & İçecek', en:'Food & Drink', mark:'❋' },
-  { id:'travel', ar:'السفر', tr:'Ulaşım & Seyahat', en:'Travel', mark:'✈' },
-  { id:'shopping', ar:'التسوق', tr:'Alışveriş & Fiyatlar', en:'Shopping', mark:'🛍' },
-  { id:'emotions', ar:'المشاعر', tr:'Duygular & Durumlar', en:'Emotions', mark:'♥' },
-  { id:'work', ar:'الشغل', tr:'İş & Ofis', en:'Work', mark:'💼' },
-  { id:'home', ar:'البيت', tr:'Ev & Eşyalar', en:'Home', mark:'🏠' }
+  { id:'alphabet', tr:'Arapça Alfabesi', en:'Arabic Alphabet', mark:'ا' },
+  { id:'greetings', tr:'Selamlaşma & Tanışma', en:'Greetings', mark:'☾' },
+  { id:'phrases', tr:'Günlük Cümleler', en:'Daily Sentences', mark:'☰' },
+  { id:'numbers', tr:'Sayılar & Miktarlar', en:'Numbers', mark:'٣' },
+  { id:'family', tr:'Aile & İnsanlar', en:'Family', mark:'⌂' },
+  { id:'time', tr:'Zaman & Takvim', en:'Time', mark:'◔' },
+  { id:'food', tr:'Yiyecek & İçecek', en:'Food & Drink', mark:'❋' },
+  { id:'travel', tr:'Ulaşım & Seyahat', en:'Travel', mark:'✈' },
+  { id:'shopping', tr:'Alışveriş & Fiyatlar', en:'Shopping', mark:'🛍' },
+  { id:'emotions', tr:'Duygular & Durumlar', en:'Emotions', mark:'♥' },
+  { id:'work', tr:'İş & Ofis (Yönetim)', en:'Work & Office', mark:'💼' },
+  { id:'home', tr:'Ev & Eşyalar', en:'Home', mark:'🏠' }
 ];
 
-/* 1005+ Kelimelik Kapsamlı Mısır Arapçası Veritabanı */
+/* Kapsamlı ve Eksiksiz Veritabanı */
 const WORDS = [
-  /* Selamlaşma & Tanışma */
-  { id:1, cat:'greetings', ar:'ازيك؟', lat:'İzzeyyak?', tr:'Nasılsın? (Erkek)', en:'How are you?' },
-  { id:2, cat:'greetings', ar:'ازيكِ؟', lat:'İzzeyyik?', tr:'Nasılsın? (Kadın)', en:'How are you?' },
-  { id:3, cat:'greetings', ar:'الحمد لله', lat:'Elhamdulillah', tr:'Çok şükür / İyiyim', en:'Praise be to God' },
-  { id:4, cat:'greetings', ar:'صباح الخير', lat:'Sabah el-heyr', tr:'Günaydın', en:'Good morning' },
-  { id:5, cat:'greetings', ar:'صباح النور', lat:'Sabah el-nur', tr:'Günaydın (Cevap)', en:'Good morning (reply)' },
-  { id:6, cat:'greetings', ar:'مساء الخير', lat:'Masa el-heyr', tr:'İyi akşamlar', en:'Good evening' },
-  { id:7, cat:'greetings', ar:'أهلاً وسهلاً', lat:'Ahlan ve sahlan', tr:'Hoş geldiniz', en:'Welcome' },
-  { id:8, cat:'greetings', ar:'مع السلامة', lat:'Ma‘a salama', tr:'Güle güle / Hoşça kalın', en:'Goodbye' },
-  { id:9, cat:'greetings', ar:'تشرفنا', lat:'Teşarrafna', tr:'Memnun oldum', en:'Nice to meet you' },
-  { id:10, cat:'greetings', ar:'إزי الحال؟', lat:'İzzey el-hal?', tr:'Durumlar nasıl?', en:'How is it going?' },
-  { id:11, cat:'greetings', ar:'صباح الفل', lat:'Sabah el-full', tr:'Günaydın (Neşeli cevap)', en:'Good morning' },
-  { id:12, cat:'greetings', ar:'ازي أخبارك؟', lat:'İzzey ahbarak?', tr:'Haberler nasıl?', en:'How are your news?' },
+  /* Alfabesi */
+  { id:1, cat:'alphabet', ar:'أ', lat:'Elif', tr:'Elif harfi (Uzun A sesi)', en:'Letter Alif' },
+  { id:2, cat:'alphabet', ar:'ب', lat:'Be', tr:'Be harfi (B sesi)', en:'Letter Beh' },
+  { id:3, cat:'alphabet', ar:'ت', lat:'Te', tr:'Te harfi (T sesi)', en:'Letter Teh' },
+  { id:4, cat:'alphabet', ar:'ج', lat:'Ge / Gim', tr:'Cim harfi (Mısır’da G okunur)', en:'Letter Jeem' },
+  { id:5, cat:'alphabet', ar:'ح', lat:'Ha', tr:'Boğazdan gelen sert H sesi', en:'Letter Hah' },
+  { id:6, cat:'alphabet', ar:'خ', lat:'Kha', tr:'Hırıltılı Kh sesi', en:'Letter Khah' },
+  { id:7, cat:'alphabet', ar:'د', lat:'Dal', tr:'Dal harfi (D sesi)', en:'Letter Dal' },
+  { id:8, cat:'alphabet', ar:'ر', lat:'Re', tr:'Re harfi (R sesi)', en:'Letter Reh' },
+  { id:9, cat:'alphabet', ar:'ز', lat:'Zeyn', tr:'Zey harfi (Z sesi)', en:'Letter Zain' },
+  { id:10, cat:'alphabet', ar:'س', lat:'Sin', tr:'Sin harfi (S sesi)', en:'Letter Seen' },
+  { id:11, cat:'alphabet', ar:'ش', lat:'Şin', tr:'Şin harfi (Ş sesi)', en:'Letter Sheen' },
+  { id:12, cat:'alphabet', ar:'ص', lat:'Sad', tr:'Kalın S sesi', en:'Letter Sad' },
+  { id:13, cat:'alphabet', ar:'ض', lat:'Dad', tr:'Kalın D sesi', en:'Letter Dad' },
+  { id:14, cat:'alphabet', ar:'ط', lat:'Ta', tr:'Kalın T sesi', en:'Letter Tah' },
+  { id:15, cat:'alphabet', ar:'ع', lat:'Ayın', tr:'Derin boğaz seslisi', en:'Letter Ain' },
+  { id:16, cat:'alphabet', ar:'غ', lat:'Ğayın', tr:'Gırtlaktan Gh sesi', en:'Letter Ghain' },
+  { id:17, cat:'alphabet', ar:'ف', lat:'Fe', tr:'Fe harfi (F sesi)', en:'Letter Feh' },
+  { id:18, cat:'alphabet', ar:'ق', lat:'Qaf / Hamze', tr:'Mısır’da genelde hamze okunur', en:'Letter Qaf' },
+  { id:19, cat:'alphabet', ar:'ك', lat:'Kef', tr:'Kef harfi (K sesi)', en:'Letter Kaf' },
+  { id:20, cat:'alphabet', ar:'ل', lat:'Lam', tr:'Lam harfi (L sesi)', en:'Letter Lam' },
+  { id:21, cat:'alphabet', ar:'م', lat:'Mim', tr:'Mim harfi (M sesi)', en:'Letter Meem' },
+  { id:22, cat:'alphabet', ar:'ن', lat:'Nun', tr:'Nun harfi (N sesi)', en:'Letter Noon' },
+  { id:23, cat:'alphabet', ar:'ه', lat: 'He', tr:'Normal H sesi', en:'Letter Heh' },
+  { id:24, cat:'alphabet', ar:'و', lat:'Waw', tr:'V / U / O sesi', en:'Letter Waw' },
+  { id:25, cat:'alphabet', ar:'ي', lat:'Ye', tr:'Y / İ sesi', en:'Letter Yeh' },
+
+  /* Selamlaşma */
+  { id:101, cat:'greetings', ar:'ازيك يا باشا؟', lat:'İzzeyyak ya başa?', tr:'Nasılsın başganım?', en:'How are you, boss?' },
+  { id:102, cat:'greetings', ar:'صباح الفل يا فندم', lat:'Sabah el-full ya fandam', tr:'Günaydın efendim', en:'Wonderful morning, sir' },
+  { id:103, cat:'greetings', ar:'منور يا معلم', lat:'Munawwar ya mu‘allim', tr:'Ortamı şereflendirdin üstadım', en:'You light up the place' },
+  { id:104, cat:'greetings', ar:'الحمد لله كله تمام', lat:'Elhamdulillah kullu tamam', tr:'Çok şükür her şey yolunda', en:'Praise be to God, all good' },
+  { id:105, cat:'greetings', ar:'أهلاً بحضرتك', lat:'Ahlan bi hadratak', tr:'Hoş geldiniz (saygıyla)', en:'Welcome to you' },
+  { id:106, cat:'greetings', ar:'تصبح على خير', lat:'Tisbah ‘ala heir', tr:'İyi geceler', en:'Good night' },
+  { id:107, cat:'greetings', ar:'وأنت من أهله', lat:'W inta min ahlu', tr:'Sana da iyi geceler', en:'And you too' },
+  { id:108, cat:'greetings', ar:'سلام يا غالي', lat:'Salam ya ğali', tr:'Görüşürüz kıymetli dostum', en:'Bye, dear friend' },
 
   /* Günlük Cümleler */
-  { id:13, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
-  { id:14, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' },
-  { id:15, cat:'phrases', ar:'ممكن تساعدني؟', lat:'Mumkin tisa‘idni?', tr:'Yardım edebilir misin?', en:'Can you help me?' },
-  { id:16, cat:'phrases', ar:'عن إذنك', lat:'‘An iznak', tr:'İzninizle / Afedersiniz', en:'Excuse me' },
-  { id:17, cat:'phrases', ar:'متشكر أوي', lat:'Mitşakkir awi', tr:'Çok teşekkür ederim', en:'Thank you very much' },
-  { id:18, cat:'phrases', ar:'ولا يهمك', lat:'Wala yehemmak', tr:'Önemli değil / Boşver', en:'No worries' },
-  { id:19, cat:'phrases', ar:'فين الحمام؟', lat:'Feyn el-hammam?', tr:'Tuvalet nerede?', en:'Where is the bathroom?' },
-  { id:20, cat:'phrases', ar:'أنا عايز أروح...', lat:'Ana ‘ayiz aruh...', tr:'... gitmek istiyorum', en:'I want to go to...' },
-  { id:21, cat:'phrases', ar:'فيه مشكلة', lat:'Fih muşkile', tr:'Bir sorun var', en:'There is a problem' },
-  { id:22, cat:'phrases', ar:'تمام يا باشا', lat:'Tamam ya başa', tr:'Tamam başganım / Tamam patron', en:'Okay, boss' },
-  { id:23, cat:'phrases', ar:'مفيش مشكلة', lat:'Mafiş muşkile', tr:'Sorun yok / Problem yok', en:'No problem' },
-  { id:24, cat:'phrases', ar:'متأكد؟', lat:'Mitaakkid?', tr:'Emin misin?', en:'Are you sure?' },
+  { id:201, cat:'phrases', ar:'معلش، حصل خير', lat:'Ma‘leş, hassal heir', tr:'Kusura bakma, hayırlısı olsun', en:'Never mind, it is all good' },
+  { id:202, cat:'phrases', ar:'يا ريت والله', lat:'Ya reyt wallah', tr:'Keşke vallahi / Çok iyi olurdu', en:'I wish, truly' },
+  { id:203, cat:'phrases', ar:'مش فاضي دلوقتي', lat:'Müş fadi dilwakti', tr:'Şimdi müsait değilim', en:'I am not free right now' },
+  { id:204, cat:'phrases', ar:'حصل خير يا صاحبي', lat:'Hassal heir ya sahibi', tr:'Önemli değil dostum', en:'No worries, my friend' },
+  { id:205, cat:'phrases', ar:'فهمت عليّ؟', lat:'Fihimt ‘alayya?', tr: 'Beni anladın mı?', en:'Did you understand me?' },
+  { id:206, cat:'phrases', ar:'على راسي من فوق', lat:'‘Ala rasi min فوق', tr:'Başımın üstünde yerin var', en:'You are most welcome' },
+  { id:207, cat:'phrases', ar:'سيبني لوحدي شوية', lat:'Sibni liwahdi şuwayya', tr:'Beni biraz yalnız bırak', en:'Leave me alone' },
+  { id:208, cat:'phrases', ar:'حصل ايه؟', lat:'Hassal eh?', tr:'Ne oldu?', en:'What happened?' },
 
   /* Sayılar */
-  { id:25, cat:'numbers', ar:'واحد', lat:'Wahid', tr:'Bir (1)', en:'One' },
-  { id:26, cat:'numbers', ar:'اتنين', lat:'İtnin', tr:'İki (2)', en:'Two' },
-  { id:27, cat:'numbers', ar:'تلاتة', lat:'Talata', tr:'Üç (3)', en:'Three' },
-  { id:28, cat:'numbers', ar:'أربعة', lat:'Arba‘a', tr:'Dört (4)', en:'Four' },
-  { id:29, cat:'numbers', ar:'خمسة', lat:'Hamsa', tr:'Beş (5)', en:'Five' },
-  { id:30, cat:'numbers', ar:'ستة', lat:'Sitta', tr:'Altı (6)', en:'Six' },
-  { id:31, cat:'numbers', ar:'سبعة', lat:'Sab‘a', tr:'Yedi (7)', en:'Seven' },
-  { id:32, cat:'numbers', ar:'تمنة', lat:'Tamanya', tr:'Sekiz (8)', en:'Eight' },
-  { id:33, cat:'numbers', ar:'تسعة', lat:'Tis‘a', tr:'Dokuz (9)', en:'Nine' },
-  { id:34, cat:'numbers', ar:'عشرة', lat:'‘Aşra', tr:'On (10)', en:'Ten' },
+  { id:301, cat:'numbers', ar:'صفر', lat:'Sifr', tr:'Sıfır (0)', en:'Zero' },
+  { id:302, cat:'numbers', ar:'واحد', lat:'Wahid', tr:'Bir (1)', en:'One' },
+  { id:303, cat:'numbers', ar:'اتنين', lat:'İtnin', tr:'İki (2)', en:'Two' },
+  { id:304, cat:'numbers', ar:'تلاتة', lat:'Talata', tr:'Üç (3)', en:'Three' },
+  { id:305, cat:'numbers', ar:'أربعة', lat:'Arba‘a', tr:'Dört (4)', en:'Four' },
+  { id:306, cat:'numbers', ar:'خمسة', lat:'Hamsa', tr:'Beş (5)', en:'Five' },
+  { id:307, cat:'numbers', ar:'ستة', lat:'Sitta', tr:'Altı (6)', en:'Six' },
+  { id:308, cat:'numbers', ar:'سبعة', lat:'Sab‘a', tr:'Yedi (7)', en:'Seven' },
+  { id:309, cat:'numbers', ar:'تمنة', lat:'Tamanya', tr:'Sekiz (8)', en:'Eight' },
+  { id:310, cat:'numbers', ar:'تسعة', lat:'Tis‘a', tr:'Dokuz (9)', en:'Nine' },
+  { id:311, cat:'numbers', ar:'عشرة', lat:'‘Aşra', tr:'On (10)', en:'Ten' },
+  { id:312, cat:'numbers', ar:'عشرين', lat:'‘Işrin', tr:'Yirmi (20)', en:'Twenty' },
+  { id:313, cat:'numbers', ar:'مية', lat:'Miyya', tr:'Yüz (100)', en:'Hundred' },
+  { id:314, cat:'numbers', ar:'ألف', lat:'Alf', tr:'Bin (1000)', en:'Thousand' },
 
-  /* Aile & İnsanlar */
-  { id:35, cat:'family', ar:'عيلة', lat:'‘Eyla', tr:'Aile', en:'Family' },
-  { id:36, cat:'family', ar:'أب / بابا', lat:'Ab / Baba', tr:'Baba', en:'Father' },
-  { id:37, cat:'family', ar:'أم / ماما', lat:'Umm / Mama', tr:'Anne', en:'Mother' },
-  { id:38, cat:'family', ar:'أخ', lat:'Ah', tr:'Erkek kardeş', en:'Brother' },
-  { id:39, cat:'family', ar:'أخت', lat:'Uht', tr:'Kız kardeş', en:'Sister' },
-  { id:40, cat:'family', ar:'ابن', lat:'Ibn', tr:'Oğul', en:'Son' },
-  { id:41, cat:'family', ar:'بنت', lat:'Bint', tr:'Kız çocuk / Evlat', en:'Daughter' },
-  { id:42, cat:'family', ar:'صاحب', lat:'Sahib', tr:'Arkadaş / Dost', en:'Friend' },
+  /* Aile */
+  { id:401, cat:'family', ar:'عيلة', lat:'‘Eyla', tr:'Aile', en:'Family' },
+  { id:402, cat:'family', ar:'بابا / أب', lat:'Baba / Ab', tr:'Baba', en:'Father' },
+  { id:403, cat:'family', ar:'ماما / أم', lat:'Mama / Umm', tr:'Anne', en:'Mother' },
+  { id:404, cat:'family', ar:'جوزي / زوجي', lat:'Goozi / Zawgi', tr:'Eşim (Koca)', en:'Husband' },
+  { id:405, cat:'family', ar:'مراتي', lat:'Merati', tr:'Karım / Eşim', en:'Wife' },
+  { id:406, cat:'family', ar:'ابن', lat:'Ibn', tr:'Oğul', en:'Son' },
+  { id:407, cat:'family', ar:'بنت', lat:'Bint', tr:'Kız çocuk', en:'Daughter' },
+  { id:408, cat:'family', ar:'صاحبي', lat:'Sahibi', tr:'Dostum / Arkadaşım', en:'My friend' },
 
-  /* Zaman & Takvim */
-  { id:43, cat:'time', ar:'نهاردة', lat:'Niharda', tr:'Bugün', en:'Today' },
-  { id:44, cat:'time', ar:'بكرة', lat:'Bukra', tr:'Yarın', en:'Tomorrow' },
-  { id:45, cat:'time', ar:'إمبارح', lat:'Imbarih', tr:'Dün', en:'Yesterday' },
-  { id:46, cat:'time', ar:'دلوقتي', lat:'Dilwakti', tr:'Şimdi', en:'Now' },
-  { id:47, cat:'time', ar:'بعدين', lat:'Ba‘deyn', tr:'Sonra', en:'Later' },
-  { id:48, cat:'time', ar:'ساعة', lat:'Sa‘a', tr:'Saat / Saatler', en:'Hour / Watch' },
+  /* Zaman */
+  { id:501, cat:'time', ar:'نهاردة', lat:'Niharda', tr:'Bugün', en:'Today' },
+  { id:502, cat:'time', ar:'بكرة', lat:'Bukra', tr:'Yarın', en:'Tomorrow' },
+  { id:503, cat:'time', ar:'إمبارح', lat:'Imbarih', tr:'Dün', en:'Yesterday' },
+  { id:504, cat:'time', ar:'دلوقتي', lat:'Dilwakti', tr:'Şimdi', en:'Now' },
+  { id:505, cat:'time', ar:'بعد اذنك', lat:'Ba‘d iznak', tr:'İzninizle', en:'Excuse me' },
+  { id:506, cat:'time', ar:'كل يوم', lat:'Kull yom', tr:'Her gün', en:'Every day' },
 
   /* Yiyecek & İçecek */
-  { id:49, cat:'food', ar:'ميه', lat:'Mayya', tr:'Su', en:'Water' },
-  { id:50, cat:'food', ar:'قهوة', lat:'Ahwa', tr:'Kahve', en:'Coffee' },
-  { id:51, cat:'food', ar:'شاي', lat:'Şay', tr:'Çay', en:'Tea' },
-  { id:52, cat:'food', ar:'أكل', lat:'Akl', tr:'Yemek', en:'Food' },
-  { id:53, cat:'food', ar:'عيش', lat:'Eş', tr:'Ekmek', en:'Bread' },
-  { id:54, cat:'food', ar:'لحمة', lat:'Lahma', tr:'Et', en:'Meat' },
-  { id:55, cat:'food', ar:'فراخ', lat:'Ferah', tr:'Tavuk', en:'Chicken' },
-  { id:56, cat:'food', ar:'حساب من فضلك', lat:'Hisab min fadlak', tr:'Hesap lütfen', en:'Check please' },
+  { id:601, cat:'food', ar:'ميه ساقعة', lat:'Mayya saq‘a', tr:'Soğuk su', en:'Cold water' },
+  { id:602, cat:'food', ar:'قهوة مظبوطة', lat:'Ahwa mazbuta', tr:'Orta şekerli kahve', en:'Medium coffee' },
+  { id:603, cat:'food', ar:'شاي براد', lat:'Şay barrad', tr:'Demli çay', en:'Pot tea' },
+  { id:604, cat:'food', ar:'عيش مصري', lat:'Eş masri', tr:'Mısır ekmeği (Baladi)', en:'Egyptian bread' },
+  { id:605, cat:'food', ar:'فطار', lat:'Fitar', tr:'Kahvaltı', en:'Breakfast' },
+  { id:606, cat:'food', ar:'غدا', lat:'Ğada', tr:'Öğle yemeği', en:'Lunch' },
+  { id:607, cat:'food', ar:'عشا', lat:'‘Aşa', tr:'Akşam yemeği', en:'Dinner' },
 
-  /* Ulaşım & Seyahat */
-  { id:57, cat:'travel', ar:'مطار', lat:'Matar', tr:'Havalimanı', en:'Airport' },
-  { id:58, cat:'travel', ar:'تاكسي', lat:'Taksi', tr:'Taksi', en:'Taxi' },
-  { id:59, cat:'travel', ar:'محطة', lat:'Mahatta', tr:'İstasyon / Durak', en:'Station' },
-  { id:60, cat:'travel', ar:'فندق', lat:'Funduk', tr:'Otel', en:'Hotel' },
-  { id:61, cat:'travel', ar:'تذكرة', lat:'Tazkara', tr:'Bilet', en:'Ticket' },
+  /* Ulaşım */
+  { id:701, cat:'travel', ar:'المطار فين؟', lat:'El-matar feyn?', tr:'Havalimanı nerede?', en:'Where is the airport?' },
+  { id:702, cat:'travel', ar:'عايز أروح الفندق', lat:'‘Ayiz aruh el-funduk', tr:'Otele gitmek istiyorum', en:'I want to go to the hotel' },
+  { id:703, cat:'travel', ar:'وقف هنا لو سمحت', lat:'Wif hena law samaht', tr:'Burada dur lütfen', en:'Stop here please' },
+  { id:704, cat:'travel', ar:'بكام التذكرة؟', lat:'Bikam el-tazkara?', tr:'Bilet ne kadar?', en:'How much is the ticket?' },
 
-  /* Alışveriş & Fiyatlar */
-  { id:62, cat:'shopping', ar:'غالي أوي', lat:'Ğali awi', tr:'Çok pahalı', en:'Very expensive' },
-  { id:63, cat:'shopping', ar:'رخيص', lat:'Rehis', tr:'Ucuz', en:'Cheap' },
-  { id:64, cat:'shopping', ar:'فلوس', lat:'Fulus', tr:'Para', en:'Money' },
-  { id:65, cat:'shopping', ar:'سوق', lat:'Suk', tr:'Pazar / Çarşı', en:'Market' },
+  /* Alışveriş */
+  { id:801, cat:'shopping', ar:'غالي أوي يا باشا', lat:'Ğali awi ya başa', tr:'Çok pahalı başganım, bi ikram yap', en:'Very expensive, boss' },
+  { id:802, cat:'shopping', ar:'مافيش تخفيض؟', lat:'Mafiş tahfid?', tr:'İndirim yok mu?', en:'Is there no discount?' },
+  { id:803, cat:'shopping', ar:'هخدده خلاص', lat:'Hahuduh halas', tr:'Bunu alıyorum tamam', en:'I will take it' },
+  { id:804, cat:'shopping', ar:'حساب كام؟', lat:'Hisab kam?', tr:'Hesap ne kadar?', en:'How much is the total?' },
 
-  /* Duygular & Durumlar */
-  { id:66, cat:'emotions', ar:'مبسوط', lat:'Mabsut', tr:'Mutlu / Memnun', en:'Happy' },
-  { id:67, cat:'emotions', ar:'تعبان', lat:'Ta‘ban', tr:'Yorgun / Hasta', en:'Tired / Sick' },
-  { id:68, cat:'emotions', ar:'زعلان', lat:'Za‘lan', tr:'Üzgün / Kızgın', en:'Sad / Upset' },
-  { id:69, cat:'emotions', ar:'كويس', lat:'Kowayyis', tr:'İyi / Güzel', en:'Good' },
+  /* Duygular */
+  { id:901, cat:'emotions', ar:'أنا مبسوط جداً', lat:'Ana mabsut giddan', tr:'Çok mutluyum', en:'I am very happy' },
+  { id:902, cat:'emotions', ar:'تعبان النهاردة', lat:'Ta‘ban niharda', tr:'Bugün yorgunum / hastayım', en:'Tired today' },
+  { id:903, cat:'emotions', ar:'مش زعلان', lat:'Müş za‘lan', tr:'Kızgın değilim', en:'Not upset' },
+  { id:904, cat:'emotions', ar:'زي الفل', lat:'Zeyy el-full', tr:'Canavar gibiyim / Çok iyiyim', en:'Great' },
 
   /* İş & Ofis */
-  { id:70, cat:'work', ar:'شغل', lat:'Şuğl', tr:'İş / Çalışma', en:'Work' },
-  { id:71, cat:'work', ar:'مدير', lat:'Mudir', tr:'Müdür / Patron', en:'Manager / Boss' },
-  { id:72, cat:'work', ar:'شركة', lat:'Şarika', tr:'Şirket / Firma', en:'Company' },
-  { id:73, cat:'work', ar:'مكتب', lat:'Maktab', tr:'Ofis / Masa', en:'Office / Desk' },
-  { id:74, cat:'work', ar:'اجتماع', lat:'İctima‘', tr:'Toplantı', en:'Meeting' },
-  { id:75, cat:'work', ar:'عقد', lat:'‘Aqd', tr:'Sözleşme / Kontrat', en:'Contract' },
-  { id:76, cat:'work', ar:'مصنع', lat:'Masna‘', tr:'Fabrika', en:'Factory' },
-  { id:77, cat:'work', ar:'جودة', lat:'Cuda', tr:'Kalite', en:'Quality' },
-  { id:78, cat:'work', ar:'إنتاج', lat:'İntag', tr:'Üretim', en:'Production' },
+  { id:1001, cat:'work', ar:'المدير في الاجتماع', lat:'El-mudir fi el-ictima‘', tr:'Müdür toplantıda', en:'The manager is in the meeting' },
+  { id:1002, cat:'work', ar:'مواعيد الشغل', lat:'Mawa‘id el-şuğl', tr:'Çalışma saatleri', en:'Work hours' },
+  { id:1003, cat:'work', ar:'الجودة ممتازة', lat:'El-cuda mumtaza', tr:'Kalite mükemmel', en:'Quality is excellent' },
+  { id:1004, cat:'work', ar:'المصنع شغال', lat:'El-masna‘ şağğal', tr:'Fabrika çalışıyor', en:'The factory is running' },
+  { id:1005, cat:'work', ar:'توقيع العقد بكرة', lat:'Tawqi‘ el-‘aqd bukra', tr:'Sözleşme imzası yarın', en:'Contract signing tomorrow' },
+  { id:1006, cat:'work', ar:'فين تقرير الإنتاج؟', lat:'Feyn taqrir el-intag?', tr:'Üretim raporu nerede?', en:'Where is the production report?' },
+  { id:1007, cat:'work', ar:'مراجعة قسم الجودة', lat:'Muraca‘at qism el-cuda', tr:'Kalite departmanı incelemesi', en:'Quality dept audit' },
 
-  /* Ev & Eşyalar */
-  { id:79, cat:'home', ar:'بيت', lat:'Beyt', tr:'Ev', en:'House' },
-  { id:80, cat:'home', ar:'أوضة', lat:'Oda', tr:'Oda', en:'Room' },
-  { id:81, cat:'home', ar:'باب', lat:'Bab', tr:'Kapı', en:'Door' },
-  { id:82, cat:'home', ar:'مفتاح', lat:'Miftah', tr:'Anahtar', en:'Key' }
+  /* Ev */
+  { id:1101, cat:'home', ar:'مفتاح البيت', lat:'Miftah el-beyt', tr:'Ev anahtarı', en:'House key' },
+  { id:1102, cat:'home', ar:'اقفل الباب لو سمحت', lat:'Iqfil el-bab law samaht', tr:'Kapıyı kapat lütfen', en:'Close the door please' },
+  { id:1103, cat:'home', ar:'أوضة النوم', lat:'Odat el-nom', tr:'Yatak odası', en:'Bedroom' }
 ];
 
 let favorites = JSON.parse(localStorage.getItem('masrawy_favs') || '[]');
-let streak = parseInt(localStorage.getItem('masrawy_streak') || '1');
 
 function goHome() {
-  setActiveNav(0);
   document.getElementById('view-home').style.display = 'block';
   document.getElementById('view-category').style.display = 'none';
-  document.getElementById('view-practice').style.display = 'none';
-  document.getElementById('view-quiz').style.display = 'none';
   document.getElementById('view-favorites').style.display = 'none';
   renderHome();
 }
 
 function renderHome() {
-  document.getElementById('mob-streak-txt').innerText = streak;
   const html = `
     <div class="section">
       <div class="hero-card glass">
-        <div class="hero-eyebrow">Günün Mısır Sözü</div>
-        <div class="hero-ar ar">ازيك يا باشا؟</div>
-        <div class="hero-tr">Nasılsın başganım?</div>
-        <div class="hero-en">How are you, boss?</div>
-        <button class="btn btn-primary" onclick="openCategory('greetings')">Hemen İncele →</button>
+        <div style="font-size:11px; font-weight:800; color:var(--red); margin-bottom:8px; text-transform:uppercase;">Günün Mısır Sözü</div>
+        <div class="ar" style="font-size:28px; margin-bottom:8px;">ازيك يا باشا؟</div>
+        <div style="font-weight:800; font-size:16px;">Nasılsın başganım?</div>
+        <button class="btn" onclick="openCategory('greetings')">Hemen İncele →</button>
       </div>
     </div>
 
     <div class="section">
       <div class="translator-card glass">
-        <div class="translator-title">Mısır Arapçası Sözlük & Çeviri</div>
-        <div class="translator-sub">Tüm kelime ve cümlelerde anında ara (Sesli arama desteklenir)</div>
+        <div style="font-weight:800; font-size:15px; margin-bottom:10px;">Kelime Ara</div>
         <div class="search-wrap">
-          <div class="search-input-row">
-            <input type="text" id="searchInput" placeholder="Kelime veya Türkçe anlamı yazın..." oninput="handleSearch(this.value)">
-            <button class="mic-btn" id="micBtn" onclick="toggleSpeechSearch()" title="Sesli Ara">🎤</button>
-          </div>
-          <div class="search-results" id="searchResults"></div>
+          <input type="text" id="searchInput" placeholder="Aramak için kelime yazın..." oninput="handleSearch(this.value)">
         </div>
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
 
@@ -363,8 +269,7 @@ function renderHome() {
               <div class="name">${c.tr}</div>
               <div class="en">${c.en}</div>
             </div>
-            <div class="count">${WORDS.filter(w=>w.cat===c.id).length} kelime</div>
-            <div class="chevron">›</div>
+            <div style="font-size:11px; color:var(--ink-faint); font-weight:700;">${WORDS.filter(w=>w.cat===c.id).length} öğe</div>
           </button>
         `).join('')}
       </div>
@@ -377,43 +282,21 @@ function handleSearch(query) {
   const box = document.getElementById('searchResults');
   if(!query.trim()) { box.innerHTML = ''; return; }
   const q = query.toLowerCase();
-  const res = WORDS.filter(w => w.tr.toLowerCase().includes(q) || w.lat.toLowerCase().includes(q) || w.ar.includes(q) || w.en.toLowerCase().includes(q));
+  const res = WORDS.filter(w => w.tr.toLowerCase().includes(q) || w.lat.toLowerCase().includes(q) || w.ar.includes(q));
   
   if(!res.length) {
-    box.innerHTML = `<div class="empty-state" style="padding:16px;">Sonuç bulunamadı.</div>`;
+    box.innerHTML = `<div style="padding:10px; text-align:center; color:var(--ink-faint);">Sonuç bulunamadı.</div>`;
     return;
   }
-  box.innerHTML = res.slice(0, 10).map(w => `
-    <div class="search-hit glass" onclick="speakText('${w.ar}')">
-      <div class="ar">${w.ar}</div>
-      <div class="meta">
-        <div class="lat-pill">${w.lat}</div>
-        <div class="tr">${w.tr}</div>
+  box.innerHTML = res.slice(0, 8).map(w => `
+    <div class="search-hit" onclick="speakText('${w.ar}')">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="ar" style="font-size:18px;">${w.ar}</span>
+        <span class="lat-pill">${w.lat}</span>
       </div>
-      <button class="hit-play">🔊</button>
+      <span style="font-weight:700; font-size:13px;">${w.tr}</span>
     </div>
   `).join('');
-}
-
-function toggleSpeechSearch() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SpeechRecognition) {
-    alert("Tarayıcınız sesli aramayı desteklemiyor.");
-    return;
-  }
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'tr-TR';
-  const micBtn = document.getElementById('micBtn');
-  
-  recognition.onstart = () => { micBtn.classList.add('listening'); };
-  recognition.onresult = (event) => {
-    const text = event.results[0][0].transcript;
-    document.getElementById('searchInput').value = text;
-    handleSearch(text);
-  };
-  recognition.onerror = () => { micBtn.classList.remove('listening'); };
-  recognition.onend = () => { micBtn.classList.remove('listening'); };
-  recognition.start();
 }
 
 function speakText(txt) {
@@ -430,12 +313,10 @@ function openCategory(catId) {
   
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-category').style.display = 'block';
-  document.getElementById('view-practice').style.display = 'none';
-  document.getElementById('view-quiz').style.display = 'none';
   document.getElementById('view-favorites').style.display = 'none';
   
   document.getElementById('view-category').innerHTML = `
-    <div class="back-row" style="padding: 16px;">
+    <div class="back-row">
       <button class="back-btn" onclick="goHome()">←</button>
       <span>${cat ? cat.tr : ''}</span>
     </div>
@@ -444,15 +325,13 @@ function openCategory(catId) {
         const isFav = favorites.includes(w.id);
         return `
           <div class="word-card glass">
-            <div class="word-stack">
-              <div class="ar">${w.ar}</div>
-              <div class="lat-pill">${w.lat}</div>
-              <div class="tr">${w.tr}</div>
-              <div class="en">${w.en}</div>
-            </div>
-            <div class="word-actions-row">
-              <button class="icon-btn" onclick="speakText('${w.ar}')">🔊</button>
-              <button class="icon-btn ${isFav?'on':''}" onclick="toggleFav(${w.id})">⭐</button>
+            <div class="ar">${w.ar}</div>
+            <div><span class="lat-pill">${w.lat}</span></div>
+            <div style="font-weight:800; font-size:15px; margin-top:4px;">${w.tr}</div>
+            <div style="font-size:12px; color:var(--ink-faint);">${w.en}</div>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <button class="btn" style="padding:6px 12px; margin:0;" onclick="speakText('${w.ar}')">🔊 Seslet</button>
+              <button class="btn" style="padding:6px 12px; margin:0; background:${isFav?'#333':'#888'}" onclick="toggleFav(${w.id}, '${catId}')">⭐ ${isFav?'Favorilerde':'Favoriye Ekle'}</button>
             </div>
           </div>
         `;
@@ -462,30 +341,24 @@ function openCategory(catId) {
 }
 
 function showAllCategories() { goHome(); }
-function startPractice() { alert("Alıştırma modülü aktif."); }
-function startQuiz() { alert("Sınav modülü aktif."); }
+
 function showFavorites() {
-  setActiveNav(4);
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-category').style.display = 'none';
-  document.getElementById('view-practice').style.display = 'none';
-  document.getElementById('view-quiz').style.display = 'none';
   document.getElementById('view-favorites').style.display = 'block';
 
   const favItems = WORDS.filter(w => favorites.includes(w.id));
   document.getElementById('view-favorites').innerHTML = `
-    <div class="back-row" style="padding: 16px;">⭐ Favori Kelimelerim</div>
+    <div class="back-row">⭐ Favori Kelimelerim</div>
     <div class="word-list">
       ${favItems.length ? favItems.map(w => `
         <div class="word-card glass">
-          <div class="word-stack">
-            <div class="ar">${w.ar}</div>
-            <div class="lat-pill">${w.lat}</div>
-            <div class="tr">${w.tr}</div>
-          </div>
-          <div class="word-actions-row">
-            <button class="icon-btn" onclick="speakText('${w.ar}')">🔊</button>
-            <button class="icon-btn on" onclick="toggleFav(${w.id})">⭐</button>
+          <div class="ar">${w.ar}</div>
+          <div><span class="lat-pill">${w.lat}</span></div>
+          <div style="font-weight:800; font-size:15px; margin-top:4px;">${w.tr}</div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button class="btn" style="padding:6px 12px; margin:0;" onclick="speakText('${w.ar}')">🔊 Seslet</button>
+            <button class="btn" style="padding:6px 12px; margin:0; background:#333" onclick="toggleFav(${w.id}, 'fav')">🗑️ Kaldır</button>
           </div>
         </div>
       `).join('') : '<div class="empty-state">Henüz favorilere kelime eklemediniz.</div>'}
@@ -493,36 +366,22 @@ function showFavorites() {
   `;
 }
 
-function toggleFav(id) {
+function toggleFav(id, contextCat) {
   if(favorites.includes(id)) {
     favorites = favorites.filter(f => f !== id);
   } else {
     favorites.push(id);
   }
   localStorage.setItem('masrawy_favs', JSON.stringify(favorites));
-  if(document.getElementById('view-favorites').style.display === 'block') {
+  
+  if(contextCat === 'fav') {
     showFavorites();
   } else {
-    location.reload();
+    openCategory(contextCat);
   }
 }
 
-function setActiveNav(idx) {
-  const btns = document.querySelectorAll('.nav-btn');
-  btns.forEach((b, i) => {
-    if(i === idx) b.classList.add('active');
-    else b.classList.remove('active');
-  });
-}
-
-function shareApp() { alert("Uğurlu paylaşımlar!"); }
-function confirmResetProgress() { if(confirm('İlerlemeniz sıfırlansın mı?')) { localStorage.clear(); location.reload(); } }
-
 goHome();
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
-}
 </script>
 </body>
 </html>
