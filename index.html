@@ -104,6 +104,7 @@
   .flag-ico{width:22px; height:auto; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.4); vertical-align:middle; flex-shrink:0; display:inline-block;}
   .flag-ico.sm{width:17px;}
   .flag-ico.lg{width:36px;}
+  .flag-ico.xl{width:72px; border-radius:6px; box-shadow:0 3px 10px rgba(0,0,0,0.28);}
   .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-text);}
   .offline-pill{display:none; align-items:center; gap:5px; background:var(--red); border-radius:99px; padding:5px 10px; font-size:10px; font-weight:800; color:#fff; margin-inline-end:6px;}
   .offline-pill.show{display:flex;}
@@ -112,13 +113,8 @@
   .section-title{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:11px; display:flex; align-items:center; gap:8px;}
   .section-title .rule{flex:1; height:1px; background:var(--glass-border);}
 
-  /* ── Köprü rozeti: 🇹🇷 → 🇪🇬 — imza unsuru / Bridge badge: 🇹🇷 → 🇪🇬 — signature element ── */
-  .bridge-strip{display:flex; align-items:center; justify-content:center; gap:14px; padding:14px 10px 18px;}
-  .bridge-flag{font-size:30px; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.4));}
-  .bridge-route{flex:0 0 auto; display:flex; align-items:center; gap:4px; width:120px; position:relative;}
-  .bridge-line{flex:1; height:2px; background:repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 11px);}
-  .bridge-plane{font-size:15px; transform:rotate(90deg); flex-shrink:0;}
-  .bridge-caption{text-align:center; font-size:11px; color:var(--ink-faint); font-weight:700; margin-top:-8px; margin-bottom:6px; letter-spacing:.02em;}
+  /* ── Köprü rozeti: 🇹🇷 🇪🇬 — büyük bayraklar, sade / Bridge badge: 🇹🇷 🇪🇬 — big flags, clean ── */
+  .bridge-strip{display:flex; align-items:center; justify-content:center; gap:22px; padding:20px 10px 18px;}
 
   /* ── Çevirmen kartı / Translator card ── */
   .translator-card{padding:20px 18px 18px; position:relative; overflow:hidden;}
@@ -297,6 +293,8 @@
   /* ── Alt bilgi / Footer ── */
   .app-footer{padding:26px 16px 8px; position:relative; z-index:1;}
   .footer-card{padding:22px 20px; text-align:center;}
+  .footer-logo-left{display:flex; justify-content:flex-start; margin-bottom:14px;}
+  .footer-logo-img{height:56px; width:auto; object-fit:contain; border-radius:10px;}
   .footer-logo-row{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:10px; background:none; border:none; width:100%; padding:4px;}
   .footer-logo-row:active{opacity:.75;}
   .footer-tag{font-size:11.5px; color:var(--ink-faint); margin-bottom:16px;}
@@ -317,13 +315,14 @@
     body{padding:24px 0;}
     #app{gap:26px; align-items:flex-start;}
     #sidebar{display:flex; flex-direction:column; width:236px; flex-shrink:0; padding:22px 16px; position:sticky; top:24px; gap:4px;}
-    .side-brand{display:flex; align-items:center; gap:10px; padding:0 6px 18px; border-bottom:1px solid var(--glass-border); margin-bottom:14px; background:none; border-inline:none; border-top:none; width:100%; cursor:pointer;}
+    .side-brand{display:flex; align-items:center; gap:10px; padding:0 13px 18px; border-bottom:1px solid var(--glass-border); margin-bottom:14px; background:none; border-inline:none; border-top:none; width:100%; cursor:pointer;}
     .side-brand:active{opacity:.8;}
     .side-brand .kufi{font-size:17px; color:var(--ink);}
     .side-brand .sub{font-size:9px; color:var(--ink-faint); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
     .side-flags{display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 0 16px; font-size:22px;}
     .side-link{display:flex; align-items:center; gap:12px; padding:12px 13px; border-radius:14px; background:none; border:none; font-size:14px; font-weight:700; color:var(--ink-dim); text-align:left; width:100%;}
-    .side-link .ic{font-size:17px; width:20px; text-align:center;}
+    .side-link .ic{font-size:17px; width:20px; flex-shrink:0; text-align:center;}
+    .side-link .lbl{flex:1;}
     .side-link.active{background:linear-gradient(135deg,rgba(33,150,243,0.18),rgba(33,150,243,0.06)); color:var(--gold-text);}
     .side-streak{margin-top:14px; padding-top:14px; border-top:1px solid var(--glass-border); font-size:12px; color:var(--ink-faint); font-weight:600; display:flex; align-items:center; gap:8px; padding-left:13px;}
     #main-col{padding-bottom:24px;}
@@ -331,7 +330,6 @@
     #scroll-top-btn{bottom:26px;}
     .cat-grid{grid-template-columns:repeat(3,1fr);}
     .hero-ar{font-size:52px;}
-    .bridge-route{width:180px;}
   }
   @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important;} }
 </style>
@@ -341,17 +339,16 @@
 <div id="app">
   <nav id="sidebar" class="glass">
     <button class="side-brand" onclick="goHome()" title="Ana sayfaya dön">
-      <img src="icon-192.png" alt="Logo" class="logo-mark-img">
       <div><div class="kufi">أتعلم العربية</div><div class="sub">ARAPÇA ÖĞRENİYORUM</div></div>
     </button>
     <div class="side-flags"><svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg> <span style="color:var(--red); font-size:14px;">✦</span> <svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
-    <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span> Ana Sayfa</button>
-    <button class="side-link" data-nav="translate" onclick="showTranslate()"><span class="ic">🗣️</span> Çeviri</button>
-    <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span> Kategoriler</button>
-    <button class="side-link" data-nav="phrases" onclick="openCategory('phrases')"><span class="ic">💬</span> Günlük Cümleler</button>
-    <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span> Alıştırma</button>
-    <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span> Sınav</button>
-    <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span> Favoriler</button>
+    <button class="side-link" data-nav="home" onclick="goHome()"><span class="ic">🏠</span><span class="lbl">Ana Sayfa</span></button>
+    <button class="side-link" data-nav="translate" onclick="showTranslate()"><span class="ic">🗣️</span><span class="lbl">Çeviri</span></button>
+    <button class="side-link" data-nav="categories" onclick="showAllCategories()"><span class="ic">📚</span><span class="lbl">Kategoriler</span></button>
+    <button class="side-link" data-nav="phrases" onclick="openCategory('phrases')"><span class="ic">💬</span><span class="lbl">Günlük Cümleler</span></button>
+    <button class="side-link" data-nav="practice" onclick="startPractice()"><span class="ic">🔄</span><span class="lbl">Alıştırma</span></button>
+    <button class="side-link" data-nav="quiz" onclick="startQuiz()"><span class="ic">📝</span><span class="lbl">Sınav</span></button>
+    <button class="side-link" data-nav="favorites" onclick="showFavorites()"><span class="ic">⭐</span><span class="lbl">Favoriler</span></button>
     <div class="side-streak"><span>🔥</span> <span id="side-streak-txt">0 günlük seri</span></div>
   </nav>
 
@@ -359,7 +356,6 @@
     <header class="topbar">
       <div class="topbar-row">
         <button class="brand" onclick="goHome()" title="Ana sayfaya dön">
-          <img src="icon-192.png" alt="Logo" class="logo-mark-img">
           <div class="brand-text"><div class="kufi">أتعلم العربية</div><div class="sub">Arapça Öğreniyorum</div></div>
         </button>
         <div style="display:flex; align-items:center;">
@@ -383,7 +379,9 @@
          extra shortcuts. -->
     <footer class="app-footer">
       <div class="footer-card glass">
-        <div class="footer-tag" style="font-weight:800; font-size:13px; color:var(--ink); margin-bottom:6px;">Arapça Öğreniyorum</div>
+        <div class="footer-logo-left">
+          <img src="logo-full.png" alt="Arapça Öğreniyorum" class="footer-logo-img">
+        </div>
         <div class="footer-tag">Türkçe konuşanlar için günlük Mısır Arapçası rehberi</div>
         <div class="footer-flags"><svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg> ✦ <svg class="flag-ico" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg></div>
         <a class="footer-contact" href="mailto:abdullahbaydogan@hotmail.com">✉️ abdullahbaydogan@hotmail.com</a>
@@ -1229,11 +1227,9 @@ function renderHome(){
   const totalWords = allWords().length;
   document.getElementById('view-home').innerHTML = `
     <div class="bridge-strip">
-      <svg class="flag-ico lg" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg>
-      <div class="bridge-route"><div class="bridge-line"></div><span class="bridge-plane">✈</span><div class="bridge-line"></div></div>
-      <svg class="flag-ico lg" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg>
+      <svg class="flag-ico xl" viewBox="0 0 30 20"><rect width="30" height="20" fill="#E30A17"/><circle cx="11" cy="10" r="5" fill="#fff"/><circle cx="12.5" cy="10" r="4" fill="#E30A17"/><polygon points="17,6.5 18,9.5 21.2,9.5 18.6,11.3 19.6,14.3 17,12.5 14.4,14.3 15.4,11.3 12.8,9.5 16,9.5" fill="#fff"/></svg>
+      <svg class="flag-ico xl" viewBox="0 0 30 20"><rect width="30" height="6.667" fill="#CE1126"/><rect y="6.667" width="30" height="6.667" fill="#fff"/><rect y="13.333" width="30" height="6.667" fill="#000"/><circle cx="15" cy="10" r="2.6" fill="#C09300"/></svg>
     </div>
-    <div class="bridge-caption">İstanbul'dan Kahire'ye — günlük Mısır Arapçası</div>
     <div class="section">
       <button class="translator-card glass" onclick="showTranslate()" style="width:100%; text-align:left; display:flex; align-items:center; gap:14px; cursor:pointer;">
         <span style="font-size:28px; flex-shrink:0;">🗣️</span>
