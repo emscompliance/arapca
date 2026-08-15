@@ -22,13 +22,11 @@
     --ink:#0A0A0A; --ink-dim:#4A4A4A; --ink-faint:#868686;
     --gold:#111111; --gold-soft:#3A3A3A; --gold-text:#111111; --gold-glow:rgba(17,17,17,0.20);
     --red:#E8231F; --red-soft:#FF5C57; --red-glow:rgba(232,35,31,0.26);
-    --brand-red:#111111;
     --teal:#111111; --teal-soft:#3A3A3A; --teal-glow:rgba(17,17,17,0.18);
     --radius-lg:18px; --radius-md:14px; --radius-sm:10px;
     --nav-h:64px;
     --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
     --shadow-card:0 2px 8px rgba(15,22,38,0.07), 0 1px 2px rgba(15,22,38,0.06);
-    --shadow-pop:0 12px 32px rgba(15,22,38,0.16);
   }
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; touch-action:manipulation;}
   html,body{height:100%;}
@@ -40,7 +38,6 @@
   }
   h1,h2,h3{font-weight:700; letter-spacing:-.01em;}
   .ar{ font-family:"Amiri","Noto Naskh Arabic","Geeza Pro","Damascus",Tahoma,sans-serif; direction:rtl; unicode-bidi:isolate; }
-  .kufi{ font-family:"Reem Kufi","Amiri","Noto Naskh Arabic","Geeza Pro",Tahoma,sans-serif; direction:rtl; unicode-bidi:isolate; }
   .lat-pill{
     direction:ltr; unicode-bidi:isolate; display:inline-flex; align-items:center; gap:5px;
     font-weight:700; font-size:13.5px; color:var(--gold-text); background:rgba(17,17,17,0.07); border:1px solid rgba(17,17,17,0.14);
@@ -67,7 +64,6 @@
     display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:var(--shadow-card); padding:2px;
   }
   .home-logo-img{width:100%; height:100%; object-fit:cover; border-radius:50%;}
-  .home-btn:active{background:var(--bg0);}
   .streak-pill{display:flex; align-items:center; gap:5px; padding:7px 12px; border-radius:99px; font-size:12.5px; font-weight:800; color:var(--gold-text);}
 
   .section{padding:14px 16px 4px; position:relative; z-index:1;}
@@ -100,15 +96,13 @@
 
   .hero-card{padding:26px 22px; position:relative; text-align:left; border-top:3px solid var(--gold);}
   .hero-eyebrow{font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--red); margin-bottom:14px;}
-  .hero-ar{font-size:40px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px;}
-  .hero-tr{font-size:21px; font-weight:800; margin-bottom:3px; color:var(--ink); letter-spacing:-.01em;}
+  .hero-ar{font-size:36px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:14px;}
+  .hero-tr{font-size:20px; font-weight:800; margin-bottom:3px; color:var(--ink); letter-spacing:-.01em;}
   .hero-en{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px;}
 
   .btn{border:none; border-radius:10px; padding:12px 18px; font-size:13.5px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:7px; transition:transform .12s, opacity .12s; min-height:46px;}
   .btn:active{opacity:.85; transform:scale(.98);}
   .btn-primary{background:var(--gold); color:#FFFFFF; box-shadow:0 4px 14px var(--gold-glow);}
-  .btn-teal{background:var(--teal); color:#fff; box-shadow:0 4px 14px var(--teal-glow);}
-  .btn-block{width:100%; justify-content:center;}
 
   .cat-list{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-card);}
   .cat-row{
@@ -195,13 +189,12 @@
   </nav>
 
   <div id="main-col">
-    <!-- Mobil Üst Bar -->
     <div class="topbar">
       <div class="topbar-row">
         <button class="home-btn" onclick="goHome()">
           <img src="favicon-192.png" alt="Logo" class="home-logo-img">
         </button>
-        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">0</span> günlük seri</span>
+        <span class="streak-pill glass">🔥 <span id="mob-streak-txt">1</span> günlük seri</span>
       </div>
     </div>
 
@@ -236,7 +229,6 @@
 </nav>
 
 <script>
-/* Tüm Kategoriler ve 1000+ Kelime Veritabanı */
 const CATS = [
   { id:'alphabet', ar:'الأبجدية', tr:'Arapça Alfabesi', en:'Arabic Alphabet', mark:'ا' },
   { id:'greetings', ar:'التحية', tr:'Selamlaşma & Tanışma', en:'Greetings', mark:'☾' },
@@ -253,7 +245,7 @@ const CATS = [
 ];
 
 const WORDS = [
-  /* Selamlaşma */
+  /* Selamlaşma & Tanışma */
   { id:1, cat:'greetings', ar:'ازيك؟', lat:'İzzeyyak?', tr:'Nasılsın? (Erkek)', en:'How are you?' },
   { id:2, cat:'greetings', ar:'ازيكِ؟', lat:'İzzeyyik?', tr:'Nasılsın? (Kadın)', en:'How are you?' },
   { id:3, cat:'greetings', ar:'الحمد لله', lat:'Elhamdulillah', tr:'Çok şükür / İyiyim', en:'Praise be to God' },
@@ -264,40 +256,94 @@ const WORDS = [
   { id:8, cat:'greetings', ar:'مع السلامة', lat:'Ma‘a salama', tr:'Güle güle / Hoşça kalın', en:'Goodbye' },
   { id:9, cat:'greetings', ar:'تشرفنا', lat:'Teşarrafna', tr:'Memnun oldum', en:'Nice to meet you' },
   { id:10, cat:'greetings', ar:'إزי الحال؟', lat:'İzzey el-hal?', tr:'Durumlar nasıl?', en:'How is it going?' },
+  { id:11, cat:'greetings', ar:'صباح الفل', lat:'Sabah el-full', tr:'Günaydın (Neşeli cevap)', en:'Good morning' },
+  { id:12, cat:'greetings', ar:'ازי أخبارك؟', lat:'İzzey ahbarak?', tr:'Haberler nasıl?', en:'How are your news?' },
 
   /* Günlük Cümleler */
-  { id:11, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
-  { id:12, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' },
-  { id:13, cat:'phrases', ar:'ممكن تساعدني؟', lat:'Mumkin tisa‘idni?', tr:'Yardım edebilir misin?', en:'Can you help me?' },
-  { id:14, cat:'phrases', ar:'عن إذنك', lat:'‘An iznak', tr:'İzninizle / Afedersiniz', en:'Excuse me' },
-  { id:15, cat:'phrases', ar:'متشكر أوي', lat:'Mitşakkir awi', tr:'Çok teşekkür ederim', en:'Thank you very much' },
-  { id:16, cat:'phrases', ar:'ولا يهمك', lat:'Wala yehemmak', tr:'Önemli değil / Boşver', en:'No worries' },
-  { id:17, cat:'phrases', ar:'فين الحمام؟', lat:'Feyn el-hammam?', tr:'Tuvalet nerede?', en:'Where is the bathroom?' },
-  { id:18, cat:'phrases', ar:'أنا عايز أروح...', lat:'Ana ‘ayiz aruh...', tr:'... gitmek istiyorum', en:'I want to go to...' },
-  { id:19, cat:'phrases', ar:'فيه مشكلة', lat:'Fih muşkile', tr:'Bir sorun var', en:'There is a problem' },
-  { id:20, cat:'phrases', ar:'تمام يا باشا', lat:'Tamam ya başa', tr:'Tamam başganım / Tamam patron', en:'Okay, boss' },
+  { id:13, cat:'phrases', ar:'أنا مش فاهم', lat:'Ana müş fehim', tr:'Anlamıyorum', en:'I do not understand' },
+  { id:14, cat:'phrases', ar:'بكام ده؟', lat:'Bikam dah?', tr:'Bu ne kadar?', en:'How much is this?' },
+  { id:15, cat:'phrases', ar:'ممكن تساعدني؟', lat:'Mumkin tisa‘idni?', tr:'Yardım edebilir misin?', en:'Can you help me?' },
+  { id:16, cat:'phrases', ar:'عن إذنك', lat:'‘An iznak', tr:'İzninizle / Afedersiniz', en:'Excuse me' },
+  { id:17, cat:'phrases', ar:'متشكر أوي', lat:'Mitşakkir awi', tr:'Çok teşekkür ederim', en:'Thank you very much' },
+  { id:18, cat:'phrases', ar:'ولا يهمك', lat:'Wala yehemmak', tr:'Önemli değil / Boşver', en:'No worries' },
+  { id:19, cat:'phrases', ar:'فين الحمام؟', lat:'Feyn el-hammam?', tr:'Tuvalet nerede?', en:'Where is the bathroom?' },
+  { id:20, cat:'phrases', ar:'أنا عايز أروح...', lat:'Ana ‘ayiz aruh...', tr:'... gitmek istiyorum', en:'I want to go to...' },
+  { id:21, cat:'phrases', ar:'فيه مشكلة', lat:'Fih muşkile', tr:'Bir sorun var', en:'There is a problem' },
+  { id:22, cat:'phrases', ar:'تمام يا باشا', lat:'Tamam ya başa', tr:'Tamam başganım / Tamam patron', en:'Okay, boss' },
+  { id:23, cat:'phrases', ar:'مفيش problem', lat:'Mafiş muşkile', tr:'Sorun yok / Problem yok', en:'No problem' },
+  { id:24, cat:'phrases', ar:'متأكد؟', lat:'Mitaakkid?', tr:'Emin misin?', en:'Are you sure?' },
 
   /* Sayılar */
-  { id:21, cat:'numbers', ar:'واحد', lat:'Wahid', tr:'Bir (1)', en:'One' },
-  { id:22, cat:'numbers', ar:'اتنين', lat:'İtnin', tr:'İki (2)', en:'Two' },
-  { id:23, cat:'numbers', ar:'تلاتة', lat:'Talata', tr:'Üç (3)', en:'Three' },
-  { id:24, cat:'numbers', ar:'أربعة', lat:'Arba‘a', tr:'Dört (4)', en:'Four' },
-  { id:25, cat:'numbers', ar:'خمسة', lat:'Hamsa', tr:'Beş (5)', en:'Five' },
-  { id:26, cat:'numbers', ar:'ستة', lat:'Sitta', tr:'Altı (6)', en:'Six' },
-  { id:27, cat:'numbers', ar:'سبعة', lat:'Sab‘a', tr:'Yedi (7)', en:'Seven' },
-  { id:28, cat:'numbers', ar:'تمنة', lat:'Tamanya', tr:'Sekiz (8)', en:'Eight' },
-  { id:29, cat:'numbers', ar:'تسعة', lat:'Tis‘a', tr:'Dokuz (9)', en:'Nine' },
-  { id:30, cat:'numbers', ar:'عشرة', lat:'‘Aşra', tr:'On (10)', en:'Ten' },
+  { id:25, cat:'numbers', ar:'واحد', lat:'Wahid', tr:'Bir (1)', en:'One' },
+  { id:26, cat:'numbers', ar:'اتنين', lat:'İtnin', tr:'İki (2)', en:'Two' },
+  { id:27, cat:'numbers', ar:'تلاتة', lat:'Talata', tr:'Üç (3)', en:'Three' },
+  { id:28, cat:'numbers', ar:'أربعة', lat:'Arba‘a', tr:'Dört (4)', en:'Four' },
+  { id:29, cat:'numbers', ar:'خمسة', lat:'Hamsa', tr:'Beş (5)', en:'Five' },
+  { id:30, cat:'numbers', ar:'ستة', lat:'Sitta', tr:'Altı (6)', en:'Six' },
+  { id:31, cat:'numbers', ar:'سبعة', lat:'Sab‘a', tr:'Yedi (7)', en:'Seven' },
+  { id:32, cat:'numbers', ar:'تمنة', lat:'Tamanya', tr:'Sekiz (8)', en:'Eight' },
+  { id:33, cat:'numbers', ar:'تسعة', lat:'Tis‘a', tr:'Dokuz (9)', en:'Nine' },
+  { id:34, cat:'numbers', ar:'عشرة', lat:'‘Aşra', tr:'On (10)', en:'Ten' },
+
+  /* Aile & İnsanlar */
+  { id:35, cat:'family', ar:'عيلة', lat:'‘Eyla', tr:'Aile', en:'Family' },
+  { id:36, cat:'family', ar:'أب / بابا', lat:'Ab / Baba', tr:'Baba', en:'Father' },
+  { id:37, cat:'family', ar:'أم / ماما', lat:'Umm / Mama', tr:'Anne', en:'Mother' },
+  { id:38, cat:'family', ar:'أخ', lat:'Ah', tr:'Erkek kardeş', en:'Brother' },
+  { id:39, cat:'family', ar:'أخت', lat:'Uht', tr:'Kız kardeş', en:'Sister' },
+  { id:40, cat:'family', ar:'ابن', lat:'Ibn', tr:'Oğul', en:'Son' },
+  { id:41, cat:'family', ar:'بنت', lat:'Bint', tr:'Kız çocuk / Evlat', en:'Daughter' },
+  { id:42, cat:'family', ar:'صاحب', lat:'Sahib', tr:'Arkadaş / Dost', en:'Friend' },
+
+  /* Zaman & Takvim */
+  { id:43, cat:'time', ar:'نهاردة', lat:'Niharda', tr:'Bugün', en:'Today' },
+  { id:44, cat:'time', ar:'بكرة', lat:'Bukra', tr:'Yarın', en:'Tomorrow' },
+  { id:45, cat:'time', ar:'إمبارح', lat:'Imbarih', tr:'Dün', en:'Yesterday' },
+  { id:46, cat:'time', ar:'دلوقتي', lat:'Dilwakti', tr:'Şimdi', en:'Now' },
+  { id:47, cat:'time', ar:'بعدين', lat:'Ba‘deyn', tr:'Sonra', en:'Later' },
+  { id:48, cat:'time', ar:'ساعة', lat:'Sa‘a', tr:'Saat / Saatler', en:'Hour / Watch' },
 
   /* Yiyecek & İçecek */
-  { id:31, cat:'food', ar:'ميه', lat:'Mayya', tr:'Su', en:'Water' },
-  { id:32, cat:'food', ar:'قهوة', lat:'Ahwa', tr:'Kahve', en:'Coffee' },
-  { id:33, cat:'food', ar:'شاي', lat:'Şay', tr:'Çay', en:'Tea' },
-  { id:34, cat:'food', ar:'أكل', lat:'Akl', tr:'Yemek', en:'Food' },
-  { id:35, cat:'food', ar:'عيش', lat:'Eş', tr:'Ekmek', en:'Bread' },
-  { id:36, cat:'food', ar:'لحمة', lat:'Lahma', tr:'Et', en:'Meat' },
-  { id:37, cat:'food', ar:'فراخ', lat:'Ferah', tr:'Tavuk', en:'Chicken' },
-  { id:38, cat:'food', ar:'حساب من فضلك', lat:'Hisab min fadlak', tr:'Hesap lütfen', en:'Check please' }
+  { id:49, cat:'food', ar:'ميه', lat:'Mayya', tr:'Su', en:'Water' },
+  { id:50, cat:'food', ar:'قهوة', lat:'Ahwa', tr:'Kahve', en:'Coffee' },
+  { id:51, cat:'food', ar:'شاي', lat:'Şay', tr:'Çay', en:'Tea' },
+  { id:52, cat:'food', ar:'أكل', lat:'Akl', tr:'Yemek', en:'Food' },
+  { id:53, cat:'food', ar:'عيش', lat:'Eş', tr:'Ekmek', en:'Bread' },
+  { id:54, cat:'food', ar:'لحمة', lat:'Lahma', tr:'Et', en:'Meat' },
+  { id:55, cat:'food', ar:'فراخ', lat:'Ferah', tr:'Tavuk', en:'Chicken' },
+  { id:56, cat:'food', ar:'حساب من فضلك', lat:'Hisab min fadlak', tr:'Hesap lütfen', en:'Check please' },
+
+  /* Ulaşım & Seyahat */
+  { id:57, cat:'travel', ar:'مطار', lat:'Matar', tr:'Havalimanı', en:'Airport' },
+  { id:58, cat:'travel', ar:'تاكسي', lat:'Taksi', tr:'Taksi', en:'Taxi' },
+  { id:59, cat:'travel', ar:'محطة', lat:'Mahatta', tr:'İstasyon / Durak', en:'Station' },
+  { id:60, cat:'travel', ar:'فندق', lat:'Funduk', tr:'Otel', en:'Hotel' },
+  { id:61, cat:'travel', ar:'تذكرة', lat:'Tazkara', tr:'Bilet', en:'Ticket' },
+
+  /* Alışveriş & Fiyatlar */
+  { id:62, cat:'shopping', ar:'غالي أوي', lat:'Ğali awi', tr:'Çok pahalı', en:'Very expensive' },
+  { id:63, cat:'shopping', ar:'رخيص', lat:'Rخيص / Rehis', tr:'Ucuz', en:'Cheap' },
+  { id:64, cat:'shopping', ar:'فلوس', lat:'Fulus', tr:'Para', en:'Money' },
+  { id:65, cat:'shopping', ar:'سوق', lat:'Suk', tr:'Pazar / Çarşı', en:'Market' },
+
+  /* Duygular & Durumlar */
+  { id:66, cat:'emotions', ar:'مبسوط', lat:'Mabsut', tr:'Mutlu / Memnun', en:'Happy' },
+  { id:67, cat:'emotions', ar:'تعبان', lat:'Ta‘ban', tr:'Yorgun / Hasta', en:'Tired / Sick' },
+  { id:68, cat:'emotions', ar:'زعلان', lat:'Za‘lan', tr:'Üzgün / Kızgın', en:'Sad / Upset' },
+  { id:69, cat:'emotions', ar:'كويس', lat:'Kowayyis', tr:'İyi / Güzel', en:'Good' },
+
+  /* İş & Ofis */
+  { id:70, cat:'work', ar:'شغل', lat:'Şuğl', tr:'İş / Çalışma', en:'Work' },
+  { id:71, cat:'work', ar:'مدير', lat:'Mudir', tr:'Müdür / Patron', en:'Manager / Boss' },
+  { id:72, cat:'work', ar:'شركة', lat:'Şarika', tr:'Şirket / Firma', en:'Company' },
+  { id:73, cat:'work', ar:'مكتب', lat:'Maktab', tr:'Ofis / Masa', en:'Office / Desk' },
+  { id:74, cat:'work', ar:'اجتماع', lat:'İctima‘', tr:'Toplantı', en:'Meeting' },
+
+  /* Ev & Eşyalar */
+  { id:75, cat:'home', ar:'بيت', lat:'Beyt', tr:'Ev', en:'House' },
+  { id:76, cat:'home', ar:'أوضة', lat:'Oda', tr:'Oda', en:'Room' },
+  { id:77, cat:'home', ar:'باب', lat:'Bab', tr:'Kapı', en:'Door' },
+  { id:78, cat:'home', ar:'مفتاح', lat:'Miftah', tr:'Anahtar', en:'Key' }
 ];
 
 let favorites = JSON.parse(localStorage.getItem('masrawy_favs') || '[]');
@@ -329,7 +375,7 @@ function renderHome() {
     <div class="section">
       <div class="translator-card glass">
         <div class="translator-title">Mısır Arapçası Sözlük & Çeviri</div>
-        <div class="translator-sub">1005+ kelime ve cümlede anında ara (Sesli arama desteklenir)</div>
+        <div class="translator-sub">Tüm kelime ve cümlelerde anında ara (Sesli arama desteklenir)</div>
         <div class="search-wrap">
           <div class="search-input-row">
             <input type="text" id="searchInput" placeholder="Kelime veya Türkçe anlamı yazın..." oninput="handleSearch(this.value)">
@@ -382,7 +428,6 @@ function handleSearch(query) {
   `).join('');
 }
 
-/* Sesli Arama (Speech Recognition) */
 function toggleSpeechSearch() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SpeechRecognition) {
@@ -488,11 +533,9 @@ function toggleFav(id) {
     favorites.push(id);
   }
   localStorage.setItem('masrawy_favs', JSON.stringify(favorites));
-  // Aktif görünümü yenile
   if(document.getElementById('view-favorites').style.display === 'block') {
     showFavorites();
   } else {
-    // Bulunduğu kategoriyi yenile
     location.reload();
   }
 }
