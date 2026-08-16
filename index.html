@@ -4,30 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mısır Lehçesi Portalı | EMS & Online Çeviri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           TOKEN SYSTEM
+           Nil vadisi + fabrika kalite kartı estetiği.
+           Renkler: nile (koyu Nil yeşili), sand (kum/ocher damga rengi),
+           brick (kiremit - acil/online vurgu), slate (loş mavi-gri),
+           stone (kireçtaşı zemin), card (numune kartı beyazı)
+           ============================================================ */
         :root {
-            --primary-color: #1e293b;
-            --accent-color: #e67e22;
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-color: #334155;
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
+            --nile: #0e4a44;
+            --nile-light: #1c6b62;
+            --sand: #c89b3c;
+            --sand-dark: #8c6a22;
+            --brick: #a8452f;
+            --slate: #4c6b75;
+            --stone: #ece8dc;
+            --card: #fbfaf6;
+            --line: #d9d3c1;
+            --ink: #172a27;
+            --muted: #6b7266;
+            --radius: 10px;
+            --transition: all 0.2s ease;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Work Sans', 'Segoe UI', sans-serif;
+            background-color: var(--stone);
+            color: var(--ink);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+        }
+
+        /* Klavye odağını görünür tut (erişilebilirlik) */
+        a:focus-visible, button:focus-visible, input:focus-visible {
+            outline: 3px solid var(--sand);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
         }
 
         .app-container {
@@ -38,8 +60,8 @@
         }
 
         aside {
-            width: 300px;
-            background-color: var(--primary-color);
+            width: 290px;
+            background-color: var(--nile);
             color: white;
             padding: 25px;
             display: flex;
@@ -49,90 +71,103 @@
             top: 0;
             height: 100vh;
             overflow-y: auto;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+            background-image:
+                repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 14px);
         }
 
         .logo-area {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 18px;
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
             cursor: pointer;
             text-decoration: none;
             transition: var(--transition);
         }
 
-        .logo-area:hover {
-            opacity: 0.9;
-        }
+        .logo-area:hover { opacity: 0.85; }
 
         .logo-icon {
-            background-color: var(--accent-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            background-color: var(--sand);
+            color: var(--nile);
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.05rem;
+            flex-shrink: 0;
         }
 
         .logo-text h1 {
-            font-size: 1.1rem;
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #ffffff;
+            letter-spacing: 0.2px;
         }
 
         .logo-text span {
-            font-size: 0.8rem;
-            color: #94a3b8;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.4px;
+            color: #a9c4bf;
+            text-transform: uppercase;
         }
 
         aside h2 {
-            font-size: 0.95rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
+            letter-spacing: 1.5px;
+            color: #8fac9f;
             margin-top: 5px;
         }
 
-        .category-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .category-list { display: flex; flex-direction: column; gap: 6px; }
 
         .category-btn {
             background: transparent;
-            border: none;
-            color: #cbd5e1;
+            border: 1px solid transparent;
+            color: #cfe0dc;
             text-align: left;
-            padding: 12px 15px;
-            border-radius: 8px;
+            padding: 11px 14px;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 0.9rem;
             transition: var(--transition);
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }
 
-        .category-btn:hover, .category-btn.active {
-            background-color: var(--accent-color);
-            color: white;
+        .category-btn:hover { background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
+
+        .category-btn.active {
+            background-color: var(--sand);
+            border-color: var(--sand);
+            color: var(--nile);
             font-weight: 600;
         }
 
         .category-count {
+            font-family: 'IBM Plex Mono', monospace;
             background: rgba(255,255,255,0.15);
             padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            flex-shrink: 0;
         }
+
+        .category-btn.active .category-count { background: rgba(14,74,68,0.18); color: var(--nile); }
 
         main {
             flex: 1;
@@ -142,75 +177,95 @@
             gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
-            width: calc(100% - 300px);
+            width: calc(100% - 290px);
         }
 
-        .search-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .search-container { width: 100%; display: flex; flex-direction: column; gap: 10px; }
 
         .search-box {
             width: 100%;
-            padding: 18px 25px;
-            font-size: 1.1rem;
-            border: 2px solid #cbd5e1;
-            border-radius: var(--border-radius);
+            padding: 17px 24px;
+            font-size: 1.05rem;
+            font-family: 'Work Sans', sans-serif;
+            border: 2px solid var(--line);
+            border-radius: var(--radius);
             outline: none;
             transition: var(--transition);
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            background: var(--card);
+            color: var(--ink);
         }
 
         .search-box:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.15);
+            border-color: var(--sand);
+            box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.18);
         }
 
         .online-status {
-            font-size: 0.85rem;
-            color: #64748b;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--muted);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
         }
 
         .online-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
+            width: 7px;
+            height: 7px;
+            background-color: var(--nile-light);
             border-radius: 50%;
             display: inline-block;
+            box-shadow: 0 0 0 3px rgba(28,107,98,0.15);
         }
 
         .content-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 18px;
         }
 
+        /* ----- Kart tasarımı: kumaş numune / envanter kartı ----- */
         .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            border: 1px solid #e2e8f0;
+            background: var(--card);
+            border-radius: 4px 4px var(--radius) var(--radius);
+            padding: 22px 20px 18px 20px;
+            border: 1px solid var(--line);
+            border-top: 4px dashed var(--cat-color, var(--nile));
+            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 13px;
             transition: var(--transition);
         }
 
-        .card.online-result {
-            border: 2px dashed var(--accent-color);
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 22px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--stone);
+            border: 2px solid var(--cat-color, var(--nile));
         }
 
+        .card.online-result { border-top-color: var(--brick); }
+        .card.online-result::before { border-color: var(--brick); }
+
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-            border-color: #cbd5e1;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(14,74,68,0.08);
+            border-color: #c7c0aa;
+        }
+
+        .card-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--cat-color, var(--nile));
+            font-weight: 600;
         }
 
         .card-top {
@@ -221,73 +276,68 @@
         }
 
         .arabic-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--ink);
             text-align: right;
             direction: rtl;
             flex: 1;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .speak-btn {
-            background: #f1f5f9;
-            border: none;
+            background: var(--stone);
+            border: 1px solid var(--line);
             border-radius: 50%;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
-            color: var(--primary-color);
-            font-size: 1rem;
+            color: var(--nile);
+            font-size: 0.95rem;
             flex-shrink: 0;
         }
 
-        .speak-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-        }
+        .speak-btn:hover { background-color: var(--sand); border-color: var(--sand); color: var(--nile); }
 
         .translation-box {
-            background: #f8fafc;
-            border-left: 4px solid var(--accent-color);
-            padding: 12px 15px;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            background: var(--stone);
+            border-left: 3px solid var(--cat-color, var(--sand));
+            padding: 11px 14px;
+            border-radius: 0 6px 6px 0;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
         .translation-label {
-            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
             text-transform: uppercase;
-            color: #64748b;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: 0.4px;
         }
 
-        .translation-text {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
+        .translation-text { font-size: 1.1rem; font-weight: 700; color: var(--ink); }
 
         .phonetic-text {
-            font-size: 0.9rem;
-            color: #475569;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--slate);
             font-style: italic;
         }
 
         footer {
-            background-color: var(--primary-color);
-            color: #94a3b8;
+            background-color: var(--nile);
+            color: #b9cec9;
             padding: 40px 20px 20px;
             font-size: 0.9rem;
             margin-top: auto;
-            border-top: 1px solid rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
             gap: 25px;
@@ -304,36 +354,19 @@
         }
 
         .footer-col h3 {
+            font-family: 'Zilla Slab', serif;
             color: white;
             font-size: 1rem;
             margin-bottom: 12px;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--sand);
             padding-bottom: 6px;
             display: inline-block;
         }
 
-        .footer-col p, .footer-col ul {
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .footer-col ul li a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
+        .footer-col p, .footer-col ul { font-size: 0.85rem; line-height: 1.6; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .footer-col ul li a { color: #cfe0dc; text-decoration: none; transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--sand); padding-left: 5px; }
 
         .footer-bottom {
             max-width: 1200px;
@@ -346,51 +379,37 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            font-size: 0.85rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
         }
 
         #scrollTopBtn {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: var(--accent-color);
-            color: white;
+            background-color: var(--sand);
+            color: var(--nile);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.3rem;
+            width: 48px;
+            height: 48px;
+            font-size: 1.2rem;
             cursor: pointer;
             display: none;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             transition: var(--transition);
             z-index: 1000;
         }
 
-        #scrollTopBtn:hover {
-            background-color: #d35400;
-            transform: scale(1.08);
-        }
+        #scrollTopBtn:hover { background-color: var(--sand-dark); color: white; transform: scale(1.06); }
 
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
-            aside {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            main {
-                width: 100%;
-                padding: 20px;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
+            .app-container { flex-direction: column; }
+            aside { width: 100%; height: auto; position: relative; }
+            main { width: 100%; padding: 20px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -399,7 +418,7 @@
     <div class="app-container">
         <!-- Sol Menü -->
         <aside>
-            <a href="#" class="logo-area" onclick="resetToHome(event)">
+            <a href="#" class="logo-area" id="logoLink">
                 <div class="logo-icon">EMS</div>
                 <div class="logo-text">
                     <h1>Mısır Lehçesi</h1>
@@ -409,29 +428,29 @@
 
             <h2>Kategoriler</h2>
             <div class="category-list" id="categoryList">
-                <button class="category-btn active" onclick="filterCategory('all', event)">Tüm Veritabanı <span class="category-count" id="count-all">0</span></button>
-                <button class="category-btn" onclick="filterCategory('İş & Üretim', event)">İş & Üretim (EMS) <span class="category-count" id="count-is">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Günlük Yaşam', event)">Günlük Yaşam <span class="category-count" id="count-gunluk">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Seyahat & Ulaşım', event)">Seyahat & Ulaşım <span class="category-count" id="count-seyahat">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Alışveriş & Ticaret', event)">Alışveriş & Ticaret <span class="category-count" id="count-alisveris">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Sosyal İlişkiler', event)">Sosyal İlişkiler <span class="category-count" id="count-sosyal">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Yemek & Restoran', event)">Yemek & Restoran <span class="category-count" id="count-yemek">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Acil Durumlar', event)">Acil Durumlar <span class="category-count" id="count-acil">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Teknik & Kalite', event)">Teknik & Kalite <span class="category-count" id="count-teknik">0</span></button>
-                <button class="category-btn" onclick="filterCategory('Deyimler & Kalıplar', event)">Deyimler & Kalıplar <span class="category-count" id="count-deyim">0</span></button>
+                <button class="category-btn active" data-category="all">Tüm Sözlük <span class="category-count" id="count-all">0</span></button>
+                <button class="category-btn" data-category="İş & Üretim">İş & Üretim (EMS) <span class="category-count" id="count-is">0</span></button>
+                <button class="category-btn" data-category="Günlük Yaşam">Günlük Yaşam <span class="category-count" id="count-gunluk">0</span></button>
+                <button class="category-btn" data-category="Seyahat & Ulaşım">Seyahat & Ulaşım <span class="category-count" id="count-seyahat">0</span></button>
+                <button class="category-btn" data-category="Alışveriş & Ticaret">Alışveriş & Ticaret <span class="category-count" id="count-alisveris">0</span></button>
+                <button class="category-btn" data-category="Sosyal İlişkiler">Sosyal İlişkiler <span class="category-count" id="count-sosyal">0</span></button>
+                <button class="category-btn" data-category="Yemek & Restoran">Yemek & Restoran <span class="category-count" id="count-yemek">0</span></button>
+                <button class="category-btn" data-category="Acil Durumlar">Acil Durumlar <span class="category-count" id="count-acil">0</span></button>
+                <button class="category-btn" data-category="Teknik & Kalite">Teknik & Kalite <span class="category-count" id="count-teknik">0</span></button>
+                <button class="category-btn" data-category="Deyimler & Kalıplar">Deyimler & Kalıplar <span class="category-count" id="count-deyim">0</span></button>
             </div>
         </aside>
 
         <!-- Ana İçerik ve Çevirici -->
         <main>
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-box" placeholder="🔍 5000+ Kelime ve Cümle İçinde Ara (Örn: neredesin, kalite, kumaş, maşallah)..." oninput="handleSearch()">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔍 Sözlükte ara veya bir kelime yaz (Örn: neredesin, kalite, kumaş, maşallah)..." autocomplete="off">
                 <div class="online-status">
-                    <span class="online-dot"></span> Online Çeviri Motoru Aktif (5000+ Kapsamlı Veritabanı + Otomatik Okunuş)
+                    <span class="online-dot"></span> Yerel sözlükte yoksa online çeviri motoru otomatik devreye girer
                 </div>
             </div>
-            
-            <div id="contentGrid" class="content-grid">
+
+            <div id="contentGrid" class="content-grid" aria-live="polite">
                 <!-- Kartlar dinamik yüklenecektir -->
             </div>
         </main>
@@ -447,9 +466,9 @@
             <div class="footer-col">
                 <h3>Hızlı Bağlantılar</h3>
                 <ul>
-                    <li><a href="#" onclick="filterCategory('all', event); scrollToTop(); return false;">Tüm Kelimeler</a></li>
-                    <li><a href="#" onclick="filterCategory('İş & Üretim', event); scrollToTop(); return false;">İş & Üretim Terimleri</a></li>
-                    <li><a href="#" onclick="filterCategory('Teknik & Kalite', event); scrollToTop(); return false;">Teknik & Kalite</a></li>
+                    <li><a href="#" data-footer-category="all">Tüm Kelimeler</a></li>
+                    <li><a href="#" data-footer-category="İş & Üretim">İş & Üretim Terimleri</a></li>
+                    <li><a href="#" data-footer-category="Teknik & Kalite">Teknik & Kalite</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -466,8 +485,16 @@
     <button id="scrollTopBtn" onclick="scrollToTop()" title="Yukarı Çık">&uarr;</button>
 
     <script>
-        // Temel Kapsamlı Veritabanı Altyapısı
-        const baseTerms = [
+        'use strict';
+
+        // ------------------------------------------------------------
+        // Çekirdek sözlük verisi (gerçek, tekil kayıtlar).
+        // Not: Önceki sürüm arayüzde "5000+ kelime" iddia ediyordu ama
+        // aslında bu 31 kaydı kopyalayıp numaralandırıyordu. Yanıltıcı
+        // olduğu için kaldırıldı: burada yalnızca gerçek kayıtlar var,
+        // eşleşmeyen aramalar online çeviri motoruna düşüyor.
+        // ------------------------------------------------------------
+        const database = [
             { arabic: "انت فين؟", phonetic: "Inta fein?", translation: "Neredesin?", category: "Günlük Yaşam" },
             { arabic: "ازيك؟ عامل ايه؟", phonetic: "İzzeyyak? Amil eh?", translation: "Nasılsın? Nasıl gidiyor?", category: "Günlük Yaşam" },
             { arabic: "فيه ايه؟", phonetic: "Fi eh?", translation: "Ne var ne yok? / Ne oluyor?", category: "Günlük Yaşam" },
@@ -502,87 +529,136 @@
             { arabic: "إن شاء الله", phonetic: "İnşallah", translation: "İnşallah / Nasip olursa", category: "Deyimler & Kalıplar" }
         ];
 
-        // 5000+ Kelime ve Cümleye Tamamlama Algoritması
-        let database = [];
-        function generate5000Database() {
-            database = [...baseTerms];
-            const categories = ['Günlük Yaşam', 'İş & Üretim', 'Teknik & Kalite', 'Yemek & Restoran', 'Seyahat & Ulaşım', 'Alışveriş & Ticaret', 'Acil Durumlar', 'Sosyal İlişkiler', 'Deyimler & Kalıplar'];
-            
-            let id = 1;
-            while(database.length < 5000) {
-                const template = baseTerms[id % baseTerms.length];
-                const cat = categories[id % categories.length];
-                database.push({
-                    arabic: template.arabic,
-                    phonetic: template.phonetic,
-                    translation: template.translation + " (Kayıt #" + id + ")",
-                    category: cat
-                });
-                id++;
-            }
-        }
-        generate5000Database();
+        // Kategori rozet renkleri (kök palet tonlarından türetildi)
+        const categoryColors = {
+            'İş & Üretim': '#0e4a44',
+            'Teknik & Kalite': '#0e4a44',
+            'Günlük Yaşam': '#c89b3c',
+            'Yemek & Restoran': '#8c6a22',
+            'Seyahat & Ulaşım': '#4c6b75',
+            'Deyimler & Kalıplar': '#4c6b75',
+            'Alışveriş & Ticaret': '#a8452f',
+            'Acil Durumlar': '#a8452f',
+            'Sosyal İlişkiler': '#1c6b62',
+            'Online Çeviri': '#a8452f'
+        };
 
         let currentCategory = 'all';
 
+        function countBy(cat) { return database.filter(i => i.category === cat).length; }
+
         function updateCategoryCounts() {
-            document.getElementById('count-all').innerText = database.length;
-            document.getElementById('count-is').innerText = database.filter(i => i.category === 'İş & Üretim').length;
-            document.getElementById('count-gunluk').innerText = database.filter(i => i.category === 'Günlük Yaşam').length;
-            document.getElementById('count-seyahat').innerText = database.filter(i => i.category === 'Seyahat & Ulaşım').length;
-            document.getElementById('count-alisveris').innerText = database.filter(i => i.category === 'Alışveriş & Ticaret').length;
-            document.getElementById('count-sosyal').innerText = database.filter(i => i.category === 'Sosyal İlişkiler').length;
-            document.getElementById('count-yemek').innerText = database.filter(i => i.category === 'Yemek & Restoran').length;
-            document.getElementById('count-acil').innerText = database.filter(i => i.category === 'Acil Durumlar').length;
-            document.getElementById('count-teknik').innerText = database.filter(i => i.category === 'Teknik & Kalite').length;
-            document.getElementById('count-deyim').innerText = database.filter(i => i.category === 'Deyimler & Kalıplar').length;
+            const map = {
+                'count-all': database.length,
+                'count-is': countBy('İş & Üretim'),
+                'count-gunluk': countBy('Günlük Yaşam'),
+                'count-seyahat': countBy('Seyahat & Ulaşım'),
+                'count-alisveris': countBy('Alışveriş & Ticaret'),
+                'count-sosyal': countBy('Sosyal İlişkiler'),
+                'count-yemek': countBy('Yemek & Restoran'),
+                'count-acil': countBy('Acil Durumlar'),
+                'count-teknik': countBy('Teknik & Kalite'),
+                'count-deyim': countBy('Deyimler & Kalıplar')
+            };
+            Object.entries(map).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = value; // eksik id olsa bile sayfa çökmesin
+            });
         }
 
-        function resetToHome(event) {
-            if(event) event.preventDefault();
+        function setActiveCategoryButton(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+        }
+
+        function resetToHome() {
             currentCategory = 'all';
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.category-btn').classList.add('active');
+            setActiveCategoryButton('all');
             document.getElementById('searchInput').value = '';
             renderData(database);
             scrollToTop();
         }
 
+        // Güvenli DOM oluşturma: kullanıcı/API'den gelen metin innerHTML'e
+        // ASLA doğrudan basılmıyor (XSS önlemi). Tüm metinler textContent
+        // ile yazılıyor; tıklama olayları addEventListener ile bağlanıyor
+        // (eskisi gibi onclick="...('${arabic}')" değil — tek tırnak veya
+        // "<script>" içeren bir metin geldiğinde kırılmaz/çalıştırılmaz).
+        function buildCard(item) {
+            const card = document.createElement('div');
+            card.className = item.isOnline ? 'card online-result' : 'card';
+            const color = categoryColors[item.category] || '#0e4a44';
+            card.style.setProperty('--cat-color', color);
+
+            const tag = document.createElement('div');
+            tag.className = 'card-tag';
+            tag.textContent = item.category;
+
+            const top = document.createElement('div');
+            top.className = 'card-top';
+
+            const arabicEl = document.createElement('div');
+            arabicEl.className = 'arabic-text';
+            arabicEl.textContent = item.arabic;
+
+            const speakBtn = document.createElement('button');
+            speakBtn.className = 'speak-btn';
+            speakBtn.title = 'Sesli Dinle';
+            speakBtn.setAttribute('aria-label', 'Sesli dinle: ' + item.arabic);
+            speakBtn.textContent = '🔊';
+            speakBtn.addEventListener('click', () => speakText(item.arabic));
+
+            top.appendChild(arabicEl);
+            top.appendChild(speakBtn);
+
+            const phonetic = document.createElement('div');
+            phonetic.className = 'phonetic-text';
+            phonetic.textContent = 'Okunuş: ' + item.phonetic;
+
+            const box = document.createElement('div');
+            box.className = 'translation-box';
+
+            const label = document.createElement('span');
+            label.className = 'translation-label';
+            label.textContent = item.isOnline ? 'Canlı Çeviri Sonucu (Online API + Otomatik Okunuş)' : 'Türkçe Anlamı';
+
+            const text = document.createElement('span');
+            text.className = 'translation-text';
+            text.textContent = item.translation;
+
+            box.appendChild(label);
+            box.appendChild(text);
+
+            card.appendChild(tag);
+            card.appendChild(top);
+            card.appendChild(phonetic);
+            card.appendChild(box);
+
+            return card;
+        }
+
+        function renderMessage(text, color) {
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = '';
+            const p = document.createElement('p');
+            p.style.cssText = `grid-column: 1/-1; text-align:center; color:${color || '#6b7266'}; padding: 40px; font-family:'Work Sans',sans-serif;`;
+            p.textContent = text;
+            grid.appendChild(p);
+        }
+
         function renderData(data) {
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = '';
-            
-            if(data.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#64748b; padding: 40px;">Aradığınız kelime yerel veritabanında bulunamadı. Online çeviri sorgulanıyor...</p>';
+
+            if (data.length === 0) {
+                renderMessage('Aradığınız kelime yerel sözlükte bulunamadı. Online çeviri sorgulanıyor...', '#6b7266');
                 return;
             }
 
-            // Performans için ilk 100 sonucu göster (5000 kelimede tarayıcı donmasını önlemek için)
-            const displayData = data.slice(0, 100);
-
-            displayData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = item.isOnline ? 'card online-result' : 'card';
-                card.innerHTML = `
-                    <div class="card-top">
-                        <div class="arabic-text">${item.arabic}</div>
-                        <button class="speak-btn" onclick="speakText('${item.arabic}')" title="Sesli Dinle">🔊</button>
-                    </div>
-                    <div class="phonetic-text">Okunuş: ${item.phonetic}</div>
-                    <div class="translation-box">
-                        <span class="translation-label">${item.isOnline ? 'Canlı Çeviri Sonucu (Online API + Otomatik Okunuş)' : 'Türkçe Anlamı'}</span>
-                        <span class="translation-text">${item.translation}</span>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-
-            if(data.length > 100) {
-                const infoBox = document.createElement('div');
-                infoBox.style.cssText = "grid-column: 1/-1; text-align:center; color:#64748b; padding: 15px; font-style: italic;";
-                infoBox.innerText = `Aramanıza uygun ${data.length} sonuç bulundu. İlk 100 sonuç listelenmektedir.`;
-                grid.appendChild(infoBox);
-            }
+            const fragment = document.createDocumentFragment();
+            data.forEach(item => fragment.appendChild(buildCard(item)));
+            grid.appendChild(fragment);
         }
 
         function speakText(text) {
@@ -592,29 +668,18 @@
                 utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Tarayıcınız sesli okuma özelliğini desteklemiyor.");
+                renderMessage('Tarayıcınız sesli okuma özelliğini desteklemiyor.', '#a8452f');
             }
         }
 
-        function filterCategory(category, event) {
+        function filterCategory(category) {
             currentCategory = category;
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
-            } else {
-                document.querySelectorAll('.category-btn').forEach(btn => {
-                    if(category === 'all' && btn.innerText.includes('Tüm')) btn.classList.add('active');
-                    else if(btn.innerText.includes(category)) btn.classList.add('active');
-                });
-            }
-
+            setActiveCategoryButton(category);
             document.getElementById('searchInput').value = '';
             if (category === 'all') {
                 renderData(database);
             } else {
-                const filtered = database.filter(item => item.category === category);
-                renderData(filtered);
+                renderData(database.filter(item => item.category === category));
             }
         }
 
@@ -628,7 +693,7 @@
                 .replace(/ح/g, 'h')
                 .replace(/خ/g, 'h')
                 .replace(/د/g, 'd')
-                .replace(/ذ/g, 'ز')
+                .replace(/ذ/g, 'z')
                 .replace(/ر/g, 'r')
                 .replace(/ز/g, 'z')
                 .replace(/س/g, 's')
@@ -651,10 +716,13 @@
         }
 
         let searchTimeout;
+        let searchRequestId = 0; // yarış durumu (race condition) önlemi
+
         function handleSearch() {
             clearTimeout(searchTimeout);
             const query = document.getElementById('searchInput').value.trim();
             const lowerQuery = query.toLowerCase();
+            const requestId = ++searchRequestId;
 
             if (!query) {
                 if (currentCategory === 'all') {
@@ -667,69 +735,86 @@
 
             const filtered = database.filter(item => {
                 const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
-                const matchesQuery = item.arabic.toLowerCase().includes(lowerQuery) || 
-                                     item.phonetic.toLowerCase().includes(lowerQuery) || 
+                const matchesQuery = item.arabic.toLowerCase().includes(lowerQuery) ||
+                                     item.phonetic.toLowerCase().includes(lowerQuery) ||
                                      item.translation.toLowerCase().includes(lowerQuery);
                 return matchesCategory && matchesQuery;
             });
 
             if (filtered.length > 0) {
                 renderData(filtered);
-            } else {
-                const grid = document.getElementById('contentGrid');
-                grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#e67e22; padding: 20px; font-weight:600;">⏳ "${query}" için online çeviri motorundan sonuç alınıyor ve fonetik okunuş üretiliyor...</p>`;
-
-                searchTimeout = setTimeout(() => {
-                    const langPair = /[\u0600-\u06FF]/.test(query) ? 'ar|tr' : 'tr|ar';
-                    const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=${langPair}`;
-
-                    fetch(apiUrl)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.responseData && data.responseData.translatedText) {
-                                const translated = data.responseData.translatedText;
-                                const isTrToAr = langPair === 'tr|ar';
-                                const arabicVal = isTrToAr ? translated : query;
-                                const turkishVal = isTrToAr ? query : translated;
-                                
-                                const autoPhonetic = generateSmartPhonetic(arabicVal) + " (Canlı Çeviri Karşılığı)";
-
-                                const onlineResult = [{
-                                    arabic: arabicVal,
-                                    phonetic: autoPhonetic,
-                                    translation: turkishVal,
-                                    category: "Online Çeviri",
-                                    isOnline: true
-                                }];
-                                renderData(onlineResult);
-                            } else {
-                                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#64748b; padding: 40px;">Bu kelime için online çeviri sonucu bulunamadı.</p>';
-                            }
-                        })
-                        .catch(err => {
-                            grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#ef4444; padding: 40px;">Bağlantı hatası: İnternet bağlantınızı kontrol edin.</p>';
-                        });
-                }, 500);
+                return;
             }
+
+            renderMessage(`⏳ "${query}" için online çeviri motorundan sonuç alınıyor...`, '#c89b3c');
+
+            searchTimeout = setTimeout(() => {
+                const langPair = /[\u0600-\u06FF]/.test(query) ? 'ar|tr' : 'tr|ar';
+                const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=${langPair}`;
+
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (requestId !== searchRequestId) return; // kullanıcı yeni arama yazdıysa eski sonucu yoksay
+                        if (data && data.responseData && data.responseData.translatedText) {
+                            const translated = data.responseData.translatedText;
+                            const isTrToAr = langPair === 'tr|ar';
+                            const arabicVal = isTrToAr ? translated : query;
+                            const turkishVal = isTrToAr ? query : translated;
+
+                            const autoPhonetic = generateSmartPhonetic(arabicVal) + ' (Canlı Çeviri Karşılığı)';
+
+                            renderData([{
+                                arabic: arabicVal,
+                                phonetic: autoPhonetic,
+                                translation: turkishVal,
+                                category: 'Online Çeviri',
+                                isOnline: true
+                            }]);
+                        } else {
+                            renderMessage('Bu kelime için online çeviri sonucu bulunamadı.', '#6b7266');
+                        }
+                    })
+                    .catch(() => {
+                        if (requestId !== searchRequestId) return;
+                        renderMessage('Bağlantı hatası: İnternet bağlantınızı kontrol edin.', '#a8452f');
+                    });
+            }, 500);
         }
-
-        window.onscroll = function() {
-            const btn = document.getElementById('scrollTopBtn');
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                btn.style.display = 'flex';
-            } else {
-                btn.style.display = 'none';
-            }
-        };
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.onload = function() {
+        window.onscroll = function () {
+            const btn = document.getElementById('scrollTopBtn');
+            const scrolled = document.body.scrollTop > 300 || document.documentElement.scrollTop > 300;
+            btn.style.display = scrolled ? 'flex' : 'none';
+        };
+
+        // Olay bağlama (event delegation) — inline onclick yerine
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('logoLink').addEventListener('click', (e) => { e.preventDefault(); resetToHome(); });
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => filterCategory(btn.dataset.category));
+            });
+
+            document.querySelectorAll('[data-footer-category]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterCategory(link.dataset.footerCategory);
+                    scrollToTop();
+                });
+            });
+
             updateCategoryCounts();
             renderData(database);
-        };
+        });
     </script>
 </body>
 </html>
