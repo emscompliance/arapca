@@ -85,22 +85,24 @@
             transition: var(--transition);
         }
 
-        .logo-area:hover .logo-icon { transform: rotate(-4deg) scale(1.04); box-shadow: 0 0 0 4px rgba(239,31,39,0.25); }
+        .logo-area:hover .logo-icon { transform: scale(1.06); box-shadow: 0 0 0 5px rgba(239,31,39,0.3), 0 6px 16px rgba(0,0,0,0.35); }
 
         .logo-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
-            background: var(--black-soft);
+            background: radial-gradient(circle at 35% 30%, #ffffff, #f0f0f0);
+            box-shadow: 0 0 0 3px rgba(239,31,39,0.35), 0 4px 12px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 4px;
             transition: var(--transition);
         }
 
-        .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .logo-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
         .logo-text h1 {
             font-family: 'Zilla Slab', serif;
@@ -197,6 +199,23 @@
         }
 
         .search-container { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2px;
+        }
+
+        .section-title svg { width: 22px; height: 22px; color: var(--red); flex-shrink: 0; }
+
+        .section-title h2 {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: 0.2px;
+        }
 
         .search-box-wrap { position: relative; }
 
@@ -411,8 +430,10 @@
         .footer-logo { display: flex; align-items: center; gap: 12px; }
 
         .footer-logo img {
-            width: 44px; height: 44px; border-radius: 11px; object-fit: cover;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+            width: 48px; height: 48px; border-radius: 50%; object-fit: contain;
+            background: radial-gradient(circle at 35% 30%, #ffffff, #f0f0f0);
+            padding: 4px;
+            box-shadow: 0 0 0 3px rgba(239,31,39,0.3), 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .footer-logo-text h4 {
@@ -553,6 +574,10 @@
         <!-- Ana İçerik ve Çevirici -->
         <main>
             <div class="search-container">
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7"></path><path d="M9 3v2c0 4.4-2.7 8-6 8"></path><path d="M4 13c1.5 1.6 3.6 2.7 6 2.9"></path><path d="M13 21l4-9 4 9"></path><path d="M14.5 18h5"></path></svg>
+                    <h2>Türkçe Arapça Online Çeviri</h2>
+                </div>
                 <div class="search-box-wrap">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     <input type="text" id="searchInput" class="search-box" placeholder="Sözlükte ara veya bir kelime yaz (Örn: neredesin, kalite, kumaş, maşallah)..." autocomplete="off">
@@ -769,7 +794,191 @@
             { arabic: "على راسي", phonetic: "'Ala rasi", translation: "Baş üstüne", category: "Deyimler & Kalıplar" },
             { arabic: "ولا يهمك", phonetic: "Wala yehimmak", translation: "Merak etme", category: "Deyimler & Kalıplar" },
             { arabic: "زي الفل", phonetic: "Zay el-full", translation: "Harika / mükemmel (deyim)", category: "Deyimler & Kalıplar" },
-            { arabic: "ربنا يسهل", phonetic: "Rabbena yisahhel", translation: "Allah kolaylaştırsın", category: "Deyimler & Kalıplar" }
+            { arabic: "ربنا يسهل", phonetic: "Rabbena yisahhel", translation: "Allah kolaylaştırsın", category: "Deyimler & Kalıplar" },
+            { arabic: "خلاص", phonetic: "Khalas", translation: "Tamam artık / Bitti", category: "Deyimler & Kalıplar" },
+            { arabic: "ايه ده؟", phonetic: "Eh da?", translation: "Bu da ne? (şaşkınlık ifadesi)", category: "Deyimler & Kalıplar" },
+            { arabic: "معلش", phonetic: "Ma'lesh", translation: "Sorun değil / Üzgünüm", category: "Deyimler & Kalıplar" },
+            { arabic: "يا سلام", phonetic: "Ya salam", translation: "Ne güzel / Vay canına", category: "Deyimler & Kalıplar" },
+            { arabic: "والله", phonetic: "Wallahi", translation: "Yemin ederim", category: "Deyimler & Kalıplar" },
+            { arabic: "بجد؟", phonetic: "Begad?", translation: "Gerçekten mi?", category: "Deyimler & Kalıplar" },
+            { arabic: "ايوه", phonetic: "Aywa", translation: "Evet", category: "Deyimler & Kalıplar" },
+            { arabic: "لأ", phonetic: "La'", translation: "Hayır", category: "Deyimler & Kalıplar" },
+            { arabic: "ازاي كده؟", phonetic: "Ezzay keda?", translation: "Nasıl yani?", category: "Deyimler & Kalıplar" },
+            { arabic: "خير ان شاء الله", phonetic: "Kheir insha'Allah", translation: "Umarım hayırlıdır", category: "Deyimler & Kalıplar" },
+
+            // ---- Günlük Yaşam: haftanın günleri ----
+            { arabic: "الأحد", phonetic: "El-had", translation: "Pazar", category: "Günlük Yaşam" },
+            { arabic: "الاتنين", phonetic: "El-etnein", translation: "Pazartesi", category: "Günlük Yaşam" },
+            { arabic: "التلات", phonetic: "Et-talat", translation: "Salı", category: "Günlük Yaşam" },
+            { arabic: "الأربع", phonetic: "El-arba'", translation: "Çarşamba", category: "Günlük Yaşam" },
+            { arabic: "الخميس", phonetic: "El-khamees", translation: "Perşembe", category: "Günlük Yaşam" },
+            { arabic: "الجمعة", phonetic: "El-gom'a", translation: "Cuma", category: "Günlük Yaşam" },
+            { arabic: "السبت", phonetic: "Es-sabt", translation: "Cumartesi", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: soru kelimeleri ----
+            { arabic: "ايه", phonetic: "Eh", translation: "Ne", category: "Günlük Yaşam" },
+            { arabic: "مين", phonetic: "Meen", translation: "Kim", category: "Günlük Yaşam" },
+            { arabic: "فين", phonetic: "Fein", translation: "Nerede", category: "Günlük Yaşam" },
+            { arabic: "امتى", phonetic: "Emta", translation: "Ne zaman", category: "Günlük Yaşam" },
+            { arabic: "ليه", phonetic: "Leh", translation: "Neden", category: "Günlük Yaşam" },
+            { arabic: "ازاي", phonetic: "Ezzay", translation: "Nasıl", category: "Günlük Yaşam" },
+            { arabic: "كام", phonetic: "Kam", translation: "Kaç / Ne kadar", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: sıfatlar ----
+            { arabic: "كويس", phonetic: "Kwayyes", translation: "İyi", category: "Günlük Yaşam" },
+            { arabic: "وحش", phonetic: "Wehesh", translation: "Kötü", category: "Günlük Yaşam" },
+            { arabic: "كبير", phonetic: "Kebeer", translation: "Büyük", category: "Günlük Yaşam" },
+            { arabic: "صغير", phonetic: "Soghayyar", translation: "Küçük", category: "Günlük Yaşam" },
+            { arabic: "سخن", phonetic: "Sokhn", translation: "Sıcak", category: "Günlük Yaşam" },
+            { arabic: "بارد", phonetic: "Bared", translation: "Soğuk", category: "Günlük Yaşam" },
+            { arabic: "جديد", phonetic: "Gedeed", translation: "Yeni", category: "Günlük Yaşam" },
+            { arabic: "قديم", phonetic: "Adeem", translation: "Eski", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: temel fiiller ----
+            { arabic: "روح", phonetic: "Rouh", translation: "Git", category: "Günlük Yaşam" },
+            { arabic: "تعالى", phonetic: "Ta'ala", translation: "Gel", category: "Günlük Yaşam" },
+            { arabic: "كل", phonetic: "Kol", translation: "Ye", category: "Günlük Yaşam" },
+            { arabic: "اشرب", phonetic: "Eshrab", translation: "İç", category: "Günlük Yaşam" },
+            { arabic: "نام", phonetic: "Nam", translation: "Uyu", category: "Günlük Yaşam" },
+            { arabic: "اشتغل", phonetic: "Eshteghal", translation: "Çalış", category: "Günlük Yaşam" },
+            { arabic: "اعرف", phonetic: "A'raf", translation: "Biliyorum", category: "Günlük Yaşam" },
+
+            // ---- İş & Üretim: ofis ve fabrika kelimeleri ----
+            { arabic: "مكتب", phonetic: "Maktab", translation: "Ofis", category: "İş & Üretim" },
+            { arabic: "اجتماع", phonetic: "Egtema'", translation: "Toplantı", category: "İş & Üretim" },
+            { arabic: "مرتب", phonetic: "Murattab", translation: "Maaş", category: "İş & Üretim" },
+            { arabic: "عقد", phonetic: "'A'd", translation: "Sözleşme", category: "İş & Üretim" },
+            { arabic: "موظف", phonetic: "Muwazzaf", translation: "Çalışan / Personel", category: "İş & Üretim" },
+            { arabic: "رئيس", phonetic: "Ra'ees", translation: "Patron / Şef", category: "İş & Üretim" },
+            { arabic: "استراحة", phonetic: "Estraha", translation: "Mola", category: "İş & Üretim" },
+            { arabic: "جدول", phonetic: "Gadwal", translation: "Program / Çizelge", category: "İş & Üretim" },
+            { arabic: "تقرير", phonetic: "Ta'reer", translation: "Rapor", category: "İş & Üretim" },
+            { arabic: "ايميل", phonetic: "Email", translation: "E-posta", category: "İş & Üretim" },
+            { arabic: "تليفون", phonetic: "Telefon", translation: "Telefon", category: "İş & Üretim" },
+            { arabic: "اطبع", phonetic: "Etba'", translation: "Yazdır", category: "İş & Üretim" },
+            { arabic: "امضاء", phonetic: "Emda'", translation: "İmza", category: "İş & Üretim" },
+            { arabic: "اخر ميعاد", phonetic: "Akher mi'ad", translation: "Son teslim tarihi", category: "İş & Üretim" },
+            { arabic: "هدف", phonetic: "Hadaf", translation: "Hedef", category: "İş & Üretim" },
+            { arabic: "ميزانية", phonetic: "Mizaneyya", translation: "Bütçe", category: "İş & Üretim" },
+            { arabic: "توريد", phonetic: "Tawreed", translation: "Tedarik", category: "İş & Üretim" },
+            { arabic: "عميل", phonetic: "'Ameel", translation: "Müşteri", category: "İş & Üretim" },
+            { arabic: "طلبية", phonetic: "Talabeyya", translation: "Sipariş", category: "İş & Üretim" },
+            { arabic: "مخزون", phonetic: "Makhzoon", translation: "Stok", category: "İş & Üretim" },
+            { arabic: "قطعة غيار", phonetic: "Et'et gheyar", translation: "Yedek parça", category: "İş & Üretim" },
+            { arabic: "عامل", phonetic: "'Amel", translation: "İşçi", category: "İş & Üretim" },
+            { arabic: "مصنع", phonetic: "Masna'", translation: "Fabrika", category: "İş & Üretim" },
+            { arabic: "انتاج", phonetic: "Entag", translation: "Üretim", category: "İş & Üretim" },
+            { arabic: "تسليم", phonetic: "Tasleem", translation: "Teslimat", category: "İş & Üretim" },
+
+            // ---- Teknik & Kalite: ölçü ve kalite kelimeleri ----
+            { arabic: "سنتيمتر", phonetic: "Sentimetr", translation: "Santimetre", category: "Teknik & Kalite" },
+            { arabic: "كيلو", phonetic: "Kilo", translation: "Kilogram", category: "Teknik & Kalite" },
+            { arabic: "جرام", phonetic: "Gram", translation: "Gram", category: "Teknik & Kalite" },
+            { arabic: "متر", phonetic: "Metr", translation: "Metre", category: "Teknik & Kalite" },
+            { arabic: "وزن", phonetic: "Wazn", translation: "Ağırlık", category: "Teknik & Kalite" },
+            { arabic: "مقاس", phonetic: "Ma'as", translation: "Beden / Ölçü", category: "Teknik & Kalite" },
+            { arabic: "عيب", phonetic: "'Eyb", translation: "Kusur", category: "Teknik & Kalite" },
+            { arabic: "مواصفة", phonetic: "Mewasafa", translation: "Spesifikasyon", category: "Teknik & Kalite" },
+            { arabic: "موافق", phonetic: "Mowafa'", translation: "Onaylı", category: "Teknik & Kalite" },
+            { arabic: "مرفوض", phonetic: "Marfoud", translation: "Reddedildi", category: "Teknik & Kalite" },
+            { arabic: "عينة", phonetic: "'Ayyena", translation: "Numune", category: "Teknik & Kalite" },
+            { arabic: "اختبار", phonetic: "Ekhtebar", translation: "Test", category: "Teknik & Kalite" },
+            { arabic: "قائمة فحص", phonetic: "Ay'met fahs", translation: "Kontrol listesi", category: "Teknik & Kalite" },
+            { arabic: "تحمل", phonetic: "Tahammol", translation: "Tolerans", category: "Teknik & Kalite" },
+            { arabic: "عدد الغرز", phonetic: "'Adad el-ghorz", translation: "Dikiş sayısı", category: "Teknik & Kalite" },
+            { arabic: "انكماش", phonetic: "Enkemash", translation: "Büzülme (kumaşta)", category: "Teknik & Kalite" },
+            { arabic: "لون", phonetic: "Lon", translation: "Renk", category: "Teknik & Kalite" },
+            { arabic: "خامة", phonetic: "Khama", translation: "Hammadde", category: "Teknik & Kalite" },
+            { arabic: "معيار", phonetic: "Me'yar", translation: "Standart", category: "Teknik & Kalite" },
+
+            // ---- Yemek & Restoran: temel yiyecekler ----
+            { arabic: "عيش", phonetic: "'Eish", translation: "Ekmek", category: "Yemek & Restoran" },
+            { arabic: "رز", phonetic: "Roz", translation: "Pirinç", category: "Yemek & Restoran" },
+            { arabic: "فراخ", phonetic: "Ferakh", translation: "Tavuk", category: "Yemek & Restoran" },
+            { arabic: "لحمة", phonetic: "Lahma", translation: "Et", category: "Yemek & Restoran" },
+            { arabic: "سمك", phonetic: "Samak", translation: "Balık", category: "Yemek & Restoran" },
+            { arabic: "خضار", phonetic: "Khodar", translation: "Sebze", category: "Yemek & Restoran" },
+            { arabic: "فاكهة", phonetic: "Fak-ha", translation: "Meyve", category: "Yemek & Restoran" },
+            { arabic: "شاي", phonetic: "Shai", translation: "Çay", category: "Yemek & Restoran" },
+            { arabic: "قهوة", phonetic: "Ahwa", translation: "Kahve", category: "Yemek & Restoran" },
+            { arabic: "سكر", phonetic: "Sokkar", translation: "Şeker", category: "Yemek & Restoran" },
+            { arabic: "ملح", phonetic: "Malh", translation: "Tuz", category: "Yemek & Restoran" },
+            { arabic: "حلو", phonetic: "Helw", translation: "Tatlı", category: "Yemek & Restoran" },
+            { arabic: "غدا", phonetic: "Ghada", translation: "Öğle yemeği", category: "Yemek & Restoran" },
+            { arabic: "عشا", phonetic: "'Asha", translation: "Akşam yemeği", category: "Yemek & Restoran" },
+            { arabic: "مطعم", phonetic: "Mat'am", translation: "Restoran", category: "Yemek & Restoran" },
+            { arabic: "منيو", phonetic: "Menu", translation: "Menü", category: "Yemek & Restoran" },
+            { arabic: "جرسون", phonetic: "Garson", translation: "Garson", category: "Yemek & Restoran" },
+            { arabic: "ترابيزة", phonetic: "Trabeyza", translation: "Masa", category: "Yemek & Restoran" },
+            { arabic: "معلقة", phonetic: "Ma'la'a", translation: "Kaşık", category: "Yemek & Restoran" },
+            { arabic: "شوكة", phonetic: "Shoka", translation: "Çatal", category: "Yemek & Restoran" },
+            { arabic: "سكينة", phonetic: "Sekkeena", translation: "Bıçak", category: "Yemek & Restoran" },
+            { arabic: "طبق", phonetic: "Taba'", translation: "Tabak", category: "Yemek & Restoran" },
+            { arabic: "كوباية", phonetic: "Kubbaya", translation: "Bardak", category: "Yemek & Restoran" },
+
+            // ---- Seyahat & Ulaşım: ulaşım kelimeleri ----
+            { arabic: "عربية", phonetic: "'Arabeyya", translation: "Araba", category: "Seyahat & Ulaşım" },
+            { arabic: "اتوبيس", phonetic: "Otobees", translation: "Otobüs", category: "Seyahat & Ulaşım" },
+            { arabic: "قطر", phonetic: "'Atr", translation: "Tren", category: "Seyahat & Ulaşım" },
+            { arabic: "طيارة", phonetic: "Tayyara", translation: "Uçak", category: "Seyahat & Ulaşım" },
+            { arabic: "مركب", phonetic: "Markeb", translation: "Gemi / Tekne", category: "Seyahat & Ulaşım" },
+            { arabic: "شارع", phonetic: "Share'", translation: "Cadde", category: "Seyahat & Ulaşım" },
+            { arabic: "خريطة", phonetic: "Khareeta", translation: "Harita", category: "Seyahat & Ulaşım" },
+            { arabic: "جواز سفر", phonetic: "Gawaz safar", translation: "Pasaport", category: "Seyahat & Ulaşım" },
+            { arabic: "فيزا", phonetic: "Viza", translation: "Vize", category: "Seyahat & Ulaşım" },
+            { arabic: "شنطة", phonetic: "Shanta", translation: "Bavul / Çanta", category: "Seyahat & Ulaşım" },
+            { arabic: "فندق", phonetic: "Fondo'", translation: "Otel", category: "Seyahat & Ulaşım" },
+            { arabic: "اوضة", phonetic: "Odah", translation: "Oda", category: "Seyahat & Ulaşım" },
+            { arabic: "حجز", phonetic: "Hagz", translation: "Rezervasyon", category: "Seyahat & Ulaşım" },
+            { arabic: "شمال", phonetic: "Shemal", translation: "Sol", category: "Seyahat & Ulaşım" },
+            { arabic: "يمين", phonetic: "Yemeen", translation: "Sağ", category: "Seyahat & Ulaşım" },
+            { arabic: "دوغري", phonetic: "Doghri", translation: "Düz (yön)", category: "Seyahat & Ulaşım" },
+            { arabic: "قريب", phonetic: "'Areeb", translation: "Yakın", category: "Seyahat & Ulaşım" },
+            { arabic: "بعيد", phonetic: "Ba'eed", translation: "Uzak", category: "Seyahat & Ulaşım" },
+
+            // ---- Alışveriş & Ticaret: sayılar ve alışveriş kelimeleri ----
+            { arabic: "واحد", phonetic: "Wahed", translation: "Bir", category: "Alışveriş & Ticaret" },
+            { arabic: "اتنين", phonetic: "Etnein", translation: "İki", category: "Alışveriş & Ticaret" },
+            { arabic: "تلاتة", phonetic: "Talata", translation: "Üç", category: "Alışveriş & Ticaret" },
+            { arabic: "اربعة", phonetic: "Arba'a", translation: "Dört", category: "Alışveriş & Ticaret" },
+            { arabic: "خمسة", phonetic: "Khamsa", translation: "Beş", category: "Alışveriş & Ticaret" },
+            { arabic: "ستة", phonetic: "Setta", translation: "Altı", category: "Alışveriş & Ticaret" },
+            { arabic: "سبعة", phonetic: "Sab'a", translation: "Yedi", category: "Alışveriş & Ticaret" },
+            { arabic: "تمانية", phonetic: "Tamanya", translation: "Sekiz", category: "Alışveriş & Ticaret" },
+            { arabic: "تسعة", phonetic: "Tes'a", translation: "Dokuz", category: "Alışveriş & Ticaret" },
+            { arabic: "عشرة", phonetic: "'Ashara", translation: "On", category: "Alışveriş & Ticaret" },
+            { arabic: "عشرين", phonetic: "'Eshreen", translation: "Yirmi", category: "Alışveriş & Ticaret" },
+            { arabic: "فلوس", phonetic: "Felous", translation: "Para", category: "Alışveriş & Ticaret" },
+            { arabic: "جنيه", phonetic: "Genee", translation: "Mısır Lirası (Cüneyh)", category: "Alışveriş & Ticaret" },
+            { arabic: "رخيص", phonetic: "Rekhees", translation: "Ucuz", category: "Alışveriş & Ticaret" },
+            { arabic: "غالي", phonetic: "Ghali", translation: "Pahalı", category: "Alışveriş & Ticaret" },
+            { arabic: "دكان", phonetic: "Dokkan", translation: "Dükkan", category: "Alışveriş & Ticaret" },
+            { arabic: "سوق", phonetic: "Sou'", translation: "Pazar / Çarşı", category: "Alışveriş & Ticaret" },
+            { arabic: "بائع", phonetic: "Baye'", translation: "Satıcı", category: "Alışveriş & Ticaret" },
+
+            // ---- Acil Durumlar: temel kelimeler ----
+            { arabic: "بوليس", phonetic: "Bolees", translation: "Polis", category: "Acil Durumlar" },
+            { arabic: "مستشفى", phonetic: "Mostashfa", translation: "Hastane", category: "Acil Durumlar" },
+            { arabic: "خطر", phonetic: "Khatar", translation: "Tehlike", category: "Acil Durumlar" },
+            { arabic: "مساعدة", phonetic: "Mosa'ada", translation: "Yardım", category: "Acil Durumlar" },
+            { arabic: "حادثة", phonetic: "Hadsa", translation: "Kaza", category: "Acil Durumlar" },
+            { arabic: "جرح", phonetic: "Garh", translation: "Yara", category: "Acil Durumlar" },
+            { arabic: "وجع", phonetic: "Waga'", translation: "Ağrı", category: "Acil Durumlar" },
+            { arabic: "دوا", phonetic: "Dawa", translation: "İlaç", category: "Acil Durumlar" },
+            { arabic: "طوارئ", phonetic: "Tawari'", translation: "Acil durum", category: "Acil Durumlar" },
+            { arabic: "احترس", phonetic: "Ehtares", translation: "Dikkat et", category: "Acil Durumlar" },
+
+            // ---- Sosyal İlişkiler: aile kelimeleri ----
+            { arabic: "ماما", phonetic: "Mama", translation: "Anne", category: "Sosyal İlişkiler" },
+            { arabic: "بابا", phonetic: "Baba", translation: "Baba", category: "Sosyal İlişkiler" },
+            { arabic: "اخويا", phonetic: "Akhoya", translation: "Erkek kardeşim", category: "Sosyal İlişkiler" },
+            { arabic: "اختي", phonetic: "Okhti", translation: "Kız kardeşim", category: "Sosyal İlişkiler" },
+            { arabic: "ابني", phonetic: "Ebni", translation: "Oğlum", category: "Sosyal İlişkiler" },
+            { arabic: "بنتي", phonetic: "Benti", translation: "Kızım", category: "Sosyal İlişkiler" },
+            { arabic: "صاحبي", phonetic: "Sahbi", translation: "Arkadaşım", category: "Sosyal İlişkiler" },
+            { arabic: "جوزي", phonetic: "Gozi", translation: "Kocam", category: "Sosyal İlişkiler" },
+            { arabic: "مراتي", phonetic: "Mirati", translation: "Eşim (karım)", category: "Sosyal İlişkiler" },
+            { arabic: "جدو", phonetic: "Geddo", translation: "Dede", category: "Sosyal İlişkiler" },
+            { arabic: "تيتة", phonetic: "Teta", translation: "Nine", category: "Sosyal İlişkiler" },
+            { arabic: "جار", phonetic: "Gar", translation: "Komşu", category: "Sosyal İlişkiler" },
+            { arabic: "ضيف", phonetic: "Deif", translation: "Misafir", category: "Sosyal İlişkiler" }
         ];
 
         const categoryDefs = [
