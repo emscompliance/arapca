@@ -277,6 +277,26 @@
             gap: 18px;
         }
 
+        .load-more-btn {
+            align-self: center;
+            margin: 6px auto 0;
+            background: var(--black);
+            color: white;
+            border: none;
+            padding: 13px 26px;
+            border-radius: 30px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .load-more-btn:hover { background: var(--red); transform: translateY(-2px); box-shadow: 0 8px 18px var(--red-glow); }
+
         /* ----- Kart tasarımı: kayıt/numune kartı ----- */
         .card {
             background: var(--card);
@@ -414,6 +434,80 @@
         }
 
         .footer-inner { padding: 46px 20px 20px; }
+
+        /* ----- Günün Sözü ----- */
+        .sod-card {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, rgba(239,31,39,0.14), rgba(239,31,39,0.02));
+            border: 1px solid rgba(239,31,39,0.3);
+            border-radius: 14px;
+            padding: 26px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sod-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .sod-eyebrow svg { width: 15px; height: 15px; }
+
+        .sod-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .sod-arabic {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: white;
+            direction: rtl;
+        }
+
+        .sod-meta { display: flex; flex-direction: column; gap: 4px; }
+
+        .sod-phonetic {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: #ff8a8f;
+        }
+
+        .sod-translation { font-size: 0.9rem; color: #cfcfcf; }
+
+        .sod-speak {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 50%;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .sod-speak:hover { background: var(--red); border-color: var(--red); }
+        .sod-speak svg { width: 19px; height: 19px; }
+
+        @media (max-width: 640px) {
+            .sod-body { flex-direction: column; align-items: flex-start; }
+            .sod-arabic { direction: rtl; align-self: flex-end; }
+        }
 
         .footer-content {
             max-width: 1200px;
@@ -590,12 +684,14 @@
             <div id="contentGrid" class="content-grid" aria-live="polite">
                 <!-- Kartlar dinamik yüklenecektir -->
             </div>
+            <button id="loadMoreBtn" class="load-more-btn" style="display:none;" type="button"></button>
         </main>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
+            <div id="sentenceOfDay" class="sod-card"></div>
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="footer-logo">
@@ -978,7 +1074,183 @@
             { arabic: "جدو", phonetic: "Geddo", translation: "Dede", category: "Sosyal İlişkiler" },
             { arabic: "تيتة", phonetic: "Teta", translation: "Nine", category: "Sosyal İlişkiler" },
             { arabic: "جار", phonetic: "Gar", translation: "Komşu", category: "Sosyal İlişkiler" },
-            { arabic: "ضيف", phonetic: "Deif", translation: "Misafir", category: "Sosyal İlişkiler" }
+            { arabic: "ضيف", phonetic: "Deif", translation: "Misafir", category: "Sosyal İlişkiler" },
+
+            // ---- Alışveriş & Ticaret: onlar basamağı sayılar ----
+            { arabic: "تلاتين", phonetic: "Talateen", translation: "Otuz", category: "Alışveriş & Ticaret" },
+            { arabic: "اربعين", phonetic: "Arba'een", translation: "Kırk", category: "Alışveriş & Ticaret" },
+            { arabic: "خمسين", phonetic: "Khamseen", translation: "Elli", category: "Alışveriş & Ticaret" },
+            { arabic: "ستين", phonetic: "Setteen", translation: "Altmış", category: "Alışveriş & Ticaret" },
+            { arabic: "سبعين", phonetic: "Sab'een", translation: "Yetmiş", category: "Alışveriş & Ticaret" },
+            { arabic: "تمانين", phonetic: "Tamaneen", translation: "Seksen", category: "Alışveriş & Ticaret" },
+            { arabic: "تسعين", phonetic: "Tes'een", translation: "Doksan", category: "Alışveriş & Ticaret" },
+            { arabic: "ميه", phonetic: "Meyya", translation: "Yüz", category: "Alışveriş & Ticaret" },
+            { arabic: "الف", phonetic: "Alf", translation: "Bin", category: "Alışveriş & Ticaret" },
+            { arabic: "كمية", phonetic: "Kammeyya", translation: "Miktar", category: "Alışveriş & Ticaret" },
+            { arabic: "عرض", phonetic: "'Ard", translation: "Kampanya / Teklif", category: "Alışveriş & Ticaret" },
+            { arabic: "ضمان", phonetic: "Daman", translation: "Garanti", category: "Alışveriş & Ticaret" },
+            { arabic: "استرجاع", phonetic: "Estergaa'", translation: "İade", category: "Alışveriş & Ticaret" },
+
+            // ---- Teknik & Kalite: renkler ve tekstil terimleri ----
+            { arabic: "احمر", phonetic: "Ahmar", translation: "Kırmızı", category: "Teknik & Kalite" },
+            { arabic: "اصفر", phonetic: "Asfar", translation: "Sarı", category: "Teknik & Kalite" },
+            { arabic: "اخضر", phonetic: "Akhdar", translation: "Yeşil", category: "Teknik & Kalite" },
+            { arabic: "ازرق", phonetic: "Azra'", translation: "Mavi", category: "Teknik & Kalite" },
+            { arabic: "اسود", phonetic: "Eswed", translation: "Siyah", category: "Teknik & Kalite" },
+            { arabic: "ابيض", phonetic: "Abyad", translation: "Beyaz", category: "Teknik & Kalite" },
+            { arabic: "بني", phonetic: "Bonni", translation: "Kahverengi", category: "Teknik & Kalite" },
+            { arabic: "رمادي", phonetic: "Ramadi", translation: "Gri", category: "Teknik & Kalite" },
+            { arabic: "بمبي", phonetic: "Bambi", translation: "Pembe", category: "Teknik & Kalite" },
+            { arabic: "برتقالي", phonetic: "Borto'ani", translation: "Turuncu", category: "Teknik & Kalite" },
+            { arabic: "بنفسجي", phonetic: "Banafsegi", translation: "Mor", category: "Teknik & Kalite" },
+            { arabic: "خيط", phonetic: "Kheit", translation: "İplik", category: "Teknik & Kalite" },
+            { arabic: "ابرة", phonetic: "Ebra", translation: "İğne", category: "Teknik & Kalite" },
+            { arabic: "مكواة", phonetic: "Makwa", translation: "Ütü", category: "Teknik & Kalite" },
+            { arabic: "قص", phonetic: "'Ass", translation: "Kesim", category: "Teknik & Kalite" },
+            { arabic: "درزة", phonetic: "Darza", translation: "Dikiş", category: "Teknik & Kalite" },
+            { arabic: "تطريز", phonetic: "Tatreez", translation: "Nakış", category: "Teknik & Kalite" },
+            { arabic: "باترون", phonetic: "Batron", translation: "Kalıp (dikiş)", category: "Teknik & Kalite" },
+            { arabic: "جودة عالية", phonetic: "Goda 'alya", translation: "Yüksek kalite", category: "Teknik & Kalite" },
+            { arabic: "جودة واطية", phonetic: "Goda watya", translation: "Düşük kalite", category: "Teknik & Kalite" },
+
+            // ---- Acil Durumlar: vücut bölümleri ve sağlık ----
+            { arabic: "راس", phonetic: "Ras", translation: "Baş", category: "Acil Durumlar" },
+            { arabic: "عين", phonetic: "'Ein", translation: "Göz", category: "Acil Durumlar" },
+            { arabic: "ودن", phonetic: "Widn", translation: "Kulak", category: "Acil Durumlar" },
+            { arabic: "مناخير", phonetic: "Manakheer", translation: "Burun", category: "Acil Durumlar" },
+            { arabic: "بق", phonetic: "Bo'", translation: "Ağız", category: "Acil Durumlar" },
+            { arabic: "سنان", phonetic: "Senan", translation: "Diş", category: "Acil Durumlar" },
+            { arabic: "ايد", phonetic: "Eid", translation: "El", category: "Acil Durumlar" },
+            { arabic: "رجل", phonetic: "Regl", translation: "Ayak / Bacak", category: "Acil Durumlar" },
+            { arabic: "بطن", phonetic: "Batn", translation: "Karın", category: "Acil Durumlar" },
+            { arabic: "ضهر", phonetic: "Dahr", translation: "Sırt", category: "Acil Durumlar" },
+            { arabic: "قلب", phonetic: "'Alb", translation: "Kalp", category: "Acil Durumlar" },
+            { arabic: "دم", phonetic: "Damm", translation: "Kan", category: "Acil Durumlar" },
+            { arabic: "حرارة", phonetic: "Harara", translation: "Ateş (vücut ısısı)", category: "Acil Durumlar" },
+            { arabic: "كحة", phonetic: "Kohha", translation: "Öksürük", category: "Acil Durumlar" },
+            { arabic: "زكام", phonetic: "Zokam", translation: "Nezle", category: "Acil Durumlar" },
+            { arabic: "دوخة", phonetic: "Dokha", translation: "Baş dönmesi", category: "Acil Durumlar" },
+
+            // ---- Alışveriş & Ticaret: giyim ----
+            { arabic: "قميص", phonetic: "'Amees", translation: "Gömlek", category: "Alışveriş & Ticaret" },
+            { arabic: "بنطلون", phonetic: "Bantalon", translation: "Pantolon", category: "Alışveriş & Ticaret" },
+            { arabic: "جاكيت", phonetic: "Jaket", translation: "Ceket", category: "Alışveriş & Ticaret" },
+            { arabic: "فستان", phonetic: "Fostan", translation: "Elbise", category: "Alışveriş & Ticaret" },
+            { arabic: "جزمة", phonetic: "Gazma", translation: "Ayakkabı", category: "Alışveriş & Ticaret" },
+            { arabic: "شراب", phonetic: "Sharab", translation: "Çorap", category: "Alışveriş & Ticaret" },
+            { arabic: "طاقية", phonetic: "Ta'eyya", translation: "Şapke / Bere", category: "Alışveriş & Ticaret" },
+            { arabic: "حزام", phonetic: "Hezam", translation: "Kemer", category: "Alışveriş & Ticaret" },
+
+            // ---- Günlük Yaşam: aylar, zaman ----
+            { arabic: "يناير", phonetic: "Yanayer", translation: "Ocak", category: "Günlük Yaşam" },
+            { arabic: "فبراير", phonetic: "Febrayer", translation: "Şubat", category: "Günlük Yaşam" },
+            { arabic: "مارس", phonetic: "Mares", translation: "Mart", category: "Günlük Yaşam" },
+            { arabic: "ابريل", phonetic: "Abreel", translation: "Nisan", category: "Günlük Yaşam" },
+            { arabic: "مايو", phonetic: "Mayo", translation: "Mayıs", category: "Günlük Yaşam" },
+            { arabic: "يونيو", phonetic: "Yonyo", translation: "Haziran", category: "Günlük Yaşam" },
+            { arabic: "يوليو", phonetic: "Yolyo", translation: "Temmuz", category: "Günlük Yaşam" },
+            { arabic: "اغسطس", phonetic: "Aghostos", translation: "Ağustos", category: "Günlük Yaşam" },
+            { arabic: "سبتمبر", phonetic: "Sebtamber", translation: "Eylül", category: "Günlük Yaşam" },
+            { arabic: "اكتوبر", phonetic: "Oktobar", translation: "Ekim", category: "Günlük Yaşam" },
+            { arabic: "نوفمبر", phonetic: "Nofamber", translation: "Kasım", category: "Günlük Yaşam" },
+            { arabic: "ديسمبر", phonetic: "Desamber", translation: "Aralık", category: "Günlük Yaşam" },
+            { arabic: "ساعة", phonetic: "Sa'a", translation: "Saat", category: "Günlük Yaşam" },
+            { arabic: "دقيقة", phonetic: "Da'ee'a", translation: "Dakika", category: "Günlük Yaşam" },
+            { arabic: "اسبوع", phonetic: "Esboo'", translation: "Hafta", category: "Günlük Yaşam" },
+            { arabic: "شهر", phonetic: "Shahr", translation: "Ay", category: "Günlük Yaşam" },
+            { arabic: "سنة", phonetic: "Sana", translation: "Yıl", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: ev eşyaları ----
+            { arabic: "بيت", phonetic: "Beit", translation: "Ev", category: "Günlük Yaşam" },
+            { arabic: "اوضة نوم", phonetic: "Odet nom", translation: "Yatak odası", category: "Günlük Yaşam" },
+            { arabic: "مطبخ", phonetic: "Matbakh", translation: "Mutfak", category: "Günlük Yaşam" },
+            { arabic: "حمام", phonetic: "Hammam", translation: "Banyo", category: "Günlük Yaşam" },
+            { arabic: "سرير", phonetic: "Sereer", translation: "Yatak", category: "Günlük Yaşam" },
+            { arabic: "كرسي", phonetic: "Korsi", translation: "Sandalye", category: "Günlük Yaşam" },
+            { arabic: "تلاجة", phonetic: "Tallaga", translation: "Buzdolabı", category: "Günlük Yaşam" },
+            { arabic: "غسالة", phonetic: "Ghassala", translation: "Çamaşır makinesi", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: hava durumu ----
+            { arabic: "شمس", phonetic: "Shams", translation: "Güneş", category: "Günlük Yaşam" },
+            { arabic: "مطر", phonetic: "Matar", translation: "Yağmur", category: "Günlük Yaşam" },
+            { arabic: "هوا", phonetic: "Hawa", translation: "Hava / Rüzgar", category: "Günlük Yaşam" },
+            { arabic: "غيم", phonetic: "Gheim", translation: "Bulut", category: "Günlük Yaşam" },
+            { arabic: "حر", phonetic: "Harr", translation: "Sıcaklık (hava)", category: "Günlük Yaşam" },
+            { arabic: "برد", phonetic: "Bard", translation: "Soğukluk (hava)", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: fiiller ----
+            { arabic: "اشوف", phonetic: "Ashoof", translation: "Görürüm", category: "Günlük Yaşam" },
+            { arabic: "اسمع", phonetic: "Asma'", translation: "Duyarım", category: "Günlük Yaşam" },
+            { arabic: "اتكلم", phonetic: "Atkallem", translation: "Konuşurum", category: "Günlük Yaşam" },
+            { arabic: "اكتب", phonetic: "Aktob", translation: "Yazarım", category: "Günlük Yaşam" },
+            { arabic: "اقرا", phonetic: "A'ra", translation: "Okurum", category: "Günlük Yaşam" },
+            { arabic: "افتح", phonetic: "Aftah", translation: "Açarım", category: "Günlük Yaşam" },
+            { arabic: "اقفل", phonetic: "A'fel", translation: "Kapatırım", category: "Günlük Yaşam" },
+            { arabic: "ادفع", phonetic: "Adfa'", translation: "Öderim", category: "Günlük Yaşam" },
+            { arabic: "اشتري", phonetic: "Ashtiri", translation: "Satın alırım", category: "Günlük Yaşam" },
+            { arabic: "ابيع", phonetic: "Abee'", translation: "Satarım", category: "Günlük Yaşam" },
+            // ---- Günlük Yaşam: sıfatlar ----
+            { arabic: "سريع", phonetic: "Saree'", translation: "Hızlı", category: "Günlük Yaşam" },
+            { arabic: "بطيء", phonetic: "Batee'", translation: "Yavaş", category: "Günlük Yaşam" },
+            { arabic: "نضيف", phonetic: "Nadeef", translation: "Temiz", category: "Günlük Yaşam" },
+            { arabic: "وسخ", phonetic: "Wesekh", translation: "Kirli", category: "Günlük Yaşam" },
+            { arabic: "سهل", phonetic: "Sahl", translation: "Kolay", category: "Günlük Yaşam" },
+            { arabic: "صعب", phonetic: "Sa'b", translation: "Zor", category: "Günlük Yaşam" },
+            { arabic: "تقيل", phonetic: "Te'eel", translation: "Ağır", category: "Günlük Yaşam" },
+            { arabic: "خفيف", phonetic: "Khafeef", translation: "Hafif", category: "Günlük Yaşam" },
+
+            // ---- İş & Üretim: meslekler ----
+            { arabic: "مهندس", phonetic: "Mohandes", translation: "Mühendis", category: "İş & Üretim" },
+            { arabic: "دكتور", phonetic: "Doktor", translation: "Doktor", category: "İş & Üretim" },
+            { arabic: "مدرس", phonetic: "Modarres", translation: "Öğretmen", category: "İş & Üretim" },
+            { arabic: "محاسب", phonetic: "Mohaseb", translation: "Muhasebeci", category: "İş & Üretim" },
+            { arabic: "سايق", phonetic: "Sa'e'", translation: "Şoför", category: "İş & Üretim" },
+            { arabic: "خياط", phonetic: "Khayyat", translation: "Terzi", category: "İş & Üretim" },
+            { arabic: "نجار", phonetic: "Naggar", translation: "Marangoz", category: "İş & Üretim" },
+            { arabic: "كهربائي", phonetic: "Kahraba'i", translation: "Elektrikçi", category: "İş & Üretim" },
+            // ---- İş & Üretim: özlük hakları ----
+            { arabic: "اضافي", phonetic: "Edafi", translation: "Fazla mesai (ek)", category: "İş & Üretim" },
+            { arabic: "اجازة", phonetic: "Agaza", translation: "İzin", category: "İş & Üretim" },
+            { arabic: "غياب", phonetic: "Gheyab", translation: "Devamsızlık", category: "İş & Üretim" },
+            { arabic: "حضور", phonetic: "Hodoor", translation: "Devam / Katılım", category: "İş & Üretim" },
+            { arabic: "انذار", phonetic: "Enzar", translation: "İhtar", category: "İş & Üretim" },
+            { arabic: "ترقية", phonetic: "Tar'eyya", translation: "Terfi", category: "İş & Üretim" },
+            { arabic: "استقالة", phonetic: "Este'ala", translation: "İstifa", category: "İş & Üretim" },
+            { arabic: "تدريب", phonetic: "Tadreeb", translation: "Eğitim", category: "İş & Üretim" },
+
+            // ---- Sosyal İlişkiler: geniş aile ----
+            { arabic: "عمي", phonetic: "'Ammi", translation: "Amcam", category: "Sosyal İlişkiler" },
+            { arabic: "خالي", phonetic: "Khali", translation: "Dayım", category: "Sosyal İlişkiler" },
+            { arabic: "عمتي", phonetic: "'Ammeti", translation: "Halam", category: "Sosyal İlişkiler" },
+            { arabic: "خالتي", phonetic: "Khalti", translation: "Teyzem", category: "Sosyal İlişkiler" },
+            { arabic: "ابن عمي", phonetic: "Ebn 'ammi", translation: "Kuzenim (amca oğlu)", category: "Sosyal İlişkiler" },
+            { arabic: "عريس", phonetic: "'Arees", translation: "Damat", category: "Sosyal İlişkiler" },
+            { arabic: "عروسة", phonetic: "'Aroosa", translation: "Gelin", category: "Sosyal İlişkiler" },
+            { arabic: "عيد ميلاد سعيد", phonetic: "'Eid milad sa'eed", translation: "Doğum günün kutlu olsun", category: "Sosyal İlişkiler" },
+
+            // ---- Deyimler & Kalıplar: ek deyimler ----
+            { arabic: "الصبر مفتاح الفرج", phonetic: "Es-sabr moftah el-farag", translation: "Sabır ferahlığın anahtarıdır", category: "Deyimler & Kalıplar" },
+            { arabic: "اللي فات مات", phonetic: "Elli fat mat", translation: "Geçmiş geçmiştir (deyim)", category: "Deyimler & Kalıplar" },
+            { arabic: "كل شيء بوقته", phonetic: "Koll haga be-wa'teha", translation: "Her şeyin bir zamanı var", category: "Deyimler & Kalıplar" },
+            { arabic: "ربنا موجود", phonetic: "Rabbena mawgood", translation: "Allah her yerde (teselli ifadesi)", category: "Deyimler & Kalıplar" },
+            { arabic: "نهارك سعيد", phonetic: "Naharak sa'eed", translation: "Günün mutlu geçsin", category: "Deyimler & Kalıplar" },
+
+            // ---- Yemek & Restoran: ek gıdalar ----
+            { arabic: "بيض", phonetic: "Beid", translation: "Yumurta", category: "Yemek & Restoran" },
+            { arabic: "جبنة", phonetic: "Gebna", translation: "Peynir", category: "Yemek & Restoran" },
+            { arabic: "زبدة", phonetic: "Zebda", translation: "Tereyağı", category: "Yemek & Restoran" },
+            { arabic: "عسل", phonetic: "'Asal", translation: "Bal", category: "Yemek & Restoran" },
+            { arabic: "زيت", phonetic: "Zeit", translation: "Yağ", category: "Yemek & Restoran" },
+            { arabic: "موز", phonetic: "Moz", translation: "Muz", category: "Yemek & Restoran" },
+            { arabic: "تفاح", phonetic: "Tofah", translation: "Elma", category: "Yemek & Restoran" },
+            { arabic: "برتقال", phonetic: "Borto'an", translation: "Portakal", category: "Yemek & Restoran" },
+            { arabic: "عصير", phonetic: "'Aseer", translation: "Meyve suyu", category: "Yemek & Restoran" },
+            { arabic: "مياه غازية", phonetic: "Mayya ghazeyya", translation: "Gazlı içecek", category: "Yemek & Restoran" },
+
+            // ---- Seyahat & Ulaşım: ek kelimeler ----
+            { arabic: "محطة اتوبيس", phonetic: "Mahattet otobees", translation: "Otobüs durağı", category: "Seyahat & Ulaşım" },
+            { arabic: "مترو", phonetic: "Metro", translation: "Metro", category: "Seyahat & Ulaşım" },
+            { arabic: "بنزين", phonetic: "Banzeen", translation: "Benzin", category: "Seyahat & Ulaşım" },
+            { arabic: "كارت الصعود", phonetic: "Kart es-so'ood", translation: "Biniş kartı", category: "Seyahat & Ulaşım" },
+            { arabic: "جمرك", phonetic: "Gomrok", translation: "Gümrük", category: "Seyahat & Ulaşım" },
+            { arabic: "حقيبة يد", phonetic: "Ha'eebet yad", translation: "El çantası", category: "Seyahat & Ulaşım" }
         ];
 
         const categoryDefs = [
@@ -1146,31 +1418,167 @@
             p.style.cssText = `grid-column: 1/-1; text-align:center; color:${color || '#5c5c5c'}; padding: 40px; font-family:'Work Sans',sans-serif;`;
             p.textContent = text;
             grid.appendChild(p);
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+        }
+
+        // ------------------------------------------------------------
+        // Online çeviri önbelleği (localStorage) — kategori kartlarını
+        // "online çevirinin beslendiği yerden" (aynı MyMemory ar-EG|tr-TR
+        // uç noktasından) doğrulamak için kullanılır. Aynı kelime tekrar
+        // sorgulanmaz; böylece hem hızlı hem de API dostu çalışır.
+        // ------------------------------------------------------------
+        const TRANS_CACHE_KEY = 'aoTransCache_v1';
+        let transCache = {};
+        try { transCache = JSON.parse(localStorage.getItem(TRANS_CACHE_KEY) || '{}'); } catch (e) { transCache = {}; }
+        function persistTransCache() { try { localStorage.setItem(TRANS_CACHE_KEY, JSON.stringify(transCache)); } catch (e) {} }
+
+        async function fetchOnlineTurkish(arabicText) {
+            if (transCache[arabicText]) return transCache[arabicText];
+            try {
+                const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(arabicText)}&langpair=ar-EG|tr-TR`;
+                const res = await fetch(apiUrl);
+                if (!res.ok) return null;
+                const data = await res.json();
+                const t = data && data.responseData && data.responseData.translatedText;
+                if (t && !/NO QUERY SPECIFIED|INVALID|MYMEMORY WARNING/i.test(t)) {
+                    transCache[arabicText] = t;
+                    persistTransCache();
+                    return t;
+                }
+            } catch (e) { /* sessizce yerel çeviriyle devam et */ }
+            return null;
+        }
+
+        // Ekrandaki her kartı arka planda, kademeli (rate-limit dostu)
+        // şekilde aynı online API ile doğrular/günceller. Zaten online
+        // sonuç olan kartlar (arama sonuçları) tekrar sorgulanmaz.
+        function augmentCardsOnline(pairs) {
+            pairs.forEach(({ item, card }, idx) => {
+                if (item.isOnline) return;
+                setTimeout(async () => {
+                    const online = await fetchOnlineTurkish(item.arabic);
+                    if (!online) return;
+                    const label = card.querySelector('.translation-label');
+                    const text = card.querySelector('.translation-text');
+                    if (label) label.textContent = 'Türkçe Anlamı (Online Doğrulandı)';
+                    if (text && online.trim()) text.textContent = online.trim();
+                }, idx * 160);
+            });
+        }
+
+        // ------------------------------------------------------------
+        // Sayfalama: havuz büyüdükçe (yüzlerce kelime) tek seferde
+        // yüzlerce kart basıp tarayıcıyı yormamak / API'yi tek anda
+        // boğmamak için, her seferinde bir sayfa (PAGE_SIZE) gösterilir.
+        // ------------------------------------------------------------
+        const PAGE_SIZE = 60;
+        let renderPool = [];
+        let renderedCount = 0;
+
+        function renderNextBatch() {
+            const grid = document.getElementById('contentGrid');
+            const slice = renderPool.slice(renderedCount, renderedCount + PAGE_SIZE);
+            const frag = document.createDocumentFragment();
+            const pairs = [];
+            slice.forEach(item => {
+                const card = buildCard(item);
+                frag.appendChild(card);
+                pairs.push({ item, card });
+            });
+            grid.appendChild(frag);
+            renderedCount += slice.length;
+
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) {
+                if (renderedCount < renderPool.length) {
+                    loadMoreBtn.style.display = 'inline-flex';
+                    loadMoreBtn.textContent = `Daha Fazla Göster (${renderPool.length - renderedCount} kelime kaldı)`;
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
+            }
+
+            augmentCardsOnline(pairs);
         }
 
         function renderData(data) {
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = '';
+            renderPool = data;
+            renderedCount = 0;
 
             if (data.length === 0) {
                 renderMessage('Aradığınız kelime yerel sözlükte bulunamadı. Online çeviri sorgulanıyor...', '#5c5c5c');
                 return;
             }
 
-            const fragment = document.createDocumentFragment();
-            data.forEach(item => fragment.appendChild(buildCard(item)));
-            grid.appendChild(fragment);
+            renderNextBatch();
+        }
+
+        // ------------------------------------------------------------
+        // Sesli okuma: tarayıcıdaki mevcut sesler arasından en uygun
+        // Arapça sesi seçer (ar-EG tam eşleşmesi > adında Mısır/Hoda/
+        // Salma geçen ses > herhangi bir Arapça ses). Önceki sürüm
+        // sadece utterance.lang='ar-EG' ATIYORDU ama gerçek bir ses
+        // (voice) SEÇMİYORDU — bu yüzden tarayıcı çoğu zaman eldeki
+        // ilk/varsayılan sesi (çoğunlukla İngilizce) kullanıp Arapçayı
+        // yanlış telaffuz ediyordu.
+        // ------------------------------------------------------------
+        let cachedVoices = [];
+
+        function refreshVoiceCache() {
+            if ('speechSynthesis' in window) {
+                cachedVoices = window.speechSynthesis.getVoices() || [];
+            }
+        }
+
+        if ('speechSynthesis' in window) {
+            refreshVoiceCache();
+            window.speechSynthesis.onvoiceschanged = refreshVoiceCache;
+        }
+
+        function pickArabicVoice() {
+            const arabicVoices = cachedVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+            if (!arabicVoices.length) return null;
+            return arabicVoices.find(v => v.lang.toLowerCase() === 'ar-eg')
+                || arabicVoices.find(v => /egypt|hoda|salma|masry|masri/i.test(v.name))
+                || arabicVoices[0];
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('appToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'appToast';
+                toast.style.cssText = 'position:fixed;bottom:92px;right:30px;background:#191919;color:#fff;padding:12px 18px;border-radius:8px;font-family:"Work Sans",sans-serif;font-size:0.83rem;box-shadow:0 8px 22px rgba(0,0,0,0.3);z-index:2000;border-left:3px solid #ef1f27;max-width:280px;opacity:0;transition:opacity .3s ease;pointer-events:none;';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            requestAnimationFrame(() => { toast.style.opacity = '1'; });
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => { toast.style.opacity = '0'; }, 4000);
         }
 
         function speakText(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ar-EG';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                renderMessage('Tarayıcınız sesli okuma özelliğini desteklemiyor.', '#ef1f27');
+            if (!('speechSynthesis' in window)) {
+                showToast('Tarayıcınız sesli okuma özelliğini desteklemiyor.');
+                return;
             }
+            window.speechSynthesis.cancel(); // üst üste binen sesleri durdur
+            refreshVoiceCache();
+            const voice = pickArabicVoice();
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (voice) {
+                utterance.voice = voice;
+                utterance.lang = voice.lang;
+            } else {
+                utterance.lang = 'ar-EG';
+                showToast('Cihazınızda Arapça ses bulunamadı; telaffuz sistem sesine göre değişebilir. Cihaz ayarlarından bir Arapça ses paketi yüklemeniz önerilir.');
+            }
+            utterance.rate = 0.85;
+            utterance.pitch = 1;
+            window.speechSynthesis.speak(utterance);
         }
 
         function filterCategory(category) {
@@ -1184,36 +1592,44 @@
             }
         }
 
+        // ------------------------------------------------------------
+        // Arapça -> Latin okunuş dönüştürücü.
+        // Önceki sürümde çıplak "ا" (elif) ve birkaç harf hiç
+        // eşlenmiyordu; bu yüzden ekranda ham Arapça karakterler
+        // Latin fontlu okunuş alanına karışıp bozuk görünüyordu
+        // (ör. "sb'h 'lhyr y' 'zyzy"). Şimdi HER Arapça karakter tek
+        // tek eşleniyor ve eşlenmeyen hiçbir karakter çıktıya
+        // sızmıyor (güvenlik ağı: kalan her Arapça karakter atılır).
+        // ------------------------------------------------------------
+        const ARABIC_TO_LATIN = {
+            'ا': 'a', 'أ': 'a', 'إ': 'e', 'آ': 'a', 'ٱ': 'a', 'ى': 'a', 'ء': "'",
+            'ب': 'b', 'ت': 't', 'ة': 'a', 'ث': 's', 'ج': 'g', 'ح': 'h', 'خ': 'kh',
+            'د': 'd', 'ذ': 'z', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'ş',
+            'ص': 's', 'ض': 'd', 'ط': 't', 'ظ': 'z', 'ع': "'", 'غ': 'ğ',
+            'ف': 'f', 'ق': 'k', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n',
+            'ه': 'h', 'و': 'w', 'ي': 'y', 'ئ': 'y', 'ؤ': 'w',
+            // Harekeler (üstün/esre/ötre/sükun/şedde) — sese katkısı yok, siliniyor
+            '\u064B': '', '\u064C': '', '\u064D': '', '\u064E': '', '\u064F': '',
+            '\u0650': '', '\u0651': '', '\u0652': '', '\u0670': 'a'
+        };
+        const ARABIC_BLOCK_RE = /[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+
         function generateSmartPhonetic(arabicText) {
-            return arabicText
-                .replace(/أ|إ|آ/g, 'a')
-                .replace(/ب/g, 'b')
-                .replace(/ت/g, 't')
-                .replace(/ث/g, 's')
-                .replace(/ج/g, 'g')
-                .replace(/ح/g, 'h')
-                .replace(/خ/g, 'h')
-                .replace(/د/g, 'd')
-                .replace(/ذ/g, 'z')
-                .replace(/ر/g, 'r')
-                .replace(/ز/g, 'z')
-                .replace(/س/g, 's')
-                .replace(/ش/g, 'ş')
-                .replace(/ص/g, 's')
-                .replace(/ض/g, 'd')
-                .replace(/ط/g, 't')
-                .replace(/ظ/g, 'z')
-                .replace(/ع/g, "'")
-                .replace(/غ/g, 'ğ')
-                .replace(/ف/g, 'f')
-                .replace(/ق/g, 'k')
-                .replace(/ك/g, 'k')
-                .replace(/ل/g, 'l')
-                .replace(/م/g, 'm')
-                .replace(/ن/g, 'n')
-                .replace(/ه/g, 'h')
-                .replace(/و/g, 'w')
-                .replace(/ي/g, 'y');
+            let out = '';
+            for (const ch of arabicText) {
+                if (Object.prototype.hasOwnProperty.call(ARABIC_TO_LATIN, ch)) {
+                    out += ARABIC_TO_LATIN[ch];
+                } else if (ARABIC_BLOCK_RE.test(ch)) {
+                    // Eşlenmemiş bir Arapça karakter — asla ham haliyle bırakma
+                    continue;
+                } else {
+                    out += ch; // boşluk, noktalama, Latin karakter vb. aynen kalır
+                }
+            }
+            out = out.replace(/\s+/g, ' ').trim();
+            // Kelime başlarını büyüt (okunabilirlik için)
+            out = out.replace(/(^|\s)([a-zçğışü'])/gi, (m, sep, c) => sep + c.toUpperCase());
+            return out;
         }
 
         let searchTimeout;
@@ -1303,12 +1719,73 @@
             btn.style.display = scrolled ? 'flex' : 'none';
         };
 
+        // ------------------------------------------------------------
+        // Günün Sözü: tarihe göre (gün-sayısı % havuz uzunluğu) sabit
+        // bir kayıt seçilir — böylece aynı gün içinde herkese aynı söz
+        // gösterilir, ertesi gün otomatik değişir.
+        // ------------------------------------------------------------
+        function renderSentenceOfDay() {
+            const container = document.getElementById('sentenceOfDay');
+            if (!container || database.length === 0) return;
+
+            const dayIndex = Math.floor(Date.now() / 86400000);
+            const item = database[dayIndex % database.length];
+
+            container.innerHTML = '';
+
+            const eyebrow = document.createElement('div');
+            eyebrow.className = 'sod-eyebrow';
+            eyebrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Günün Sözü</span>';
+
+            const body = document.createElement('div');
+            body.className = 'sod-body';
+
+            const meta = document.createElement('div');
+            meta.className = 'sod-meta';
+
+            const phonetic = document.createElement('div');
+            phonetic.className = 'sod-phonetic';
+            phonetic.textContent = item.phonetic;
+
+            const translation = document.createElement('div');
+            translation.className = 'sod-translation';
+            translation.textContent = item.translation + ' · ' + item.category;
+
+            meta.appendChild(phonetic);
+            meta.appendChild(translation);
+
+            const arabicEl = document.createElement('div');
+            arabicEl.className = 'sod-arabic';
+            arabicEl.textContent = item.arabic;
+
+            const speakBtn = document.createElement('button');
+            speakBtn.className = 'sod-speak';
+            speakBtn.title = 'Sesli Dinle';
+            speakBtn.setAttribute('aria-label', 'Günün sözünü sesli dinle');
+            speakBtn.innerHTML = icons.speaker;
+            speakBtn.addEventListener('click', () => speakText(item.arabic));
+
+            const right = document.createElement('div');
+            right.style.cssText = 'display:flex;align-items:center;gap:12px;';
+            right.appendChild(arabicEl);
+            right.appendChild(speakBtn);
+
+            body.appendChild(meta);
+            body.appendChild(right);
+
+            container.appendChild(eyebrow);
+            container.appendChild(body);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             buildSidebar();
             document.getElementById('logoLink').addEventListener('click', (e) => { e.preventDefault(); resetToHome(); });
             document.getElementById('searchInput').addEventListener('input', handleSearch);
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (loadMoreBtn) loadMoreBtn.addEventListener('click', renderNextBatch);
             updateCategoryCounts();
             renderData(database);
+            renderSentenceOfDay();
         });
     </script>
 </body>
