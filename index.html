@@ -133,62 +133,88 @@
             color: #8a8a8a;
         }
 
-        .category-list { display: flex; flex-direction: column; gap: 5px; }
+        .category-list { display: flex; flex-direction: column; gap: 6px; }
 
         .category-btn {
-            background: transparent;
-            border: 1px solid transparent;
+            position: relative;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
             color: #d8d8d8;
             text-align: left;
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 9px 14px 9px 10px;
+            border-radius: 12px;
             cursor: pointer;
             font-family: 'Work Sans', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 700;
+            font-size: 0.86rem;
+            font-weight: 600;
             transition: var(--transition);
             width: 100%;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            width: 3px; height: 0;
+            background: var(--white);
+            border-radius: 0 3px 3px 0;
+            transform: translateY(-50%);
+            transition: height 0.22s ease;
         }
 
         .category-btn .cat-icon {
-            width: 18px; height: 18px; flex-shrink: 0;
-            color: #9b9b9b;
+            width: 32px; height: 32px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.055);
+            color: #a8a8a8;
             transition: var(--transition);
         }
 
-        .category-btn .cat-label { flex: 1; }
+        .category-btn .cat-icon svg { width: 16px; height: 16px; }
+
+        .category-btn .cat-label { flex: 1; letter-spacing: 0.1px; }
 
         .category-btn:hover {
-            background-color: rgba(239,31,39,0.14);
-            border-color: rgba(239,31,39,0.35);
-            color: var(--red);
-            transform: translateX(2px);
+            background-color: rgba(239,31,39,0.1);
+            border-color: rgba(239,31,39,0.3);
+            color: #ffffff;
+            transform: translateX(3px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
         }
-        .category-btn:hover .cat-icon { color: var(--red); }
+        .category-btn:hover .cat-icon { color: var(--red); background: rgba(239,31,39,0.16); transform: scale(1.05); }
+        .category-btn:hover::before { height: 55%; background: var(--red); }
 
         .category-btn.active {
-            background: var(--red);
-            border-color: var(--red);
+            background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+            border-color: transparent;
             color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 14px var(--red-glow);
+            font-weight: 700;
+            box-shadow: 0 6px 18px var(--red-glow), inset 0 1px 0 rgba(255,255,255,0.15);
+            transform: translateX(2px);
         }
 
-        .category-btn.active .cat-icon { color: white; }
+        .category-btn.active::before { height: 60%; background: rgba(255,255,255,0.9); }
+
+        .category-btn.active .cat-icon { color: white; background: rgba(255,255,255,0.2); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25); }
 
         .category-count {
             font-family: 'IBM Plex Mono', monospace;
-            background: rgba(255,255,255,0.13);
-            padding: 2px 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 3px 9px;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
+            font-weight: 600;
             flex-shrink: 0;
+            transition: var(--transition);
         }
 
-        .category-btn.active .category-count { background: rgba(255,255,255,0.25); color: white; }
+        .category-btn:hover .category-count { background: rgba(239,31,39,0.22); color: #ffdada; }
+        .category-btn.active .category-count { background: rgba(255,255,255,0.28); color: white; }
 
         /* ---------------------------- MAIN ---------------------------- */
         main {
@@ -207,9 +233,13 @@
         .section-title {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
             margin-bottom: 2px;
+            flex-wrap: wrap;
         }
+
+        .section-title-left { display: flex; align-items: center; gap: 10px; }
 
         .section-title svg { width: 22px; height: 22px; color: var(--red); flex-shrink: 0; }
 
@@ -219,6 +249,51 @@
             font-weight: 700;
             color: var(--black);
             letter-spacing: 0.2px;
+        }
+
+        /* ------------------------ CANLI SAAT/TARİH ------------------------ */
+        .live-clock {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--black) 0%, #2b2b2b 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .live-clock .clock-icon {
+            width: 30px; height: 30px;
+            border-radius: 9px;
+            background: rgba(239,31,39,0.22);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .live-clock .clock-icon svg { width: 16px; height: 16px; color: var(--red); }
+
+        .live-clock .clock-text { display: flex; flex-direction: column; line-height: 1.25; }
+
+        .live-clock .clock-time {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .live-clock .clock-date {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 0.68rem;
+            color: #b8b8b8;
+            text-transform: capitalize;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 720px) {
+            .live-clock { padding: 6px 12px; }
+            .live-clock .clock-time { font-size: 0.82rem; }
         }
 
         .search-box-wrap { position: relative; }
@@ -439,78 +514,146 @@
 
         .footer-inner { padding: 46px 20px 20px; }
 
-        /* ----- Günün Sözü ----- */
+        /* ----- Günün Sözü — "spotlight" kart tasarımı ----- */
         .sod-card {
+            position: relative;
+            overflow: hidden;
             max-width: 1200px;
             margin: 0 auto 40px;
-            background: linear-gradient(135deg, rgba(239,31,39,0.14), rgba(239,31,39,0.02));
-            border: 1px solid rgba(239,31,39,0.3);
-            border-radius: 14px;
-            padding: 26px 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            background: linear-gradient(135deg, #1c1c1c 0%, #242424 55%, #2c1113 100%);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 20px 30px 26px;
+            box-shadow: 0 20px 44px rgba(0,0,0,0.35);
         }
+
+        .sod-card::after {
+            content: '';
+            position: absolute;
+            right: -50px; top: -60px;
+            width: 240px; height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,31,39,0.32), transparent 70%);
+            pointer-events: none;
+        }
+
+        .sod-ghost-arabic {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 24px;
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 6.4rem;
+            color: rgba(255,255,255,0.035);
+            direction: rtl;
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .sod-content { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; }
+
+        .sod-tag-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 
         .sod-eyebrow {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
+            background: var(--red);
+            color: white;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.66rem;
             text-transform: uppercase;
             letter-spacing: 1.4px;
-            color: var(--red);
             font-weight: 700;
+            padding: 6px 13px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(239,31,39,0.35);
         }
 
-        .sod-eyebrow svg { width: 15px; height: 15px; }
+        .sod-eyebrow svg { width: 13px; height: 13px; }
 
-        .sod-body {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
+        .sod-day-counter {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            color: #9c9c9c;
+            letter-spacing: 0.4px;
         }
+
+        .sod-main-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 
         .sod-arabic {
             font-family: 'Noto Naskh Arabic', serif;
-            font-size: 1.9rem;
+            font-size: 2.3rem;
             font-weight: 700;
             color: white;
             direction: rtl;
+            line-height: 1.3;
+            flex: 1;
+            min-width: 220px;
         }
-
-        .sod-meta { display: flex; flex-direction: column; gap: 4px; }
-
-        .sod-phonetic {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.98rem;
-            font-weight: 600;
-            color: #ff8a8f;
-        }
-
-        .sod-translation { font-size: 0.9rem; color: #cfcfcf; }
 
         .sod-speak {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.16);
+            position: relative;
+            width: 50px; height: 50px;
             border-radius: 50%;
-            width: 42px; height: 42px;
+            background: var(--red);
+            border: none;
             display: flex; align-items: center; justify-content: center;
             color: white;
             cursor: pointer;
             transition: var(--transition);
             flex-shrink: 0;
+            box-shadow: 0 0 0 0 rgba(239,31,39,0.45);
+            animation: sodPulse 2.8s infinite;
         }
 
-        .sod-speak:hover { background: var(--red); border-color: var(--red); }
-        .sod-speak svg { width: 19px; height: 19px; }
+        .sod-speak:hover { transform: scale(1.08); animation-play-state: paused; box-shadow: 0 8px 20px var(--red-glow); }
+        .sod-speak svg { width: 20px; height: 20px; }
+
+        @keyframes sodPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239,31,39,0.4); }
+            70% { box-shadow: 0 0 0 13px rgba(239,31,39,0); }
+            100% { box-shadow: 0 0 0 0 rgba(239,31,39,0); }
+        }
+
+        .sod-lower {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            border-top: 1px dashed rgba(255,255,255,0.15);
+            padding-top: 13px;
+        }
+
+        .sod-phonetic {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #ff8a8f;
+        }
+
+        .sod-translation { font-size: 0.88rem; color: #c9c9c9; margin-top: 3px; }
+
+        .sod-category-chip {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            background: rgba(255,255,255,0.08);
+            color: #dedede;
+            padding: 4px 11px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.14);
+            white-space: nowrap;
+        }
 
         @media (max-width: 640px) {
-            .sod-body { flex-direction: column; align-items: flex-start; }
-            .sod-arabic { direction: rtl; align-self: flex-end; }
+            .sod-arabic { direction: rtl; text-align: right; font-size: 1.9rem; }
+            .sod-ghost-arabic { font-size: 4rem; }
         }
 
         .footer-content {
@@ -673,8 +816,19 @@
         <main>
             <div class="search-container">
                 <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7"></path><path d="M9 3v2c0 4.4-2.7 8-6 8"></path><path d="M4 13c1.5 1.6 3.6 2.7 6 2.9"></path><path d="M13 21l4-9 4 9"></path><path d="M14.5 18h5"></path></svg>
-                    <h2>Türkçe Arapça Online Çeviri</h2>
+                    <div class="section-title-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7"></path><path d="M9 3v2c0 4.4-2.7 8-6 8"></path><path d="M4 13c1.5 1.6 3.6 2.7 6 2.9"></path><path d="M13 21l4-9 4 9"></path><path d="M14.5 18h5"></path></svg>
+                        <h2>Türkçe Arapça Online Çeviri</h2>
+                    </div>
+                    <div class="live-clock" id="liveClock">
+                        <div class="clock-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15.5 14"></polyline></svg>
+                        </div>
+                        <div class="clock-text">
+                            <span class="clock-time" id="clockTime">--:--:--</span>
+                            <span class="clock-date" id="clockDate">-- -- ----</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="search-box-wrap">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -774,7 +928,8 @@
             'Deyimler & Kalıplar': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7c0-1.7 1.3-3 3-3h1v6H5a2 2 0 0 1-2-2V7z"></path><path d="M14 7c0-1.7 1.3-3 3-3h1v6h-2a2 2 0 0 1-2-2V7z"></path></svg>',
             'Online Çeviri (Mısır Lehçesi)': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
             speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 8 9 12 5 12 19 8 15 3 15 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>',
-            link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>'
+            link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>',
+            external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>'
         };
 
         // ------------------------------------------------------------
@@ -1948,6 +2103,13 @@
         // API ile) oluştur — sabit veriden geldiği için risk yok ama
         // tutarlılık adına burada da innerHTML yerine createElement.
         // ------------------------------------------------------------
+        // Footer "Hızlı Bağlantılar" listesindeki sabit, harici kurumsal
+        // bağlantılar (kategori listelerinden bağımsız).
+        const externalQuickLinks = [
+            { label: 'EMS Kalite Güvence Müdürlüğü', url: 'https://emscompliance.github.io/ems/' },
+            { label: 'NSCSTR Danışmanlık', url: 'https://www.nscstr.com/#' }
+        ];
+
         function buildSidebar() {
             const list = document.getElementById('categoryList');
             const footerCats = document.getElementById('footerCategoryLinks');
@@ -1955,6 +2117,20 @@
             list.innerHTML = '';
             footerCats.innerHTML = '';
             footerQuick.innerHTML = '';
+
+            externalQuickLinks.forEach(linkDef => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = linkDef.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.innerHTML = icons.external;
+                const span = document.createElement('span');
+                span.textContent = linkDef.label;
+                a.appendChild(span);
+                li.appendChild(a);
+                footerQuick.appendChild(li);
+            });
 
             categoryDefs.forEach((def, idx) => {
                 const btn = document.createElement('button');
@@ -2531,26 +2707,33 @@
 
             container.innerHTML = '';
 
+            // Arka planda dekoratif, soluk büyük Arapça yazı
+            const ghost = document.createElement('div');
+            ghost.className = 'sod-ghost-arabic';
+            ghost.setAttribute('aria-hidden', 'true');
+            ghost.textContent = item.arabic;
+
+            const content = document.createElement('div');
+            content.className = 'sod-content';
+
+            // Üst satır: rozet + gün sayacı
+            const tagRow = document.createElement('div');
+            tagRow.className = 'sod-tag-row';
+
             const eyebrow = document.createElement('div');
             eyebrow.className = 'sod-eyebrow';
-            eyebrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Günün Sözü</span>';
+            eyebrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.5 9 22 9.5 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.5 9.5 9 12 2z"></path></svg><span>Günün Sözü</span>';
 
-            const body = document.createElement('div');
-            body.className = 'sod-body';
+            const dayCounter = document.createElement('div');
+            dayCounter.className = 'sod-day-counter';
+            dayCounter.textContent = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-            const meta = document.createElement('div');
-            meta.className = 'sod-meta';
+            tagRow.appendChild(eyebrow);
+            tagRow.appendChild(dayCounter);
 
-            const phonetic = document.createElement('div');
-            phonetic.className = 'sod-phonetic';
-            phonetic.textContent = item.phonetic;
-
-            const translation = document.createElement('div');
-            translation.className = 'sod-translation';
-            translation.textContent = item.translation + ' · ' + item.category;
-
-            meta.appendChild(phonetic);
-            meta.appendChild(translation);
+            // Orta satır: büyük Arapça metin + sesli dinle butonu
+            const mainRow = document.createElement('div');
+            mainRow.className = 'sod-main-row';
 
             const arabicEl = document.createElement('div');
             arabicEl.className = 'sod-arabic';
@@ -2558,21 +2741,42 @@
 
             const speakBtn = document.createElement('button');
             speakBtn.className = 'sod-speak';
+            speakBtn.type = 'button';
             speakBtn.title = 'Sesli Dinle';
             speakBtn.setAttribute('aria-label', 'Günün sözünü sesli dinle');
             speakBtn.innerHTML = icons.speaker;
             speakBtn.addEventListener('click', () => speakText(item.arabic));
 
-            const right = document.createElement('div');
-            right.style.cssText = 'display:flex;align-items:center;gap:12px;';
-            right.appendChild(arabicEl);
-            right.appendChild(speakBtn);
+            mainRow.appendChild(arabicEl);
+            mainRow.appendChild(speakBtn);
 
-            body.appendChild(meta);
-            body.appendChild(right);
+            // Alt satır: okunuş + çeviri + kategori etiketi
+            const lower = document.createElement('div');
+            lower.className = 'sod-lower';
 
-            container.appendChild(eyebrow);
-            container.appendChild(body);
+            const meta = document.createElement('div');
+            const phonetic = document.createElement('div');
+            phonetic.className = 'sod-phonetic';
+            phonetic.textContent = item.phonetic;
+            const translation = document.createElement('div');
+            translation.className = 'sod-translation';
+            translation.textContent = item.translation;
+            meta.appendChild(phonetic);
+            meta.appendChild(translation);
+
+            const categoryChip = document.createElement('span');
+            categoryChip.className = 'sod-category-chip';
+            categoryChip.textContent = item.category;
+
+            lower.appendChild(meta);
+            lower.appendChild(categoryChip);
+
+            content.appendChild(tagRow);
+            content.appendChild(mainRow);
+            content.appendChild(lower);
+
+            container.appendChild(ghost);
+            container.appendChild(content);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2585,7 +2789,26 @@
             renderData(database);
             renderSentenceOfDay();
             initOfflineSupport();
+            initLiveClock();
         });
+
+        // ------------------------------------------------------------
+        // Sağ üstteki canlı saat/tarih/gün widget'ı — cihazın kendi
+        // saatini kullanır, internet gerektirmez (offline'da da çalışır).
+        // ------------------------------------------------------------
+        function initLiveClock() {
+            const timeEl = document.getElementById('clockTime');
+            const dateEl = document.getElementById('clockDate');
+            if (!timeEl || !dateEl) return;
+
+            function tick() {
+                const now = new Date();
+                timeEl.textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                dateEl.textContent = now.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            }
+            tick();
+            setInterval(tick, 1000);
+        }
 
         // ------------------------------------------------------------
         // Offline / PWA desteği:
